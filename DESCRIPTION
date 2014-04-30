@@ -13,4 +13,5 @@ Imports:
 Suggests:
     testthat
 Collate:
-    'fakepackage.r'
+    'fakepackage.r',
+	'get_prey_of.R'
