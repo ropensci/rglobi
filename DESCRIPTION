@@ -14,4 +14,4 @@ Suggests:
     testthat
 Collate:
     'fakepackage.r',
-	'get_prey_of.R'
+    'get_prey_of.R'
