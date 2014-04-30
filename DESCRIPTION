@@ -4,11 +4,12 @@ Version: 0.1
 Author: Craig Citro <craigcitro@google.com>
 Maintainer: Craig Citro <craigcitro@google.com>
 Depends: R (>= 3.0.1)
-License: Apache License (== 2.0)
+License: file LICENSE
 Description: This is just a fake package allowing me to use travis to check my
     package to make it easier to use travis. <insert meme here>
 Imports:
-    assertthat
+    assertthat,
+	httr
 Suggests:
     testthat
 Collate:
