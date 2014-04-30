@@ -1,13 +1,13 @@
-Package: fakepackage
-Title: Test package for r-travis (http://github.com/craigcitro/r-travis)
+Package: globi
+Title: Aggregated Biotic Interaction Data of GloBI (http://globalbioticinteractions.org) 
 Version: 0.1
-Author: Craig Citro <craigcitro@google.com>
-Maintainer: Craig Citro <craigcitro@google.com>
+Author: Jorrit Poelen <jhpoelen+rglobi@gmail.com>
+Maintainer: Jorrit Poelen <jhpoelen+rglobi@gmail.com>
 Depends: R (>= 3.0.1)
 License: file LICENSE
-Description: This is just a fake package allowing me to use travis to check my
-    package to make it easier to use travis. <insert meme here>
+Description: access to data that describes how organisms interact with eachother on earth. 
 Imports:
 	httr
 Suggests:
     testthat (>= 0.8.0)
+
