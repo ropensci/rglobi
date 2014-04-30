@@ -8,9 +8,6 @@ License: file LICENSE
 Description: This is just a fake package allowing me to use travis to check my
     package to make it easier to use travis. <insert meme here>
 Imports:
-    assertthat,
 	httr
 Suggests:
-    testthat
-Collate:
-    'fakepackage.r'
+    testthat (>= 0.8.0)
