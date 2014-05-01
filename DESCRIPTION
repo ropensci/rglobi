@@ -6,7 +6,8 @@ Maintainer: Jorrit Poelen <jhpoelen+rglobi@gmail.com>
 Depends: R (>= 3.0.1)
 License: file LICENSE
 Description: access to data that describes how organisms interact with eachother on earth. 
+Imports:
+   httr (>= 0.3)
 Suggests:
-   testthat (>= 0.8.0),
-   httr
+   testthat (>= 0.8.0)
 
