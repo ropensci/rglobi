@@ -1,3 +1,2 @@
-export(is_three)
-export(three)
 export(GetPreyOf)
+export(GetInteractions)
