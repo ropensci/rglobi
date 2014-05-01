@@ -1,13 +1,3 @@
-#' Returns 3.
-three <- function() {
-  3
-}
-
-#' Check to see if our argument is three.
-is_three <- function(x) {
-  see_if(are_equal(3, x))
-}
-
 GetInteractions <- function(type = 'preysOn') {
   read.csv(text = httr::content(httr::GET('http://api.globalbioticinteractions.org/taxon/Homo%20sapiens/preysOn?type=csv')))
 }
