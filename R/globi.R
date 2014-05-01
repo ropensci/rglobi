@@ -15,5 +15,5 @@ GetPreyOf <- function(taxon.name = 'Homo sapiens') {
   #   Taxon name of predator.
   # Returns:
   #   List of prey names.
-  return (GET('http://api.globalbioticinteractions.org/taxon/Homo%20sapiens/presOn?type=csv'))
+  return (httr::GET('http://api.globalbioticinteractions.org/taxon/Homo%20sapiens/presOn?type=csv'))
 }
