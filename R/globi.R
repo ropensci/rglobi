@@ -9,7 +9,7 @@ is_three <- function(x) {
 }
 
 GetInteractions <- function(type = 'preysOn') {
-  read.csv(text = httr:content(httr::GET('http://api.globalbioticinteractions.org/taxon/Homo%20sapiens/preysOn?type=csv')))
+  read.csv(text = httr::content(httr::GET('http://api.globalbioticinteractions.org/taxon/Homo%20sapiens/preysOn?type=csv')))
 }
 
 GetPreyOf <- function() {
