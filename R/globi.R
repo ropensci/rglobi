@@ -2,19 +2,24 @@ GetGloBIURL <- function(suffix) {
   paste("http://api.globalbioticinteractions.org", suffix, sep = "")
 }
 
-GetInteractions <- function(type = "preysOn") {
-  requestURL = GetGloBIURL("/taxon/Homo%20sapiens/preysOn?type=csv")
+GetInteractions <- function(taxon = "Homo sapiens", interactionType = "preysOn") {
+  query <- paste("/taxon/", taxon, "/", interactionType, "?type=csv", sep="") 
+  requestURL = GetGloBIURL(RCurl::curlEscape(query))
   read.csv(text = httr::content(httr::GET(requestURL)))
 }
 
-GetPreyOf <- function() {
+GetPreyOf <- function(taxon = "Homo sapiens") {
   # Gets known prey of taxon with name
   # 
   # Args:
   #   Taxon name of predator.
   # Returns:
   #   List of prey names.
-  GetInteractions()
+  GetInteractions(taxon)
+}
+
+GetPredatorsOf <- function(taxon = "Rattus rattus") {
+  GetInteractions(taxon, "preyedUponBy")
 }
 
 Query <- function(querystring) {

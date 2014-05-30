@@ -1,3 +1,4 @@
 export(GetPreyOf)
+export(GetPredatorsOf)
 export(GetInteractions)
 export(Query)
