@@ -25,7 +25,7 @@ Query <- function(querystring) {
   # Returns:
   #	  Cypher query results
 
-  h <- rjson::basicTextGatherer()
+  h <- RCurl::basicTextGatherer()
 
   RCurl::curlPerform(
     url=GetGloBIURL(":7474/db/data/ext/CypherPlugin/graphdb/execute_query"),
