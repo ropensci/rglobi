@@ -18,6 +18,6 @@ test_that("predator of rats", {
 
 test_that("cypher query", {
   human <- Query("START taxon = node:taxons(name='Homo sapiens') RETURN taxon.name as `name`, taxon.path as `path`")
-  expect_equal(human$name, "Homo sapiens")
-  expect_equal(human$path, "Animalia | Chordata | Mammalia | Primates | Hominidae | Homo | Homo sapiens")
+  expect_equal(as.character(human$name), "Homo sapiens")
+  expect_equal(as.character(human$path), "Animalia | Chordata | Mammalia | Primates | Hominidae | Homo | Homo sapiens")
 })
