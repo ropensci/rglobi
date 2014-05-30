@@ -18,7 +18,7 @@ GetPreyOf <- function() {
 }
 
 Query <- function(querystring) {
-  # Executes Cypher Query against GloBI's Neo4j instance
+  # Executes Cypher Query against GloBI's Neo4j instance. See https://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples.
   #
   # Args:
   #   Cypher query
