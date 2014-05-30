@@ -3,8 +3,8 @@ GetGloBIURL <- function(suffix) {
 }
 
 GetInteractions <- function(taxon = "Homo sapiens", interactionType = "preysOn") {
-  query <- paste("/taxon/", taxon, "/", interactionType, "?type=csv", sep="") 
-  requestURL = GetGloBIURL(RCurl::curlEscape(query))
+  query <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interactionType, "?type=csv", sep="") 
+  requestURL = GetGloBIURL(query)
   read.csv(text = httr::content(httr::GET(requestURL)))
 }
 
