@@ -25,15 +25,15 @@ Query <- function(querystring) {
   # Returns:
   #	  Cypher query results
 
-  h <- basicTextGatherer()
+  h <- rjson::basicTextGatherer()
 
-  curlPerform(
+  RCurl::curlPerform(
     url=GetGloBIURL(":7474/db/data/ext/CypherPlugin/graphdb/execute_query"),
-    postfields=paste('query',curlEscape(querystring), sep='='),
+    postfields=paste('query',RCurl::curlEscape(querystring), sep='='),
 		writefunction = h$update,
 		verbose = FALSE
   )
-  result <- fromJSON(h$value())
+  result <- rjson::fromJSON(h$value())
   data <- data.frame(t(sapply(result$data, unlist)))
   names(data) <- result$columns
   data
