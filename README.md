@@ -8,7 +8,7 @@ R library to access species interaction data of http://globalbioticinteractions.
 
 To install:
 ```R
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("jhpoelen/r-globi")
 ```
 
