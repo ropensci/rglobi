@@ -44,18 +44,6 @@ Query <- function(querystring) {
   data
 }
 
-GetInteractions <- function(sourcetaxon, targettaxon=NULL, type = NULL, bbox=NULL, ) {
-	taxon=gsub(" ", "%20", taxon)
-	if (taxon != NULL){
-  a=read.csv(paste("http://api.globalbioticinteractions.org/interactions?", 
-
-
-Homo%20sapiens/preysOn?type=csv)))
-
-http://api.globalbioticinteractions.org/interaction?bbox=-67.87,12.79,-57.08,23.32&sourceTaxon=Actinopterygii&targetTaxon=Arthropoda
-}
-
-
 GetInteractionsbyTaxa <- function(sourcetaxon, targettaxon=NULL, bbox=NULL, returnobservations="false"){
 sourcetaxon=gsub(" ", "%20", sourcetaxon)
 a="http://api.globalbioticinteractions.org/interaction?"	
