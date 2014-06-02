@@ -2,3 +2,8 @@ export(GetPreyOf)
 export(GetPredatorsOf)
 export(GetInteractions)
 export(Query)
+
+export(GetInteractionsbyTaxa)
+export(GetInteractionsinArea)
+export(GetInteractionAreas)
+export(GetInteractionTypes)
