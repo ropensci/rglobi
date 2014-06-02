@@ -84,7 +84,7 @@ a="http://api.globalbioticinteractions.org/interaction?"
 	}else {print("Incorrect entry for returnobservations, only distinct interactions returned")}
 		
 	a=paste (a, "type=csv", sep="")
-  #a=read.csv(a)	
+  a=read.csv(a)	
 	a
 	}	
 
@@ -110,7 +110,7 @@ names(a)=c("Latitude", "Longitude")
 if(!is.null(bbox)){
 if(is.numeric(bbox) & length(bbox)==4)
 	{if (max(abs(bbox))<181 & bbox[1]<=bbox[3] & bbox[2]<=bbox[4]){
-		a=a[a$Latitude>=bbox[1] & a$Latitude<=bbox[3] & a$Longitude>=bbox[2] & a$Longitude<=bbox[4], ]
+		a=a[a$Latitude>=bbox[2] & a$Latitude<=bbox[4] & a$Longitude>=bbox[1] & a$Longitude<=bbox[3], ]
 	return(a)
 	}}
 else {
