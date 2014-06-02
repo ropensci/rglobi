@@ -26,7 +26,8 @@ J. Stephen Gosnell, stephengosnell@gmail.com}
 
 \examples{
 GetInteractionAreas()
-GetInteractionAreas(bbox=c(-67.87,12.79,-57.08,23.32)}
+GetInteractionAreas(bbox=c(-67.87,12.79,-57.08,23.32))
+}
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

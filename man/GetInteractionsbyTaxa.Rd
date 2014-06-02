@@ -12,18 +12,10 @@ GetInteractionsbyTaxa(sourcetaxon, targettaxon = NULL, bbox = NULL, returnobserv
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{sourcetaxon}{
-Taxa of interest (consumer, predator, parasite); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class}
-  \item{targettaxon}{
-Taxa of interest (prey, host); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class}
-}
-  \item{bbox}{
- Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box}
-}
-  \item{returnobservations}{
-if true, all individual observations are returned, else only distinct relationships
-  }
-
+  \item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class).}
+  \item{targettaxon}{Taxa of interest (prey, host); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)}
+  \item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box}
+  \item{returnobservations}{if true, all individual observations are returned, else only distinct relationships}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
