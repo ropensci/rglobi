@@ -21,9 +21,7 @@ Returns data frame of supported interaction types
 \references{
 %% ~put references to the literature/web site here ~
 }
-\author{
-J. Stephen Gosnell, stephengosnell@gmail.com}
-}
+\author{J. Stephen Gosnell, stephengosnell@gmail.com}
 \note{
 %%  ~~further notes~~
 }

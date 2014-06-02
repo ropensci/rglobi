@@ -12,9 +12,7 @@ GetInteractionsinArea(bbox)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{bbox}{
- Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box}
-}
+  \item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
