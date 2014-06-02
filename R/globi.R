@@ -7,7 +7,6 @@ GetGloBIURL <- function(suffix) {
 #' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens) 
 #' @param interactionType the preferred interaction type (e.g. preysOn)
 #' @return species interactions between source and target taxa 
-#' @seealso \code{\link{nchar}} which this function wraps
 #' @export
 #' @examples
 #' GetInteractions("Homo sapiens", "preysOn")
@@ -18,33 +17,38 @@ GetInteractions <- function(taxon = "Homo sapiens", interactionType = "preysOn")
   read.csv(text = httr::content(httr::GET(requestURL)))
 }
 
+#' Get a List of Prey for given Predator Taxon 
+#'
+#' @param taxon scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)
+#' @return list of recorded predator-prey interactions that involve the desired predator taxon
+#' @examples
+#' GetPreyOf("Homo sapiens")
+#' GetPreyOf("Primates")
 GetPreyOf <- function(taxon = "Homo sapiens") {
-  # Gets known prey of taxon with name
-  # 
-  # Args:
-  #   Taxon name of predator.
-  # Returns:
-  #   List of prey names.
   GetInteractions(taxon)
 }
 
+#' Get a List of Predators of a Given Prey Taxon
+#'
+#' @param taxon scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)
+#' @return list of recorded prey-predator interactions that involve the desired prey taxon.
+#' @examples
+#' GetPredatorsOf("Rattus rattus")
+#' GetPredatorsOf("Primates")
 GetPredatorsOf <- function(taxon = "Rattus rattus") {
   GetInteractions(taxon, "preyedUponBy")
 }
 
-Query <- function(querystring) {
-  # Executes Cypher Query against GloBI's Neo4j instance. See https://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples.
-  #
-  # Args:
-  #   Cypher query
-  # Returns:
-  #	  Cypher query results
-
+#' Executes a Cypher Query Against GloBI's Neo4j Instance
+#' 
+#' @param querystring Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
+#' @return result of cypher query string 
+Query <- function(cypherQuery) {
   h <- RCurl::basicTextGatherer()
 
   RCurl::curlPerform(
     url=GetGloBIURL(":7474/db/data/ext/CypherPlugin/graphdb/execute_query"),
-    postfields=paste('query',RCurl::curlEscape(querystring), sep='='),
+    postfields=paste('query',RCurl::curlEscape(cypherQuery), sep='='),
 		writefunction = h$update,
 		verbose = FALSE
   )
