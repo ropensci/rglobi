@@ -2,6 +2,16 @@ GetGloBIURL <- function(suffix) {
   paste("http://api.globalbioticinteractions.org", suffix, sep = "")
 }
 
+#' Get Species Interaction from GloBI 
+#'
+#' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens) 
+#' @param interactionType the preferred interaction type (e.g. preysOn)
+#' @return species interactions between source and target taxa 
+#' @seealso \code{\link{nchar}} which this function wraps
+#' @export
+#' @examples
+#' GetInteractions("Homo sapiens", "preysOn")
+#' GetInteractions("Insecta", "parasiteOf")
 GetInteractions <- function(taxon = "Homo sapiens", interactionType = "preysOn") {
   query <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interactionType, "?type=csv", sep="") 
   requestURL = GetGloBIURL(query)
