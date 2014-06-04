@@ -1,4 +1,4 @@
-GetGloBIURL <- function(suffix) {
+get_globi_url <- function(suffix) {
   paste("http://api.globalbioticinteractions.org", suffix, sep = "")
 }
 
@@ -9,11 +9,11 @@ GetGloBIURL <- function(suffix) {
 #' @return species interactions between source and target taxa 
 #' @export
 #' @examples
-#' GetInteractions("Homo sapiens", "preysOn")
-#' GetInteractions("Insecta", "parasiteOf")
-GetInteractions <- function(taxon = "Homo sapiens", interactionType = "preysOn") {
+#' get_interactions("Homo sapiens", "preysOn")
+#' get_interactions("Insecta", "parasiteOf")
+get_interactions <- function(taxon = "Homo sapiens", interactionType = "preysOn") {
   query <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interactionType, "?type=csv", sep="") 
-  requestURL = GetGloBIURL(query)
+  requestURL = get_globi_url(query)
   read.csv(text = httr::content(httr::GET(requestURL)))
 }
 
@@ -22,10 +22,10 @@ GetInteractions <- function(taxon = "Homo sapiens", interactionType = "preysOn")
 #' @param taxon scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)
 #' @return list of recorded predator-prey interactions that involve the desired predator taxon
 #' @examples
-#' GetPreyOf("Homo sapiens")
-#' GetPreyOf("Primates")
-GetPreyOf <- function(taxon = "Homo sapiens") {
-  GetInteractions(taxon)
+#' get_prey_of("Homo sapiens")
+#' get_prey_of("Primates")
+get_prey_of <- function(taxon = "Homo sapiens") {
+  get_interactions(taxon)
 }
 
 #' Get a List of Predators of a Given Prey Taxon
@@ -33,21 +33,21 @@ GetPreyOf <- function(taxon = "Homo sapiens") {
 #' @param taxon scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)
 #' @return list of recorded prey-predator interactions that involve the desired prey taxon.
 #' @examples
-#' GetPredatorsOf("Rattus rattus")
-#' GetPredatorsOf("Primates")
-GetPredatorsOf <- function(taxon = "Rattus rattus") {
-  GetInteractions(taxon, "preyedUponBy")
+#' get_predators_of("Rattus rattus")
+#' get_predators_of("Primates")
+get_predators_of <- function(taxon = "Rattus rattus") {
+  get_interactions(taxon, "preyedUponBy")
 }
 
 #' Executes a Cypher Query Against GloBI's Neo4j Instance
 #' 
 #' @param querystring Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
 #' @return result of cypher query string 
-Query <- function(cypherQuery) {
+query <- function(cypherQuery) {
   h <- RCurl::basicTextGatherer()
 
   RCurl::curlPerform(
-    url=GetGloBIURL(":7474/db/data/ext/CypherPlugin/graphdb/execute_query"),
+    url=get_globi_url(":7474/db/data/ext/CypherPlugin/graphdb/execute_query"),
     postfields=paste('query',RCurl::curlEscape(cypherQuery), sep='='),
 		writefunction = h$update,
 		verbose = FALSE
