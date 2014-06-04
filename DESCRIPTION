@@ -1,4 +1,4 @@
-Package: globi
+Package: rglobi
 Type:  Package
 Title: Aggregated Biotic Interaction Data of GloBI (http://globalbioticinteractions.org) 
 Version: 0.1
