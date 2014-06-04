@@ -1,2 +1,2 @@
 library(testthat)
-test_check("globi")
+test_check("rglobi")
