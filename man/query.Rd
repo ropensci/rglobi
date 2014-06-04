@@ -6,7 +6,7 @@
 query(cypherQuery)
 }
 \arguments{
-\item{querystring}{Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)}
+\item{cypherQuery}{Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)}
 }
 \value{
 result of cypher query string
