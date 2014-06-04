@@ -41,7 +41,7 @@ get_predators_of <- function(taxon = "Rattus rattus") {
 
 #' Executes a Cypher Query Against GloBI's Neo4j Instance
 #' 
-#' @param querystring Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
+#' @param cypherQuery Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
 #' @return result of cypher query string 
 query <- function(cypherQuery) {
   h <- RCurl::basicTextGatherer()
