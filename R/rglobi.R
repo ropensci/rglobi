@@ -1,3 +1,7 @@
+#' Get Globi URL 
+#'
+#' @param suffix additional information passed to api
+#' @return url address used to call api 
 get_globi_url <- function(suffix) {
   paste("http://api.globalbioticinteractions.org", suffix, sep = "")
 }
@@ -58,110 +62,127 @@ query <- function(cypherQuery) {
   data
 }
 
-#'@title Return interactions involving specific taxa
+#' @title Return interactions involving specific taxa
 #'
 #' @description Returns interactions involving specific taxa.  Secondary (target) 
 #' taxa and spatial boundaries may also be set
 #'
-#' @param sourcetaxon Taxa of interest (consumer, predator, parasite); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class).
-#' @param targettaxon Taxa of interest (prey, host); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)
-#' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box
-#' @param returnobservations if true, all individual observations are returned, else only distinct relationships
+#' @param sourcetaxon Taxa of interest (consumer, predator, parasite); may be 
+#' specified as "Genus species" or higher level (e.g., Genus, Family, Class).
+#' @param targettaxon Taxa of interest (prey, host); may be specified as "Genus 
+#' species" or higher level (e.g., Genus, Family, Class)
+#' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
+#'  right, top" of bounding box
+#' @param returnobservations if true, all individual observations are returned, 
+#' else only distinct relationships
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
 #' @examples
-#'get_interactions_by_taxa(sourcetaxon="Rattus")
-#'get_interactions_by_taxa(sourcetaxon="Rattus rattus", targettaxon="Aves")
-#'get_interactions_by_taxa(sourcetaxon="Rattus rattus", bbox=c(-67.87,12.79,-57.08,23.32))
-get_interactions_by_taxa <- function(sourcetaxon, targettaxon=NULL, bbox=NULL, returnobservations="false"){
-sourcetaxon=gsub(" ", "%20", sourcetaxon)
-a="http://api.globalbioticinteractions.org/interaction?"	
-	for (i in 1:length(sourcetaxon)){
-	a=paste(a, "sourceTaxon=",sourcetaxon[i], "&", sep="")
-	}
+#' get_interactions_by_taxa(sourcetaxon = "Rattus")
+#' get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon = "Aves")
+#' get_interactions_by_taxa(sourcetaxon = "Rattus rattus", 
+#' bbox = c(-67.87,12.79,-57.08,23.32))
+get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, 
+  bbox = NULL, returnobservations = "false"){
+  sourcetaxon <- gsub(" ", "%20", sourcetaxon)
+  globiintpath <- "http://api.globalbioticinteractions.org/interaction?"	
+  for (i in 1:length (sourcetaxon)){
+    requesturl <- paste (globiintpath, "sourceTaxon=",sourcetaxon[i], 
+      "&", sep="")
+  }
 	
-	if (!is.null(targettaxon)){
-	sourcetaxon=gsub(" ", "%20", sourcetaxon)
-	for (i in 1:length(targettaxon)){
-	a=paste(a, "targetTaxon=", targettaxon[i], "&", sep="")
-	}	
-	}
+  if (!is.null (targettaxon)){
+    targettaxon <- gsub(" ", "%20", sourcetaxon)
+    for (i in 1:length (targettaxon)){
+      requesturl <- paste (requesturl, "targetTaxon=", targettaxon[i], "&", sep="")
+    }	
+  }
 	
-	if (!is.null(bbox)){
-			if(is.numeric(bbox) & length(bbox)==4){
-						if (max(abs(bbox))<181 & bbox[1]<=bbox[3] & bbox[2]<=bbox[4]){
-							a=paste(a, "bbox=",bbox[1],",", 
-							bbox[2],",", bbox[3],",", bbox[4], "&", sep="")
-						}else {
-					print ("Coordinates incorrect, returning all interactions")
-				}}else({print("Coordinates incorrect, returning all interactions")})}
+  if (!is.null(bbox)){
+    if (is.numeric(bbox) & length(bbox)==4){
+			if (max (abs (bbox)) < 181 & bbox[1] <= bbox[3] & bbox[2] <= bbox[4]){
+				requesturl <- paste (requesturl, "bbox=",bbox[1],",", 
+					bbox[2],",", bbox[3],",", bbox[4], "&", sep="")
+			} else {
+				print ("Coordinates incorrect, returning all interactions")
+			}} else({print ("Coordinates incorrect, returning all 
+        interactions")})}
 
-	if (returnobservations %in% c("true", "false")){
-		a=paste(a, "includeObservations=", returnobservations, "&", sep="")
-	}else {print("Incorrect entry for returnobservations, only distinct interactions returned")}
+	if (returnobservations %in% c ("true", "false")){
+		requesturl<-paste(requesturl, "includeObservations=", returnobservations, "&",
+      sep="")
+	}else {print("Incorrect entry for returnobservations, only distinct interactions 
+    returned")}
 		
-	a=paste (a, "type=csv", sep="")
-  a=read.csv(a)	
-	a
-	}	
+	requesturltype <- paste (requesturl, "type=csv", sep="")
+  requesteddata <- read.csv(requesturltype)	
+	requesteddata
+}	
 
-#'@title Return all interactions in specified area
+#' @title Return all interactions in specified area
 #'
-#' @description Returns all interactions in data base in area specified in arguments
+#' @description Returns all interactions in data base in area specified in 
+#' arguments
 #'
-#' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box
+#' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom, 
+#' right, top" of bounding box
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
 #' @examples
 #' get_interactions_in_area(bbox=c(-67.87,12.79,-57.08,23.32))
 get_interactions_in_area <- function(bbox){
-if(!is.null(bbox)){
-if(is.numeric(bbox) & length(bbox)==4){
-	if (max(abs(bbox))<181 & bbox[1]<=bbox[3] & bbox[2]<=bbox[4]){
-	
-a=read.csv(paste("http://api.globalbioticinteractions.org/interaction?bbox=",bbox[1],",", 
-	bbox[2],",", bbox[3],",", bbox[4],"&type=csv", sep=""))
-a
-	
-}}else {
-	print ("Coordinates incorrect")
-	}
-}else({print("Coordinates incorrect")})
+  if (!is.null(bbox)){
+    if (is.numeric(bbox) & length(bbox)==4){
+	    if (max (abs (bbox)) < 181 & bbox[1] <= bbox[3] & bbox[2] <= bbox[4]){
+	      requesturltype <- read.csv(paste(
+          "http://api.globalbioticinteractions.org/interaction?bbox=",bbox[1],",", 
+          bbox[2],",", bbox[3],",", bbox[4],"&type=csv", sep=""))
+        requesturltype
+	    }
+    } else {
+	      print ("Coordinates incorrect")
+	    }
+  }else({print("Coordinates incorrect")})
 }
 
-#'@title Find locations at which interactions were observed
+#' @title Find locations at which interactions were observed
 #'
-#' @description Returns all locations (latitude,longitude) of interactions in data base or area specified in arguments
+#' @description Returns all locations (latitude,longitude) of interactions in data
+#' base or area specified in arguments
 #'
-#' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box
+#' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom, 
+#' right, top" of bounding box
 #' @return Returns data frame of coordinates
 #' @keywords database
 #' @export
 #' @examples
-#' get_interaction_areas()
-#'get_interaction_areas(bbox=c(-67.87,12.79,-57.08,23.32))
-get_interaction_areas <- function(bbox=NULL){
-a=read.csv("http://api.globalbioticinteractions.org/locations?type=csv")
-names(a)=c("Latitude", "Longitude")	
-	
-if(!is.null(bbox)){
-if(is.numeric(bbox) & length(bbox)==4)
-	{if (max(abs(bbox))<181 & bbox[1]<=bbox[3] & bbox[2]<=bbox[4]){
-		a=a[a$Latitude>=bbox[2] & a$Latitude<=bbox[4] & a$Longitude>=bbox[1] & a$Longitude<=bbox[3], ]
-	return(a)
-	}}
-else {
-	print ("Coordinates incorrect, returning all points in 10 s")
-	Sys.sleep(10)
-	a
-	}
-}
-	else {a}
+#' get_interaction_areas ()
+#' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
+get_interaction_areas <- function(bbox = NULL){
+  requesturl <- read.csv ("http://api.globalbioticinteractions.org/locations?type=csv",
+    stringsAsFactors = F)
+  names (requesturl) <- c ("Latitude", "Longitude")
+  requesturl$Latitude <- as.numeric (requesturl$Latitude)
+  requesturl$Longitude <- as.numeric (requesturl$Longitude)  	
+  if (!is.null(bbox)){
+    if (is.numeric (bbox) & length (bbox)==4){
+	    if (max(abs(bbox))<181 & bbox[1]<=bbox[3] & bbox[2]<=bbox[4]){
+		    requesturl <- requesturl[requesturl$Latitude>=bbox[2] & 
+            requesturl$Latitude<=bbox[4] & requesturl$Longitude>=bbox[1] & 
+            requesturl$Longitude<=bbox[3], ]
+	      return(requesturl)
+	    }
+    } else {
+	      print ("Coordinates incorrect, returning all points in 10 s")
+	      Sys.sleep(10)
+	      requesturl
+      }
+  } else {requesturl}
 }
 
-#'@title List interactions identified in GloBI database
+#' @title List interactions identified in GloBI database
 #'
 #' @description Returns data frame with supported interaction types
 #'
@@ -171,17 +192,17 @@ else {
 #' @examples
 #' get_interaction_types()
 get_interaction_types <- function(){
-a=read.table("http://api.globalbioticinteractions.org/interactionTypes",header=F, sep="}",
-	 stringsAsFactors = F, strip.white=T)
-a=t(a)
-a=gsub("[{} ]", "", a)
-a=gsub("^,", "", a)
-a=sub("source:" ,"", a)
-a=sub("target:" ,"", a)
-a=sub(":" ,",", a)
-a=a[!is.na(a)]
-a=matrix(unlist(strsplit(a,",")), ncol=3, byrow=T)
-a=data.frame(a)
-names(a)=c("Interaction", "Source", 'Target')
-return(a)
+  requesttypes <- read.table("http://api.globalbioticinteractions.org/interactionTypes",header = F, sep="}",
+    stringsAsFactors = F, strip.white = T)
+  requesttypes <- t(requesttypes)
+  requesttypes <- gsub("[{} ]", "", requesttypes)
+  requesttypes <- gsub("^,", "", requesttypes)
+  requesttypes <- sub("source:" ,"", requesttypes)
+  requesttypes <- sub("target:" ,"", requesttypes)
+  requesttypes <- sub(":" ,",", requesttypes)
+  requesttypes <- requesttypes[!is.na(requesttypes)]
+  requesttypes <- matrix(unlist(strsplit(requesttypes,",")), ncol=3, byrow=T)
+  requesttypes <- data.frame(requesttypes)
+  names(requesttypes) <- c("Interaction", "Source", 'Target')
+  return(requesttypes)
 }
