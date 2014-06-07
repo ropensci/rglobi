@@ -84,7 +84,7 @@ query <- function(cypherQuery) {
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus", 
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, 
-  bbox = NULL, returnobservations = "false"){
+  bbox = NULL, returnobservations = F){
   sourcetaxon <- gsub(" ", "%20", sourcetaxon)
   globiintpath <- "http://api.globalbioticinteractions.org/interaction?"	
   for (i in 1:length (sourcetaxon)){
@@ -105,15 +105,18 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL,
 				requesturl <- paste (requesturl, "bbox=",bbox[1],",", 
 					bbox[2],",", bbox[3],",", bbox[4], "&", sep="")
 			} else {
-				print ("Coordinates incorrect, returning all interactions")
-			}} else({print ("Coordinates incorrect, returning all 
-        interactions")})}
+				stop ("Coordinates entered incorrectly")
+			}} else {
+        stop ("Coordinates entered incorrectly")
+			}
+  }
 
-	if (returnobservations %in% c ("true", "false")){
-		requesturl<-paste(requesturl, "includeObservations=", returnobservations, "&",
+	if (returnobservations %in% c (T, F)){
+		requesturl<-paste(requesturl, "includeObservations=", tolower(as.character(returnobservations)), "&",
       sep="")
-	}else {print("Incorrect entry for returnobservations, only distinct interactions 
-    returned")}
+	}else {
+    stop ("Incorrect entry for returnobservations")
+  }
 		
 	requesturltype <- paste (requesturl, "type=csv", sep="")
   requesteddata <- read.csv(requesturltype)	
@@ -142,9 +145,11 @@ get_interactions_in_area <- function(bbox){
         requesturltype
 	    }
     } else {
-	      print ("Coordinates incorrect")
+	       stop("Coordinates entered incorrectly")   
 	    }
-  }else({print("Coordinates incorrect")})
+  }else{ 
+    stop("Coordinates entered incorrectly")   
+    }
 }
 
 #' @title Find locations at which interactions were observed
@@ -175,9 +180,7 @@ get_interaction_areas <- function(bbox = NULL){
 	      return(requesturl)
 	    }
     } else {
-	      print ("Coordinates incorrect, returning all points in 10 s")
-	      Sys.sleep(10)
-	      requesturl
+        stop("Coordinates entered incorrectly")	      
       }
   } else {requesturl}
 }
