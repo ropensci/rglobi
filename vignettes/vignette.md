@@ -30,7 +30,7 @@ Advanced users can also download and install the latest development copy from [G
 
 #### Find interactions involving a certain species
 
-Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the rglobi library offers several ways to specify and access these interactions.  get_interactions is the primary function used if data on a specific interaction type is required.  A focus taxon is entered and may be specified as may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)
+Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the rglobi library offers several ways to specify and access these interactions.  get_interactions is the primary function used if data on a specific interaction type is required.  A focus taxon is entered (may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)).
 
 ```r
 hsapiens=get_interactions(taxon = "Homo sapiens", interactionType = "preysOn")
@@ -159,7 +159,7 @@ head(aves_crustacea_northern_hemisphere)
 
 #### Find interactions in a geographic areas
 
-Instead of a taxa-specific approach, users may also wish to gather information on all interactions occuring a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  rglobi enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
+Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  rglobi enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
 ```r
 gulfinteractions <- get_interactions_in_area( bbox=c(-97.0, 17.5, -81, 31))
@@ -198,7 +198,7 @@ head(gulfinteractions)
 >
 ```
 
-To see all locations for which interactions have been recorded, 
+To see all locations for which interactions have entered in GloBi, 
 
 ```r
 areas=get_interaction_areas()
@@ -215,7 +215,7 @@ head(areas)
 6  40.97780  -79.52529
 ```
 
-You can also restrict this search to a certain area,
+You can also restrict this search to a certain area:
 
 ```r
 areas=get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
