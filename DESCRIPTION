@@ -16,7 +16,7 @@ Imports:
     httr (>= 0.3),
     rjson (>= 0.2.13)
 Suggests:
-    testthat (>= 0.8.0)
+    testthat (>= 0.8.0),
     knitr  (>= 1.6)
 VignetteBuilder: 
     knitr
