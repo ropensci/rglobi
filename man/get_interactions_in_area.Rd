@@ -6,16 +6,21 @@
 get_interactions_in_area(bbox)
 }
 \arguments{
-\item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box}
+\item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
+right, top" of bounding box}
 }
 \value{
 Returns data frame of interactions
 }
 \description{
-Returns all interactions in data base in area specified in arguments
+Returns all interactions in data base in area specified in
+arguments
 }
 \examples{
-get_interactions_in_area(bbox=c(-67.87,12.79,-57.08,23.32))
+get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
+}
+\seealso{
+Other areas: \code{\link{get_interaction_areas}}
 }
 \keyword{database}
 

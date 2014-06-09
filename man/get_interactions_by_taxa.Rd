@@ -4,16 +4,20 @@
 \title{Return interactions involving specific taxa}
 \usage{
 get_interactions_by_taxa(sourcetaxon, targettaxon = NULL, bbox = NULL,
-  returnobservations = "false")
+  returnobservations = F)
 }
 \arguments{
-\item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class).}
+\item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be
+specified as "Genus species" or higher level (e.g., Genus, Family, Class).}
 
-\item{targettaxon}{Taxa of interest (prey, host); may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)}
+\item{targettaxon}{Taxa of interest (prey, host); may be specified as "Genus
+species" or higher level (e.g., Genus, Family, Class)}
 
-\item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom, right, top" of bounding box}
+\item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
+right, top" of bounding box}
 
-\item{returnobservations}{if true, all individual observations are returned, else only distinct relationships}
+\item{returnobservations}{if true, all individual observations are returned,
+else only distinct relationships}
 }
 \value{
 Returns data frame of interactions
@@ -22,10 +26,19 @@ Returns data frame of interactions
 Returns interactions involving specific taxa.  Secondary (target)
 taxa and spatial boundaries may also be set
 }
+\note{
+For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
+}
 \examples{
-get_interactions_by_taxa(sourcetaxon="Rattus")
-get_interactions_by_taxa(sourcetaxon="Rattus rattus", targettaxon="Aves")
-get_interactions_by_taxa(sourcetaxon="Rattus rattus", bbox=c(-67.87,12.79,-57.08,23.32))
+get_interactions_by_taxa(sourcetaxon = "Rattus")
+get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
+get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
+bbox = c(-67.87,12.79,-57.08,23.32))
+}
+\seealso{
+Other interactions: \code{\link{get_interaction_types}};
+  \code{\link{get_interactions}};
+  \code{\link{get_predators_of}}; \code{\link{get_prey_of}}
 }
 \keyword{database}
 

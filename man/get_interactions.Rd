@@ -20,4 +20,9 @@ Get Species Interaction from GloBI
 get_interactions("Homo sapiens", "preysOn")
 get_interactions("Insecta", "parasiteOf")
 }
+\seealso{
+Other interactions: \code{\link{get_interaction_types}};
+  \code{\link{get_interactions_by_taxa}};
+  \code{\link{get_predators_of}}; \code{\link{get_prey_of}}
+}
 

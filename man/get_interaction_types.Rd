@@ -14,5 +14,10 @@ Returns data frame with supported interaction types
 \examples{
 get_interaction_types()
 }
+\seealso{
+Other interactions: \code{\link{get_interactions_by_taxa}};
+  \code{\link{get_interactions}};
+  \code{\link{get_predators_of}}; \code{\link{get_prey_of}}
+}
 \keyword{database}
 
