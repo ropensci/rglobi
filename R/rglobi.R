@@ -1,7 +1,7 @@
-#' Get Globi URL 
-#'
-#' @param suffix additional information passed to api
-#' @return url address used to call api 
+# Get Globi URL 
+#
+# @param suffix additional information passed to api
+# @return url address used to call api 
 get_globi_url <- function(suffix) {
   paste("http://api.globalbioticinteractions.org", suffix, sep = "")
 }
@@ -11,6 +11,7 @@ get_globi_url <- function(suffix) {
 #' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens) 
 #' @param interactionType the preferred interaction type (e.g. preysOn)
 #' @return species interactions between source and target taxa 
+#' @family interactions
 #' @export
 #' @examples
 #' get_interactions("Homo sapiens", "preysOn")
@@ -25,6 +26,8 @@ get_interactions <- function(taxon = "Homo sapiens", interactionType = "preysOn"
 #'
 #' @param taxon scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)
 #' @return list of recorded predator-prey interactions that involve the desired predator taxon
+#' @export
+#' @family interactions
 #' @examples
 #' get_prey_of("Homo sapiens")
 #' get_prey_of("Primates")
@@ -36,6 +39,8 @@ get_prey_of <- function(taxon = "Homo sapiens") {
 #'
 #' @param taxon scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)
 #' @return list of recorded prey-predator interactions that involve the desired prey taxon.
+#' @export
+#' @family interactions
 #' @examples
 #' get_predators_of("Rattus rattus")
 #' get_predators_of("Primates")
@@ -47,6 +52,7 @@ get_predators_of <- function(taxon = "Rattus rattus") {
 #' 
 #' @param cypherQuery Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
 #' @return result of cypher query string 
+#' @export
 query <- function(cypherQuery) {
   h <- RCurl::basicTextGatherer()
 
@@ -78,9 +84,11 @@ query <- function(cypherQuery) {
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
+#' @note For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
+#' @family interactions
 #' @examples
 #' get_interactions_by_taxa(sourcetaxon = "Rattus")
-#' get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon = "Aves")
+#' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus", 
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, 
@@ -93,7 +101,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL,
   }
 	
   if (!is.null (targettaxon)){
-    targettaxon <- gsub(" ", "%20", sourcetaxon)
+    targettaxon <- gsub(" ", "%20", targettaxon)
     for (i in 1:length (targettaxon)){
       requesturl <- paste (requesturl, "targetTaxon=", targettaxon[i], "&", sep="")
     }	
@@ -133,8 +141,9 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL,
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
+#' @family areas
 #' @examples
-#' get_interactions_in_area(bbox=c(-67.87,12.79,-57.08,23.32))
+#' get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
 get_interactions_in_area <- function(bbox){
   if (!is.null(bbox)){
     if (is.numeric(bbox) & length(bbox)==4){
@@ -162,6 +171,7 @@ get_interactions_in_area <- function(bbox){
 #' @return Returns data frame of coordinates
 #' @keywords database
 #' @export
+#' @family areas
 #' @examples
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
@@ -192,6 +202,7 @@ get_interaction_areas <- function(bbox = NULL){
 #' @return Returns data frame of supported interaction types
 #' @keywords database
 #' @export
+#' @family interactions
 #' @examples
 #' get_interaction_types()
 get_interaction_types <- function(){
