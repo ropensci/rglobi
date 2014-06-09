@@ -17,3 +17,7 @@ Imports:
     rjson (>= 0.2.13)
 Suggests:
     testthat (>= 0.8.0)
+    knitr
+VignetteBuilder: 
+    knitr
+    
