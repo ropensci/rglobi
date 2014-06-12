@@ -9,7 +9,7 @@ Author: Jorrit Poelen <jhpoelen+rglobi@gmail.com>; Stephen Gosnell
 Maintainer: Jorrit Poelen <jhpoelen+rglobi@gmail.com>
 Depends:
     R (>= 3.0.1)
-License: GPL-3
+License: MIT + file LICENSE
 Description: Access to Encyclopedia of Life Global Interactions Data that
     describes how organisms interact with each other on earth.
 Imports:
