@@ -1,4 +1,4 @@
-r-globi
+rglobi
 =======
 [![Build Status](https://travis-ci.org/ropensci/rglobi.svg?branch=master)](https://travis-ci.org/ropensci/rglobi)
 
