@@ -1,63 +1,80 @@
-# Get Globi URL 
+# Get GloBI Options
+
+# @param opts list containing options
+# @return list with options including default for missing options
+
+add_missing_options <- function(opts) {
+  defaults <- list(host = 'api.globalbioticinteractions.org', port = 80)
+  opts <- c(opts, defaults)
+  opts[unique(names(opts))]
+}
+
+# Get GloBI URL 
 #
 # @param suffix additional information passed to api
+# @param opts list of options to configure GloBI API
 # @return url address used to call api 
-get_globi_url <- function(suffix) {
-  paste("http://api.globalbioticinteractions.org", suffix, sep = "")
+get_globi_url <- function(suffix, opts = list()) {
+  opts <- add_missing_options(opts)
+  paste("http://", opts$host, ":", opts$port, suffix, sep = "")
 }
 
 #' Get Species Interaction from GloBI 
 #'
 #' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens) 
-#' @param interactionType the preferred interaction type (e.g. preysOn)
+#' @param interaction.type the preferred interaction type (e.g. preysOn)
+#' @param opts list of options to configure GloBI API
 #' @return species interactions between source and target taxa 
 #' @family interactions
 #' @export
 #' @examples
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
-get_interactions <- function(taxon = "Homo sapiens", interactionType = "preysOn") {
-  query <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interactionType, "?type=csv", sep="") 
-  requestURL = get_globi_url(query)
+get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
+  query <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interaction.type, "?type=csv", sep="") 
+  requestURL = get_globi_url(query, opts = opts)
   read.csv(text = httr::content(httr::GET(requestURL)))
 }
 
 #' Get a List of Prey for given Predator Taxon 
 #'
 #' @param taxon scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)
+#' @param opts list of named options to configure GloBI API
 #' @return list of recorded predator-prey interactions that involve the desired predator taxon
 #' @export
 #' @family interactions
 #' @examples
 #' get_prey_of("Homo sapiens")
 #' get_prey_of("Primates")
-get_prey_of <- function(taxon = "Homo sapiens") {
-  get_interactions(taxon)
+get_prey_of <- function(taxon = "Homo sapiens", opts = list()) {
+  get_interactions(taxon, opts = opts)
 }
 
 #' Get a List of Predators of a Given Prey Taxon
 #'
 #' @param taxon scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)
+#' @param opts list of named options to configure the GloBI API
 #' @return list of recorded prey-predator interactions that involve the desired prey taxon.
 #' @export
 #' @family interactions
 #' @examples
 #' get_predators_of("Rattus rattus")
 #' get_predators_of("Primates")
-get_predators_of <- function(taxon = "Rattus rattus") {
-  get_interactions(taxon, "preyedUponBy")
+get_predators_of <- function(taxon = "Rattus rattus", opts = list()) {
+  get_interactions(taxon, "preyedUponBy", opts = opts)
 }
 
 #' Executes a Cypher Query Against GloBI's Neo4j Instance
 #' 
 #' @param cypherQuery Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
+#' @param opts list of named options to configure GloBI API
 #' @return result of cypher query string 
 #' @export
-query <- function(cypherQuery) {
+query <- function(cypherQuery, opts = list(port = 7474)) {
   h <- RCurl::basicTextGatherer()
 
   RCurl::curlPerform(
-    url=get_globi_url(":7474/db/data/ext/CypherPlugin/graphdb/execute_query"),
+    url=get_globi_url("/db/data/ext/CypherPlugin/graphdb/execute_query", opts),
     postfields=paste('query',RCurl::curlEscape(cypherQuery), sep='='),
 		writefunction = h$update,
 		verbose = FALSE
