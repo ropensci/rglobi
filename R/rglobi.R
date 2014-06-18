@@ -85,6 +85,22 @@ query <- function(cypherQuery, opts = list(port = 7474)) {
   data
 }
 
+create_bbox_param <- function(bbox) {
+  if (is.null(bbox)){
+    ""
+  } else {
+    if (is.numeric(bbox) & length(bbox)==4){
+			if (max (abs (bbox)) < 181 & bbox[1] <= bbox[3] & bbox[2] <= bbox[4]){
+				paste ("bbox=",bbox[1],",", 
+					bbox[2],",", bbox[3],",", bbox[4], "&", sep="")
+			} else {
+				stop ("Coordinates entered incorrectly")
+			}} else {
+        stop ("Coordinates entered incorrectly")
+			}
+  }
+}
+
 #' @title Return interactions involving specific taxa
 #'
 #' @description Returns interactions involving specific taxa.  Secondary (target) 
@@ -111,7 +127,7 @@ query <- function(cypherQuery, opts = list(port = 7474)) {
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, 
   bbox = NULL, returnobservations = F){
   sourcetaxon <- gsub(" ", "%20", sourcetaxon)
-  globiintpath <- "http://api.globalbioticinteractions.org/interaction?"	
+  globiintpath <- get_globi_url("/interaction?")	
   for (i in 1:length (sourcetaxon)){
     requesturl <- paste (globiintpath, "sourceTaxon=",sourcetaxon[i], 
       "&", sep="")
@@ -123,18 +139,8 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL,
       requesturl <- paste (requesturl, "targetTaxon=", targettaxon[i], "&", sep="")
     }	
   }
-	
-  if (!is.null(bbox)){
-    if (is.numeric(bbox) & length(bbox)==4){
-			if (max (abs (bbox)) < 181 & bbox[1] <= bbox[3] & bbox[2] <= bbox[4]){
-				requesturl <- paste (requesturl, "bbox=",bbox[1],",", 
-					bbox[2],",", bbox[3],",", bbox[4], "&", sep="")
-			} else {
-				stop ("Coordinates entered incorrectly")
-			}} else {
-        stop ("Coordinates entered incorrectly")
-			}
-  }
+
+  requesturl <- paste(requesturl, create_bbox_param(bbox))
 
 	if (returnobservations %in% c (T, F)){
 		requesturl<-paste(requesturl, "includeObservations=", tolower(as.character(returnobservations)), "&",
@@ -162,20 +168,11 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL,
 #' @examples
 #' get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
 get_interactions_in_area <- function(bbox){
-  if (!is.null(bbox)){
-    if (is.numeric(bbox) & length(bbox)==4){
-	    if (max (abs (bbox)) < 181 & bbox[1] <= bbox[3] & bbox[2] <= bbox[4]){
-	      requesturltype <- read.csv(paste(
-          "http://api.globalbioticinteractions.org/interaction?bbox=",bbox[1],",", 
-          bbox[2],",", bbox[3],",", bbox[4],"&type=csv", sep=""))
-        requesturltype
-	    }
-    } else {
-	       stop("Coordinates entered incorrectly")   
-	    }
-  }else{ 
-    stop("Coordinates entered incorrectly")   
-    }
+  if (is.null(bbox)) {
+    stop("no coordinates provided")
+  } else {
+    get_globi_url("/interaction?type=csv&", create_bbox_param(bbox))
+  }
 }
 
 #' @title Find locations at which interactions were observed
@@ -193,11 +190,12 @@ get_interactions_in_area <- function(bbox){
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 get_interaction_areas <- function(bbox = NULL){
-  requesturl <- read.csv ("http://api.globalbioticinteractions.org/locations?type=csv",
+  requesturl <- read.csv (get_globi_url("/locations?type=csv"),
     stringsAsFactors = F)
   names (requesturl) <- c ("Latitude", "Longitude")
   requesturl$Latitude <- as.numeric (requesturl$Latitude)
-  requesturl$Longitude <- as.numeric (requesturl$Longitude)  	
+  requesturl$Longitude <- as.numeric (requesturl$Longitude)  
+
   if (!is.null(bbox)){
     if (is.numeric (bbox) & length (bbox)==4){
 	    if (max(abs(bbox))<181 & bbox[1]<=bbox[3] & bbox[2]<=bbox[4]){

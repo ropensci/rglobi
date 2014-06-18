@@ -42,5 +42,11 @@ test_that("bad bouding box throws error", {
   throws_error(get_interactions_in_area(bbox=c(23,35,22,50)))
 })
 
+test_that("interaction types", {
+  types <- get_interaction_types()
+  expect_true('preysOn' %in% types$Interaction)
+  expect_true('preyedUponBy' %in% types$Interaction)
+})
+
 
 
