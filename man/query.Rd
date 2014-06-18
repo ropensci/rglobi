@@ -3,10 +3,12 @@
 \alias{query}
 \title{Executes a Cypher Query Against GloBI's Neo4j Instance}
 \usage{
-query(cypherQuery)
+query(cypherQuery, opts = list(port = 7474))
 }
 \arguments{
 \item{cypherQuery}{Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)}
+
+\item{opts}{list of named options to configure GloBI API}
 }
 \value{
 result of cypher query string

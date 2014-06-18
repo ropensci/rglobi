@@ -3,10 +3,12 @@
 \alias{get_predators_of}
 \title{Get a List of Predators of a Given Prey Taxon}
 \usage{
-get_predators_of(taxon = "Rattus rattus")
+get_predators_of(taxon = "Rattus rattus", opts = list())
 }
 \arguments{
 \item{taxon}{scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)}
+
+\item{opts}{list of named options to configure the GloBI API}
 }
 \value{
 list of recorded prey-predator interactions that involve the desired prey taxon.

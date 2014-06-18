@@ -127,12 +127,11 @@ create_bbox_param <- function(bbox) {
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, 
   bbox = NULL, returnobservations = F){
   sourcetaxon <- gsub(" ", "%20", sourcetaxon)
-  globiintpath <- get_globi_url("/interaction?")	
+  requesturl <- get_globi_url("/interaction?")	
   for (i in 1:length (sourcetaxon)){
-    requesturl <- paste (globiintpath, "sourceTaxon=",sourcetaxon[i], 
-      "&", sep="")
+    requesturl <- paste (requesturl, "sourceTaxon=",sourcetaxon[i], "&", sep="")
   }
-	
+
   if (!is.null (targettaxon)){
     targettaxon <- gsub(" ", "%20", targettaxon)
     for (i in 1:length (targettaxon)){
@@ -140,18 +139,16 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL,
     }	
   }
 
-  requesturl <- paste(requesturl, create_bbox_param(bbox))
+  requesturl <- paste(requesturl, create_bbox_param(bbox), sep="")
 
 	if (returnobservations %in% c (T, F)){
-		requesturl<-paste(requesturl, "includeObservations=", tolower(as.character(returnobservations)), "&",
-      sep="")
+		requesturl<-paste(requesturl, "includeObservations=", tolower(as.character(returnobservations)), "&", sep="")
 	}else {
     stop ("Incorrect entry for returnobservations")
   }
 		
-	requesturltype <- paste (requesturl, "type=csv", sep="")
-  requesteddata <- read.csv(requesturltype)	
-	requesteddata
+  requesturltype <- paste (requesturl, "type=csv", sep="")
+  read.csv(requesturltype)	
 }	
 
 #' @title Return all interactions in specified area
@@ -220,8 +217,8 @@ get_interaction_areas <- function(bbox = NULL){
 #' @family interactions
 #' @examples
 #' get_interaction_types()
-get_interaction_types <- function(){
-  requesttypes <- read.table("http://api.globalbioticinteractions.org/interactionTypes",header = F, sep="}",
+get_interaction_types <- function() {
+  requesttypes <- read.table(get_globi_url("/interactionTypes"),header = F, sep="}",
     stringsAsFactors = F, strip.white = T)
   requesttypes <- t(requesttypes)
   requesttypes <- gsub("[{} ]", "", requesttypes)
