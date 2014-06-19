@@ -64,6 +64,21 @@ get_predators_of <- function(taxon = "Rattus rattus", opts = list()) {
   get_interactions(taxon, "preyedUponBy", opts = opts)
 }
 
+fromCypherResult <- function(result) {  
+  nullToNA <- function(x) { 
+    ifelse(is.null(x), NA, x)
+  }
+  f <- function(accum, x) {
+	row <- data.frame(lapply(x, nullToNA), stringsAsFactors=FALSE)
+	# give rows temporary and consist names for easy of combining
+    names(row) <- 1:length(x)
+    rbind(accum, row) 
+  }
+  df <- Reduce(f, result$data, init=data.frame())
+  names(df) <- result$columns
+  df
+}
+
 #' Executes a Cypher Query Against GloBI's Neo4j Instance
 #' 
 #' @param cypherQuery Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
@@ -80,10 +95,13 @@ query <- function(cypherQuery, opts = list(port = 7474)) {
 		verbose = FALSE
   )
   result <- rjson::fromJSON(h$value())
-  data <- data.frame(t(sapply(result$data, unlist)))
-  names(data) <- result$columns
-  data
+  if (is.null(result$message)) {
+    fromCypherResult(result)
+  } else {
+    stop(result$message)
+  }
 }
+
 
 create_bbox_param <- function(bbox) {
   if (is.null(bbox)){

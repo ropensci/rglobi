@@ -22,6 +22,10 @@ test_that("cypher query", {
   expect_equal(as.character(human$path), "Animalia | Chordata | Mammalia | Primates | Hominidae | Homo | Homo sapiens")
 })
 
+test_that("invalid cypher query", {
+  throws_error(query("this is not a valid cypher query"))
+})
+
 test_that("interactions returned based on species", {
   rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
   expect_equal(as.character(rattus$source_taxon_name[1]), "Rattus rattus")
