@@ -64,7 +64,7 @@ get_predators_of <- function(taxon = "Rattus rattus", opts = list()) {
   get_interactions(taxon, "preyedUponBy", opts = opts)
 }
 
-fromCypherResult <- function(result) {  
+cypher_result_as_dataframe <- function(result) {  
   nullToNA <- function(x) { 
     ifelse(is.null(x), NA, x)
   }
@@ -98,7 +98,7 @@ query <- function(cypherQuery, opts = list(port = 7474)) {
   )
   result <- rjson::fromJSON(h$value())
   if (is.null(result$message)) {
-    fromCypherResult(result)
+    cypher_result_as_dataframe(result)
   } else {
     stop(result$message)
   }
