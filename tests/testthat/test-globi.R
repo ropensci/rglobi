@@ -22,6 +22,11 @@ test_that("cypher query", {
   expect_equal(as.character(human$path), "Animalia | Chordata | Mammalia | Primates | Hominidae | Homo | Homo sapiens")
 })
 
+test_that("no result cypher query", {
+  res <- query("START predatorTaxon = node:taxons(name='Calisto hysius') MATCH preyTaxon<-[:CLASSIFIED_AS]-prey<-[:ATE|PREYED_ON]-predator-[:CLASSIFIED_AS]->predatorTaxon WHERE has(preyTaxon.path) RETURN distinct(preyTaxon.name), preyTaxon.path as `prey.taxon.path`")
+  expect_equal(0, length(res))
+})
+
 test_that("invalid cypher query", {
   throws_error(query("this is not a valid cypher query"))
 })

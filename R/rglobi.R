@@ -75,7 +75,9 @@ fromCypherResult <- function(result) {
     rbind(accum, row) 
   }
   df <- Reduce(f, result$data, init=data.frame())
-  names(df) <- result$columns
+  if (length(df) > 0) {
+    names(df) <- result$columns
+  }
   df
 }
 
