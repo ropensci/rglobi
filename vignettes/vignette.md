@@ -38,13 +38,12 @@ devtools::install_github("rglobi", "ropensci")
 ## Installing package from /var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpB87w6g/master.zip
 ## arguments 'minimized' and 'invisible' are for Windows only
 ## Installing rglobi
-## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD build  \
-##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpB87w6g/devtoolsb9483e2c827c/rglobi-master'  \
-##   --no-manual --no-resave-data
-```
-
-```
-## Error: Command failed (1)
+## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
+##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpB87w6g/devtoolsb9484be0fb2f/rglobi-master'  \
+##   --library='/Library/Frameworks/R.framework/Versions/3.0/Resources/library'  \
+##   --install-tests 
+## 
+## Reloading installed rglobi
 ```
 
 
