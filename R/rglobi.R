@@ -188,7 +188,8 @@ get_interactions_in_area <- function(bbox){
   if (is.null(bbox)) {
     stop("no coordinates provided")
   } else {
-    get_globi_url("/interaction?type=csv&", create_bbox_param(bbox))
+    request.url <- get_globi_url("/interaction?type=csv")
+	read.csv(paste(request.url, create_bbox_param(bbox), sep="&"))
   }
 }
 

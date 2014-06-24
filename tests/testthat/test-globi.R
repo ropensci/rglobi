@@ -38,8 +38,8 @@ test_that("interactions returned based on species", {
 })
 
 test_that("interactions subsetted by adding additional information", {
-  rattus=get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
-  rattusaves=get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves")
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves")
   expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
   expect_equal(dim(merge(rattusaves,rattus, all.x=T, all.y=T)), dim(rattus))
 })
@@ -57,5 +57,7 @@ test_that("interaction types", {
   expect_true('preyedUponBy' %in% types$Interaction)
 })
 
-
-
+test_that("interaction in area", {
+  interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31))
+  expect_true(length(interactions$source_taxon_name) > 10)
+})
