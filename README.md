@@ -12,6 +12,25 @@ install.packages("devtools")
 devtools::install_github("rglobi", "ropensci")
 ```
 
+## Tests
+Tests can be executed using devtools package.
+```R
+# workdir should be rglobi repo root directory (check with getwd())
+devtools::test()
+```
+This should reload the library, executes the test_that testcases and show test reports.
+
+## Documentation
+Vignettes are generated using knitr and markdown packages, using a recipe like:
+
+```R
+install.packages(c('knitr','markdown'))
+require('knitr')
+require('markdown')
+knit('vignettes/vignette.Rmd', 'vignettes/vignette.md')
+markdownToHTML('vignettes/vignette.md', 'vignettes/vignette.html', options=c("use_xhtml"))
+```
+
 ## Meta
 
 Please [report any issues or bugs](https://github.com/ropensci/rglobi/issues).

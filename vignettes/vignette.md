@@ -25,7 +25,7 @@ install.packages("devtools")
 ```
 ## 
 ## The downloaded binary packages are in
-## 	/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpY8t5MY/downloaded_packages
+## 	/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpB87w6g/downloaded_packages
 ```
 
 ```r
@@ -35,25 +35,16 @@ devtools::install_github("rglobi", "ropensci")
 ```
 ## Installing github repo rglobi/master from ropensci
 ## Downloading master.zip from https://github.com/ropensci/rglobi/archive/master.zip
-## Installing package from /var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpY8t5MY/master.zip
+## Installing package from /var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpB87w6g/master.zip
 ## arguments 'minimized' and 'invisible' are for Windows only
 ## Installing rglobi
 ## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD build  \
-##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpY8t5MY/devtoolsaa601ff04183/rglobi-master'  \
-##   --no-manual --no-resave-data 
-## 
-## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
-##   '/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpY8t5MY/rglobi_0.1.tar.gz'  \
-##   --library='/Library/Frameworks/R.framework/Versions/3.0/Resources/library'  \
-##   --install-tests 
-## 
-## Reloading installed rglobi
-## 
-## Attaching package: 'rglobi'
-## 
-## The following object is masked _by_ '.GlobalEnv':
-## 
-##     get_interactions_in_area
+##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpB87w6g/devtoolsb9483e2c827c/rglobi-master'  \
+##   --no-manual --no-resave-data
+```
+
+```
+## Error: Command failed (1)
 ```
 
 
@@ -216,18 +207,38 @@ Instead of a taxon-specific approach, users may also wish to gather information 
 
 ```r
 gulfinteractions <- get_interactions_in_area( bbox=c(-97.0, 17.5, -81, 31))
-```
-
-```
-## Error: could not find function "get_globi_url"
-```
-
-```r
 head(gulfinteractions)
 ```
 
 ```
-## [1] "http://api.globalbioticinteractions.org:80/interaction?type=csv&"
+##   source_taxon_external_id         source_taxon_name
+## 1               EOL:210932 Paralichthys squamilentus
+## 2               EOL:210806           Syacium gunteri
+## 3               EOL:225997          Prionotus alatus
+## 4               EOL:225007           Synodus foetens
+## 5               EOL:225007           Synodus foetens
+## 6               EOL:338581    Trichopsetta ventralis
+##                                                                                                       source_taxon_path
+## 1 Animalia | Chordata | Actinopterygii | Pleuronectiformes | Paralichthyidae | Paralichthys | Paralichthys squamilentus
+## 2                Animalia | Chordata | Actinopterygii | Pleuronectiformes | Paralichthyidae | Syacium | Syacium gunteri
+## 3                     Animalia | Chordata | Actinopterygii | Scorpaeniformes | Triglidae | Prionotus | Prionotus alatus
+## 4                        Animalia | Chordata | Actinopterygii | Aulopiformes | Synodontidae | Synodus | Synodus foetens
+## 5                        Animalia | Chordata | Actinopterygii | Aulopiformes | Synodontidae | Synodus | Synodus foetens
+## 6           Animalia | Chordata | Actinopterygii | Pleuronectiformes | Bothidae | Trichopsetta | Trichopsetta ventralis
+##   interaction_type target_taxon_external_id target_taxon_name
+## 1              ATE                    EOL:1          Animalia
+## 2              ATE                    EOL:1          Animalia
+## 3              ATE                    EOL:1          Animalia
+## 4              ATE                    EOL:1          Animalia
+## 5              ATE              EOL:2775808         Teleostei
+## 6              ATE                    EOL:1          Animalia
+##                                                                                                                        target_taxon_path
+## 1                                                                                                                               Animalia
+## 2                                                                                                                               Animalia
+## 3                                                                                                                               Animalia
+## 4                                                                                                                               Animalia
+## 5 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Osteichthyes | Actinopterygii | Neopterygii | Teleostei
+## 6                                                                                                                               Animalia
 ```
 
 To see all locations for which interactions have entered in GloBi, 
