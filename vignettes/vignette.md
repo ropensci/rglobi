@@ -23,9 +23,12 @@ install.packages("devtools")
 ```
 
 ```
-## 
-## The downloaded binary packages are in
-## 	/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpB87w6g/downloaded_packages
+## Installing package into 'C:/Users/jgosnell/Documents/R/win-library/3.1'
+## (as 'lib' is unspecified)
+```
+
+```
+## Error: trying to use CRAN without setting a mirror
 ```
 
 ```r
@@ -35,15 +38,12 @@ devtools::install_github("rglobi", "ropensci")
 ```
 ## Installing github repo rglobi/master from ropensci
 ## Downloading master.zip from https://github.com/ropensci/rglobi/archive/master.zip
-## Installing package from /var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpB87w6g/master.zip
-## arguments 'minimized' and 'invisible' are for Windows only
+## Installing package from C:\Users\jgosnell\AppData\Local\Temp\RtmpmUWmJs/master.zip
 ## Installing rglobi
-## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
-##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpB87w6g/devtoolsb9484be0fb2f/rglobi-master'  \
-##   --library='/Library/Frameworks/R.framework/Versions/3.0/Resources/library'  \
-##   --install-tests 
-## 
-## Reloading installed rglobi
+## "C:/PROGRA~1/R/R-31~1.0/bin/x64/R" --vanilla CMD INSTALL  \
+##   "C:\Users\jgosnell\AppData\Local\Temp\RtmpmUWmJs\devtools88015492ef4\rglobi-master"  \
+##   --library="C:/Users/jgosnell/Documents/R/win-library/3.1"  \
+##   --install-tests
 ```
 
 
