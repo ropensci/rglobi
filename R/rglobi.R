@@ -253,3 +253,7 @@ get_interaction_types <- function() {
   names(requesttypes) <- c("Interaction", "Source", 'Target')
   return(requesttypes)
 }
+
+library("rjson")
+json_file <- get_globi_url("/interactionTypes")
+json_data <- fromJSON(paste(readLines(json_file), collapse=""))
