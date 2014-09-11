@@ -69,8 +69,8 @@ cypher_result_as_dataframe <- function(result) {
     ifelse(is.null(x), NA, x)
   }
   f <- function(accum, x) {
-	row <- data.frame(lapply(x, nullToNA), stringsAsFactors=FALSE)
-	# give rows temporary and consist names for easy of combining
+	  row <- data.frame(lapply(x, nullToNA), stringsAsFactors=FALSE)
+	  # give rows temporary and consist names for easy of combining
     names(row) <- 1:length(x)
     rbind(accum, row) 
   }
@@ -239,21 +239,5 @@ get_interaction_areas <- function(bbox = NULL){
 #' @examples
 #' get_interaction_types()
 get_interaction_types <- function() {
-  requesttypes <- read.table(get_globi_url("/interactionTypes"),header = F, sep="}",
-    stringsAsFactors = F, strip.white = T)
-  requesttypes <- t(requesttypes)
-  requesttypes <- gsub("[{} ]", "", requesttypes)
-  requesttypes <- gsub("^,", "", requesttypes)
-  requesttypes <- sub("source:" ,"", requesttypes)
-  requesttypes <- sub("target:" ,"", requesttypes)
-  requesttypes <- sub(":" ,",", requesttypes)
-  requesttypes <- requesttypes[!is.na(requesttypes)]
-  requesttypes <- matrix(unlist(strsplit(requesttypes,",")), ncol=3, byrow=T)
-  requesttypes <- data.frame(requesttypes)
-  names(requesttypes) <- c("Interaction", "Source", 'Target')
-  return(requesttypes)
+  read.csv(get_globi_url("/interactionTypes?type=csv"))
 }
-
-library("rjson")
-json_file <- get_globi_url("/interactionTypes")
-json_data <- fromJSON(paste(readLines(json_file), collapse=""))
