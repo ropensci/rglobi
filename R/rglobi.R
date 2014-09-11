@@ -31,8 +31,8 @@ get_globi_url <- function(suffix, opts = list()) {
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
 get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
-  query <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interaction.type, "?type=csv", sep="") 
-  requestURL = get_globi_url(query, opts = opts)
+  urlPath <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interaction.type, "?type=csv", sep="") 
+  requestURL = get_globi_url(urlPath, opts = opts)
   read.csv(text = httr::content(httr::GET(requestURL)))
 }
 
