@@ -241,3 +241,73 @@ get_interaction_areas <- function(bbox = NULL){
 get_interaction_types <- function() {
   read.csv(get_globi_url("/interactionTypes?type=csv"))
 }
+
+# Generate Diet Matrices using https://github.com/ropensci/rglobi
+#
+# To install:
+# (a) install devtools using install.packages('devtools')
+# (b) install rglobi using devtools::install_github('rglobi', 'ropensci')
+# (c) load the contents of this gist into R using devtools::source_url('https://gist.githubusercontent.com/jhpoelen/81b4eced3963633b96cb/raw/dietMatrix.R')
+#
+# Examples
+#
+# Create a diet matrix for humans (Homo sapiens) and old world rat (Rattus rattus) using prey categories Aves and Mammalia:
+# CreateDietMatrix(c('Homo sapiens', 'Rattus rattus'), c('Aves', 'Mammalia'))
+#
+# Example 1. Create a diet matrix of first 25 predator species taxa using Haydens Diet Category list (see defaults in GetPreyCategories()):
+#
+# diet.matrix <- CreateDietMatrix(GetPredatorTaxa(limit=25))
+#
+#
+# Example 2. Same as example 1. except that port [1234] is used to query. This can be used to run queries again something
+# other (e.g. Dark GloBI) than the default, open, GloBI instance. Note that port [1234] will have to be replaced with a
+# valid port value in order for it to work.
+#
+# opts <- list(port=1234)
+# predator.taxa <- GetPredatorTaxa(limit=25, opts=opts)
+# diet.matrix <- CreateDietMatrix(predator.taxa, opts = opts)
+#
+# Result is a data frame with predator taxon name and food categories as columns and predator taxon occurrences as rows.
+#
+ 
+ predator.match.clause <- "preyTaxon<-[:CLASSIFIED_AS]-prey<-[:ATE|PREYS_UPON]-predator-[:CLASSIFIED_AS]->predatorTaxon"
+  
+ReportProgress <- function() {
+  message('.', appendLF=FALSE)
+}
+   
+GetPredatorTaxa <- function(rank = "Species", predator.taxa = list('Elasmobranchii'), skip = 0, limit = 25, opts = list(port = 7474)) {
+   luceneQuery <- paste('path:', predator.taxa, ' ', sep='', collapse='')
+   cypher <- paste("START predatorTaxon = node:taxonPaths('", luceneQuery , "') MATCH ", predator.match.clause, " WHERE has(predatorTaxon.rank) AND predatorTaxon.rank = '", rank, "' RETURN distinct(predatorTaxon.name) as `predator.taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
+   rglobi::query(cypher, opts = opts)$predator.taxon.name
+}
+    
+     
+# Retrieves diet items of given predator and classifies them by matching the prey categories against
+# both taxon hierarchy of prey and the name that was originally used to describe the prey.
+UniquePreyTaxaOfPredator <- function(predator.taxon.name, prey.categories, opts = list(port = 7474)) {
+  cypher <- paste("START predatorTaxon = node:taxons(name='", predator.taxon.name, "') MATCH ", predator.match.clause, ", prey-[:ORIGINALLY_DESCRIBED_AS]->preyTaxonOrig WHERE has(preyTaxon.path) RETURN distinct(preyTaxonOrig.name) as `prey.taxon.name.orig`, preyTaxon.path as `prey.taxon.path`", sep="")
+  result <- rglobi::query(cypher, opts = opts)
+  ReportProgress()
+  all.taxa.paths <- Reduce(function(accum, path) paste(accum, path), paste('{',result$prey.taxon.path,'}', sep=''))
+  has.prey.category <- lapply(prey.categories, function(prey.category) {
+    match <- grep(prey.category, all.taxa.paths, perl=TRUE)
+    ifelse(length(match) > 0, 1, 0)
+  })
+  df <- data.frame(t(c(predator.taxon.name, has.prey.category)))
+  names(df) <- c('predator.taxon.name', prey.categories)
+  df
+}
+         
+CreatePredatorPreyCategories <- function(predator.taxon.name, prey.categories = GetPreyCategories(), opts = list()) {
+  UniquePreyTaxaOfPredator(predator.taxon.name, prey.categories, opts)
+}
+
+create_interaction_matrix <- function(predator.taxon.names = list('Homo sapiens'), prey.categories = list('Mammalia'), opts = list(port = 7474)) {
+  if (is.null(predator.taxon.names)) {
+    predator.taxon.names <- GetPredatorTaxa(opts = opts)
+  }
+  Reduce(function(accum, predator.taxon.name) rbind(accum, CreatePredatorPreyCategories(predator.taxon.name, prey.categories, opts = opts)), predator.taxon.names, init=data.frame())
+}
+
+
