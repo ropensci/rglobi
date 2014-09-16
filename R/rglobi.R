@@ -300,4 +300,8 @@ get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), ta
   Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts)), source.taxon.names, init=data.frame())
 }
 
-
+get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list(port = 7474)) {
+  luceneQuery <- paste('path:', taxon.names, ' ', sep='', collapse='')
+  cypher <- paste("START taxon = node:taxonPaths('", luceneQuery , "') WHERE has(taxon.rank) AND taxon.rank = '", rank, "' RETURN distinct(taxon.name) as `taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
+  rglobi::query(cypher, opts = opts)$taxon.name
+}
