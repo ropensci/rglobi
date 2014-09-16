@@ -62,8 +62,8 @@ test_that("interaction in area", {
   expect_true(length(interactions$source_taxon_name) > 10)
 })
 
-test_that("interaction matrix can be built", {
-  interaction.matrix <- create_interaction_matrix(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia', 'Aves'));
+test_that("interaction matrix can be retrieved", {
+  interaction.matrix <- get_interaction_matrix(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia', 'Aves'));
   expect_true('Mammalia' %in% names(interaction.matrix))
   expect_true('Homo sapiens' %in% interaction.matrix[,1][[1]])
 })
