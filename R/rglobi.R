@@ -303,11 +303,8 @@ CreatePredatorPreyCategories <- function(predator.taxon.name, prey.categories = 
   UniquePreyTaxaOfPredator(predator.taxon.name, prey.categories, opts)
 }
 
-create_interaction_matrix <- function(predator.taxon.names = list('Homo sapiens'), prey.categories = list('Mammalia'), opts = list(port = 7474)) {
-  if (is.null(predator.taxon.names)) {
-    predator.taxon.names <- GetPredatorTaxa(opts = opts)
-  }
-  Reduce(function(accum, predator.taxon.name) rbind(accum, CreatePredatorPreyCategories(predator.taxon.name, prey.categories, opts = opts)), predator.taxon.names, init=data.frame())
+create_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), opts = list(port = 7474)) {
+  Reduce(function(accum, source.taxon.name) rbind(accum, CreatePredatorPreyCategories(source.taxon.name, target.taxon.names, opts = opts)), source.taxon.names, init=data.frame())
 }
 
 
