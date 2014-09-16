@@ -270,41 +270,35 @@ get_interaction_types <- function() {
 # Result is a data frame with predator taxon name and food categories as columns and predator taxon occurrences as rows.
 #
  
- predator.match.clause <- "preyTaxon<-[:CLASSIFIED_AS]-prey<-[:ATE|PREYS_UPON]-predator-[:CLASSIFIED_AS]->predatorTaxon"
-  
 ReportProgress <- function() {
   message('.', appendLF=FALSE)
 }
-   
-GetPredatorTaxa <- function(rank = "Species", predator.taxa = list('Elasmobranchii'), skip = 0, limit = 25, opts = list(port = 7474)) {
-   luceneQuery <- paste('path:', predator.taxa, ' ', sep='', collapse='')
-   cypher <- paste("START predatorTaxon = node:taxonPaths('", luceneQuery , "') MATCH ", predator.match.clause, " WHERE has(predatorTaxon.rank) AND predatorTaxon.rank = '", rank, "' RETURN distinct(predatorTaxon.name) as `predator.taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
-   rglobi::query(cypher, opts = opts)$predator.taxon.name
+
+rel_type_interaction_type <- function(interaction.type) {
+  list(preysOn = 'ATE|PREYS_UPON', 
+    parasiteOf = 'PARASITE_OF', 
+    pollinates = 'POLLINATES')[[interaction.type]];
 }
-    
-     
+
 # Retrieves diet items of given predator and classifies them by matching the prey categories against
 # both taxon hierarchy of prey and the name that was originally used to describe the prey.
-UniquePreyTaxaOfPredator <- function(predator.taxon.name, prey.categories, opts = list(port = 7474)) {
-  cypher <- paste("START predatorTaxon = node:taxons(name='", predator.taxon.name, "') MATCH ", predator.match.clause, ", prey-[:ORIGINALLY_DESCRIBED_AS]->preyTaxonOrig WHERE has(preyTaxon.path) RETURN distinct(preyTaxonOrig.name) as `prey.taxon.name.orig`, preyTaxon.path as `prey.taxon.path`", sep="")
+unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.names, interaction.type, opts = list(port = 7474)) {
+  cypher <- paste("START predatorTaxon = node:taxons(name='", source.taxon.name, "') MATCH preyTaxon<-[:CLASSIFIED_AS]-prey<-[:", rel_type_interaction_type(interaction.type), "]-predator-[:CLASSIFIED_AS]->predatorTaxon, prey-[:ORIGINALLY_DESCRIBED_AS]->preyTaxonOrig WHERE has(preyTaxon.path) RETURN distinct(preyTaxonOrig.name) as `prey.taxon.name.orig`, preyTaxon.path as `prey.taxon.path`", sep="")
+  message(cypher)
   result <- rglobi::query(cypher, opts = opts)
   ReportProgress()
   all.taxa.paths <- Reduce(function(accum, path) paste(accum, path), paste('{',result$prey.taxon.path,'}', sep=''))
-  has.prey.category <- lapply(prey.categories, function(prey.category) {
+  has.prey.category <- lapply(target.taxon.names, function(prey.category) {
     match <- grep(prey.category, all.taxa.paths, perl=TRUE)
     ifelse(length(match) > 0, 1, 0)
   })
-  df <- data.frame(t(c(predator.taxon.name, has.prey.category)))
-  names(df) <- c('predator.taxon.name', prey.categories)
+  df <- data.frame(t(c(source.taxon.name, has.prey.category)))
+  names(df) <- c('source.taxon.name', target.taxon.names)
   df
 }
-         
-CreatePredatorPreyCategories <- function(predator.taxon.name, prey.categories = GetPreyCategories(), opts = list()) {
-  UniquePreyTaxaOfPredator(predator.taxon.name, prey.categories, opts)
-}
 
-get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), opts = list(port = 7474)) {
-  Reduce(function(accum, source.taxon.name) rbind(accum, CreatePredatorPreyCategories(source.taxon.name, target.taxon.names, opts = opts)), source.taxon.names, init=data.frame())
+get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'preysOn', opts = list(port = 7474)) {
+  Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts)), source.taxon.names, init=data.frame())
 }
 
 
