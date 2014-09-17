@@ -296,10 +296,34 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
   df
 }
 
+
+
+#' Get Interaction Matrix. Constructs an interaction matrix indicating whether source taxa (rows) or target taxa (columns) are known to interact with given type. 
+#'
+#' @param list of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis')) 
+#' @param list of target taxon names 
+#' @param interaction.type the preferred interaction type (e.g. preysOn)
+#' @param opts list of options to configure GloBI API
+#' @return matrix representing species interactions between source and target taxa 
+#' @family interactions
+#' @export
+#' @examples
+#' get_interaction_matrix("Homo sapiens", "Mammalia", "preysOn")
 get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'preysOn', opts = list(port = 7474)) {
   Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts)), source.taxon.names, init=data.frame())
 }
 
+#' Returns all known child taxa with known interaction of specified taxa and rank.
+#' 
+#' @param taxon.names list of taxa of which child taxa should be included. 
+#' @param rank selected taxonomic rank of child taxa
+#' @param skip number of child taxon names to skip before returning result. May be used for pagination.
+#' @param limit maximum number of child taxon names returned
+#' @return list of child taxon names
+#' @family interactions
+#' @export
+#' @examples
+#' get_child_taxa(list("Aves"))
 get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list(port = 7474)) {
   luceneQuery <- paste('path:', taxon.names, ' ', sep='', collapse='')
   cypher <- paste("START taxon = node:taxonPaths('", luceneQuery , "') WHERE has(taxon.rank) AND taxon.rank = '", rank, "' RETURN distinct(taxon.name) as `taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
