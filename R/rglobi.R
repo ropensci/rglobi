@@ -336,7 +336,7 @@ interaction_id_for_type <- function(interaction.type) {
 }
 
 # 
-get_interactions_table <- function(source.taxon.names = list("Homo sapiens"), target.taxon.name = list("Aves"), interaction.type = "preysOn", opts = list(skip = 0, limit = 20, port = 7474)) {
+get_interaction_table <- function(source.taxon.names = list("Homo sapiens"), target.taxon.name = list("Aves"), interaction.type = "preysOn", opts = list(skip = 0, limit = 20, port = 7474)) {
   luceneQuery <- paste('path:\\\"', source.taxon.names, '\\\" ', sep='', collapse='')
   interaction.id <- interaction_id_for_type(interaction.type)
   rel_type <- rel_type_interaction_type(interaction.type)
