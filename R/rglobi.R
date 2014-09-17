@@ -36,6 +36,7 @@ get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn
   read.csv(text = httr::content(httr::GET(requestURL), type='text'))
 }
 
+
 #' Get a List of Prey for given Predator Taxon 
 #'
 #' @param taxon scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)
@@ -277,14 +278,14 @@ ReportProgress <- function() {
 rel_type_interaction_type <- function(interaction.type) {
   list(preysOn = 'ATE|PREYS_UPON', 
     parasiteOf = 'PARASITE_OF', 
-    pollinates = 'POLLINATES')[[interaction.type]];
+    pollinates = 'POLLINATES')[[interaction.type]]
 }
 
 # Retrieves diet items of given predator and classifies them by matching the prey categories against
 # both taxon hierarchy of prey and the name that was originally used to describe the prey.
 unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.names, interaction.type, opts = list(port = 7474)) {
   cypher <- paste("START predatorTaxon = node:taxons(name='", source.taxon.name, "') MATCH preyTaxon<-[:CLASSIFIED_AS]-prey<-[:", rel_type_interaction_type(interaction.type), "]-predator-[:CLASSIFIED_AS]->predatorTaxon, prey-[:ORIGINALLY_DESCRIBED_AS]->preyTaxonOrig WHERE has(preyTaxon.path) RETURN distinct(preyTaxonOrig.name) as `prey.taxon.name.orig`, preyTaxon.path as `prey.taxon.path`", sep="")
-  result <- rglobi::query(cypher, opts = opts)
+  result <- query(cypher, opts = opts)
   ReportProgress()
   all.taxa.paths <- Reduce(function(accum, path) paste(accum, path), paste('{',result$prey.taxon.path,'}', sep=''))
   has.prey.category <- lapply(target.taxon.names, function(prey.category) {
@@ -327,5 +328,21 @@ get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), ta
 get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list(port = 7474)) {
   luceneQuery <- paste('path:', taxon.names, ' ', sep='', collapse='')
   cypher <- paste("START taxon = node:taxonPaths('", luceneQuery , "') WHERE has(taxon.rank) AND taxon.rank = '", rank, "' RETURN distinct(taxon.name) as `taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
-  rglobi::query(cypher, opts = opts)$taxon.name
+  query(cypher, opts = opts)$taxon.name
+}
+
+interaction_id_for_type <- function(interaction.type) {
+  list(preysOn = 'RO_0002439', parasiteOf = 'RO_0002444', pollinates = 'RO_0002455')[[interaction.type]]
+}
+
+# 
+get_interactions_table <- function(source.taxon.names = list("Homo sapiens"), target.taxon.name = list("Aves"), interaction.type = "preysOn", opts = list(skip = 0, limit = 20, port = 7474)) {
+  luceneQuery <- paste('path:\\\"', source.taxon.names, '\\\" ', sep='', collapse='')
+  interaction.id <- interaction_id_for_type(interaction.type)
+  rel_type <- rel_type_interaction_type(interaction.type)
+  start_clause <- paste('START taxon = node:taxonPaths(\"', luceneQuery, '\")', sep='')
+  match_clause <- paste(' MATCH sameTaxon2<-[:SAME_AS]-taxon<-[:CLASSIFIED_AS]-specimen-[:', rel_type, ']->prey-[:CLASSIFIED_AS]->preyTaxon-[:SAME_AS]->sameTaxon', sep='') 
+  where_clause <- ' WHERE sameTaxon.externalId =~ \"OTT.*\" AND sameTaxon2.externalId =~ \"OTT.*\"'
+  cypher <- paste(start_clause, match_clause, where_clause, ' RETURN taxon.name as `source_name`, sameTaxon2.externalId as `source_id`, \"', interaction.type, '\" as `interaction_name`, \"', interaction.id, '\" as `interaction_id`, preyTaxon.name as `target_name`, sameTaxon.externalId as `target_id` LIMIT 100', sep='')
+  query(cypher, opts = opts)
 }
