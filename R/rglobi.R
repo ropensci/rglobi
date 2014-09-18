@@ -335,7 +335,18 @@ interaction_id_for_type <- function(interaction.type) {
   list(preysOn = 'RO_0002439', parasiteOf = 'RO_0002444', pollinates = 'RO_0002455')[[interaction.type]]
 }
 
-# 
+ 
+#' Returns all known child taxa with known interaction of specified taxa and rank.
+#' 
+#' @param source.taxon.name list of taxon names for source  
+#' @param target.taxon.name list of taxon names for target
+#' @param interaction.type kind of interaction
+#' @param opts connection parameters and other options
+#' @return table of matching source, target and interaction types
+#' @family interactions
+#' @export
+#' @examples
+#' get_interaction_table(list("Aves"))
 get_interaction_table <- function(source.taxon.names = list("Homo sapiens"), target.taxon.name = list("Aves"), interaction.type = "preysOn", opts = list(skip = 0, limit = 20, port = 7474)) {
   luceneQuery <- paste('path:\\\"', source.taxon.names, '\\\" ', sep='', collapse='')
   interaction.id <- interaction_id_for_type(interaction.type)
