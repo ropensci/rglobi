@@ -21,6 +21,12 @@ devtools::test()
 This should reload the library, executes the test_that testcases and show test reports.
 
 ## Documentation
+roxygen2 is used to generate .Rd and NAMESPACE by running:
+```R
+ library(roxygen2)
+ roxygenize(".")
+```
+
 Vignettes are generated using knitr and markdown packages, using a recipe like:
 
 ```R
