@@ -336,7 +336,7 @@ interaction_id_for_type <- function(interaction.type) {
 }
 
  
-#' Returns all known child taxa with known interaction of specified taxa and rank.
+#' Returns all known child taxa with known interaction of specified source and target taxa on any rank.
 #' 
 #' @param source.taxon.name list of taxon names for source  
 #' @param target.taxon.name list of taxon names for target
@@ -346,14 +346,26 @@ interaction_id_for_type <- function(interaction.type) {
 #' @family interactions
 #' @export
 #' @examples
-#' get_interaction_table(list("Aves"))
-get_interaction_table <- function(source.taxon.names = list("Homo sapiens"), target.taxon.name = list("Aves"), interaction.type = "preysOn", opts = list(skip = 0, limit = 20, port = 7474)) {
-  luceneQuery <- paste('path:\\\"', source.taxon.names, '\\\" ', sep='', collapse='')
+#' get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'), interaction.type = 'preysOn')
+get_interaction_table <- function(source.taxon.names = list(), target.taxon.names = list(), interaction.type = "preysOn", skip = 0, limit = 100, opts = list(port = 7474)) {
   interaction.id <- interaction_id_for_type(interaction.type)
   rel_type <- rel_type_interaction_type(interaction.type)
-  start_clause <- paste('START taxon = node:taxonPaths(\"', luceneQuery, '\")', sep='')
+
+  start_clause = list()
+  if (length(source.taxon.names) > 0) {
+    sourceLuceneQuery <- paste('path:\\\"', source.taxon.names, '\\\" ', sep='', collapse='')
+    start_clause <- list(paste('taxon = node:taxonPaths(\"', sourceLuceneQuery, '\")', sep=''))
+  }
+  if (length(target.taxon.names) > 0) {
+    targetLuceneQuery <- paste('path:\\\"', target.taxon.names, '\\\" ', sep='', collapse='')
+    start_clause <- list(start_clause, paste('preyTaxon = node:taxonPaths(\"', targetLuceneQuery, '\")', sep=''))
+  }
+  if (length(start_clause) == 0) {
+    stop('must define source or target taxa or both')
+  }
+  start_clause <- paste('START', paste(unlist(start_clause), collapse=','))
   match_clause <- paste(' MATCH sameTaxon2<-[:SAME_AS]-taxon<-[:CLASSIFIED_AS]-specimen-[:', rel_type, ']->prey-[:CLASSIFIED_AS]->preyTaxon-[:SAME_AS]->sameTaxon', sep='') 
   where_clause <- ' WHERE sameTaxon.externalId =~ \"OTT.*\" AND sameTaxon2.externalId =~ \"OTT.*\"'
-  cypher <- paste(start_clause, match_clause, where_clause, ' RETURN taxon.name as `source_name`, sameTaxon2.externalId as `source_id`, \"', interaction.type, '\" as `interaction_name`, \"', interaction.id, '\" as `interaction_id`, preyTaxon.name as `target_name`, sameTaxon.externalId as `target_id` LIMIT 100', sep='')
+  cypher <- paste(start_clause, match_clause, where_clause, ' RETURN taxon.name as `source_name`, sameTaxon2.externalId as `source_id`, \"', interaction.type, '\" as `interaction_name`, \"', interaction.id, '\" as `interaction_id`, preyTaxon.name as `target_name`, sameTaxon.externalId as `target_id` SKIP ', skip, ' LIMIT ', limit, sep='')
   query(cypher, opts = opts)
 }
