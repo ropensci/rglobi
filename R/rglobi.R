@@ -366,6 +366,6 @@ get_interaction_table <- function(source.taxon.names = list(), target.taxon.name
   start_clause <- paste('START', paste(unlist(start_clause), collapse=','))
   match_clause <- paste(' MATCH sameTaxon2<-[:SAME_AS]-taxon<-[:CLASSIFIED_AS]-specimen-[:', rel_type, ']->prey-[:CLASSIFIED_AS]->preyTaxon-[:SAME_AS]->sameTaxon', sep='') 
   where_clause <- ' WHERE sameTaxon.externalId =~ \"OTT.*\" AND sameTaxon2.externalId =~ \"OTT.*\"'
-  cypher <- paste(start_clause, match_clause, where_clause, ' RETURN taxon.name as `source_name`, sameTaxon2.externalId as `source_id`, \"', interaction.type, '\" as `interaction_name`, \"', interaction.id, '\" as `interaction_id`, preyTaxon.name as `target_name`, sameTaxon.externalId as `target_id` SKIP ', skip, ' LIMIT ', limit, sep='')
+  cypher <- paste(start_clause, match_clause, where_clause, ' RETURN id(specimen) as `source_specimen_id`, taxon.name as `source_name`, sameTaxon2.externalId as `source_id`, \"', interaction.type, '\" as `interaction_name`, \"', interaction.id, '\" as `interaction_id`, id(prey) as `target_specimen_id`, preyTaxon.name as `target_name`, sameTaxon.externalId as `target_id` SKIP ', skip, ' LIMIT ', limit, sep='')
   query(cypher, opts = opts)
 }
