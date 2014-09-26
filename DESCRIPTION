@@ -5,7 +5,7 @@ Title: R interface to the aggregated biotic interaction data of GloBI
 Version: 0.2.1
 Date: 2014-06-02
 Author: Jorrit Poelen <jhpoelen+rglobi@gmail.com>; Stephen Gosnell
-    (stephengosnell@gmail.com)
+    (stephen.gosnell@baruch.cuny.edu)
 Maintainer: Jorrit Poelen <jhpoelen+rglobi@gmail.com>
 Depends:
     R (>= 3.0.1)

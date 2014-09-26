@@ -53,7 +53,7 @@ get_interaction_types()
 
 For data sources in which type of interactions was not specified, the interaction is labeled "interacts_with".
 
-If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the get_interactions_by_taxa allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.
+If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the get_interactions_by_taxa function allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.
 
 ```{r}
 rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus")
