@@ -7,3 +7,7 @@
 # R data files from past sessions
 .Rdata
 ..Rcheck
+
+#vignette files besides source
+vignette/*.html
+vignette/*.md
