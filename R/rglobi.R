@@ -33,7 +33,11 @@ get_globi_url <- function(suffix, opts = list()) {
 get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
   urlPath <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interaction.type, "?type=csv", sep="") 
   requestURL = get_globi_url(urlPath, opts = opts)
-  read.csv(text = httr::content(httr::GET(requestURL), type='text'))
+  do.call("rbind", 
+    lapply(requestURL, function(i){
+      read.csv(text = httr::content(httr::GET(i), type='text'))
+    })
+  )
 }
 
 
