@@ -30,10 +30,23 @@ get_globi_url <- function(suffix, opts = list()) {
 #' @examples
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
+
 get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
+
+# when both 'taxon' and 'interaction.type' are vectors, output represents 1 to 1 correspondence
+# of values. i.e., with taxon = c("a","b"); interaction.type = c("c","d"), function returns data
+# for (a,c) and (b,d) pairs, which may be confusing. to make it return (a,c),(a,d),(b,c),(b,d) instead
+# following lines should be uncommented:
+# interaction.type <- c("preysOn", "parasiteOf")
+# taxon <- rep(taxon, each = length(interaction.type))
+
   urlPath <- paste("/taxon/", RCurl::curlEscape(taxon), "/", interaction.type, "?type=csv", sep="") 
   requestURL = get_globi_url(urlPath, opts = opts)
-  read.csv(text = httr::content(httr::GET(requestURL), type='text'))
+  do.call("rbind", 
+    lapply(requestURL, function(i){
+      read.csv(text = httr::content(httr::GET(i), type='text'))
+    })
+  )
 }
 
 
