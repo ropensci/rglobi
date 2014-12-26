@@ -144,6 +144,20 @@ create_bbox_param <- function(bbox) {
 #' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 #' bbox = c(-67.87,12.79,-57.08,23.32))
+
+prepare_request_sequence <- function(argumentnames, values){
+  paste(
+  na.omit(
+      sapply(1:length(argumentnames), function(i){
+      if(length(values[[i]])>0){
+          paste(paste(argumentnames[i], "=", RCurl::curlEscape(values[[i]]), sep = ""), collapse = "&")
+        } else {
+          NA
+        } 
+      })
+    ), collapse = "&")
+}
+
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL,
   bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
@@ -158,21 +172,18 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
         interactiontype <- intersect(interactiontypes, interactiontype)
       }
     }
-    interactiontypes <- paste(paste("interactionType=", gsub(" ", "%20", interactiontype), sep = ""), collapse = "&")
-  } else {
-    interactiontypes <- ""
-  }
+  } 
   requesturlbase <- get_globi_url("/interaction?")
-  sourcetaxa <- paste("sourceTaxon=", gsub(" ", "%20", sourcetaxon), sep = "", collapse = "&")
-  targettaxa <- paste("targetTaxon=", gsub(" ", "%20", targettaxon), sep = "", collapse = "&")
   if (!is.logical(returnobservations)) {
     warning ("Incorrect entry for 'returnobservations', using default value")
     returnobservations <- F
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
-  requesturl <- paste(requesturlbase, sourcetaxa, targettaxa, interactiontypes, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
+  requestsequence <- prepare_request_sequence(c("sourceTaxon", "targetTaxon", "interactionType"), list(sourcetaxon, targettaxon, interactiontype))
+  requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
   read.csv(requesturl)
 }
+
 
 #' @title Return all interactions in specified area
 #'
