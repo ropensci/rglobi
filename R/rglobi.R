@@ -144,20 +144,6 @@ create_bbox_param <- function(bbox) {
 #' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 #' bbox = c(-67.87,12.79,-57.08,23.32))
-
-prepare_request_sequence <- function(argumentnames, values){
-  paste(
-  na.omit(
-      sapply(1:length(argumentnames), function(i){
-      if(length(values[[i]])>0){
-          paste(paste(argumentnames[i], "=", RCurl::curlEscape(values[[i]]), sep = ""), collapse = "&")
-        } else {
-          NA
-        } 
-      })
-    ), collapse = "&")
-}
-
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL,
   bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
@@ -172,14 +158,28 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
         interactiontype <- intersect(interactiontypes, interactiontype)
       }
     }
-  } 
+  }
   requesturlbase <- get_globi_url("/interaction?")
   if (!is.logical(returnobservations)) {
     warning ("Incorrect entry for 'returnobservations', using default value")
     returnobservations <- F
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
-  requestsequence <- prepare_request_sequence(c("sourceTaxon", "targetTaxon", "interactionType"), list(sourcetaxon, targettaxon, interactiontype))
+  requestsequence <- (function(
+    argumentnames = c("sourceTaxon", "targetTaxon", "interactionType"),
+    values = list(sourcetaxon, targettaxon, interactiontype)
+    ){
+      paste(
+      na.omit(
+          sapply(1:length(argumentnames), function(i){
+          if(length(values[[i]])>0){
+              paste(paste(argumentnames[i], "=", RCurl::curlEscape(values[[i]]), sep = ""), collapse = "&")
+            } else {
+              NA
+            }
+          })
+        ), collapse = "&")
+  })()
   requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
   read.csv(requesturl)
 }
