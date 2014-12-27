@@ -158,21 +158,32 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
         interactiontype <- intersect(interactiontypes, interactiontype)
       }
     }
-    interactiontypes <- paste(paste("interactionType=", gsub(" ", "%20", interactiontype), sep = ""), collapse = "&")
-  } else {
-    interactiontypes <- ""
   }
   requesturlbase <- get_globi_url("/interaction?")
-  sourcetaxa <- paste("sourceTaxon=", gsub(" ", "%20", sourcetaxon), sep = "", collapse = "&")
-  targettaxa <- paste("targetTaxon=", gsub(" ", "%20", targettaxon), sep = "", collapse = "&")
   if (!is.logical(returnobservations)) {
     warning ("Incorrect entry for 'returnobservations', using default value")
     returnobservations <- F
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
-  requesturl <- paste(requesturlbase, sourcetaxa, targettaxa, interactiontypes, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
+  requestsequence <- (function(
+    argumentnames = c("sourceTaxon", "targetTaxon", "interactionType"),
+    values = list(sourcetaxon, targettaxon, interactiontype)
+    ){
+      paste(
+      na.omit(
+          sapply(1:length(argumentnames), function(i){
+          if(length(values[[i]])>0){
+              paste(paste(argumentnames[i], "=", RCurl::curlEscape(values[[i]]), sep = ""), collapse = "&")
+            } else {
+              NA
+            }
+          })
+        ), collapse = "&")
+  })()
+  requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
   read.csv(requesturl)
 }
+
 
 #' @title Return all interactions in specified area
 #'
