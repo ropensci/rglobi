@@ -1,4 +1,4 @@
-context("fake")
+context("rglobi")
 
 test_that("default prey", {
   predatorPrey <- get_prey_of()
@@ -38,10 +38,22 @@ test_that("interactions returned based on species", {
 })
 
 test_that("interactions subsetted by adding additional information", {
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
-  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves")
+  interaction_types <- c('preysOn', 'preyedUponBy')
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", interactiontype = interaction_types)
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", interactiontype= interaction_types)
+  expect_true(dim(rattus)[1] > 0)
   expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
   expect_equal(dim(merge(rattusaves,rattus, all.x=T, all.y=T)), dim(rattus))
+})
+
+test_that("interactions subsetted by adding additional information all interaction types", {
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves")
+  expect_true(dim(rattus)[1] > 0)
+  expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
+  # note that some interaction types (e.g. interactsWith) are symmetric
+  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith. 
+  expect_equal(dim(merge(unique(rattusaves),unique(rattus), all.x=T, all.y=T)), dim(unique(rattus)))
 })
 
 test_that("bad bouding box throws error", {
