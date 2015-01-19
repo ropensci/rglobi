@@ -19,7 +19,8 @@ test_that("predator of rats", {
 test_that("cypher query", {
   human <- query("START taxon = node:taxons(name='Homo sapiens') RETURN taxon.name as `name`, taxon.path as `path`")
   expect_equal(as.character(human$name), "Homo sapiens")
-  expect_equal(as.character(human$path), "Animalia | Chordata | Mammalia | Primates | Hominidae | Homo | Homo sapiens")
+  taxon_path <- as.character(human$path)
+  expect_equal(grep('Primates', taxon_path), 1)
 })
 
 test_that("no result cypher query", {
@@ -34,7 +35,8 @@ test_that("invalid cypher query", {
 test_that("interactions returned based on species", {
   rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
   expect_equal(as.character(rattus$source_taxon_name[1]), "Rattus rattus")
-  expect_equal(as.character(rattus$source_taxon_path[1]), "Animalia | Chordata | Mammalia | Rodentia | Muridae | Rattus | Rattus rattus")
+  taxon_path <- as.character(rattus$source_taxon_path[1])
+  expect_equal(grep('Muridae', taxon_path), 1)
 })
 
 test_that("interactions subsetted by adding additional information", {
