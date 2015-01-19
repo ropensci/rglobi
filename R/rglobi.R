@@ -202,8 +202,7 @@ get_interactions_in_area <- function(bbox){
   if (is.null(bbox)) {
     stop("no coordinates provided")
   } else {
-    request.url <- get_globi_url("/interaction?type=csv")
-	read.csv(paste(request.url, create_bbox_param(bbox), sep="&"))
+    get_interactions_by_taxa (sourcetaxon = NULL, bbox = bbox)
   }
 }
 
