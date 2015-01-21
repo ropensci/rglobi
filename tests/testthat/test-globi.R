@@ -19,6 +19,7 @@ test_that("predator of rats", {
 test_that("cypher query", {
   human <- query("START taxon = node:taxons(name='Homo sapiens') RETURN taxon.name as `name`, taxon.path as `path`")
   expect_equal(as.character(human$name), "Homo sapiens")
+  expect_equal(class(human$name), "character") 
   taxon_path <- as.character(human$path)
   expect_equal(grep('Primates', taxon_path), 1)
 })
@@ -43,6 +44,7 @@ test_that("interactions subsetted by adding additional information", {
   interaction_types <- c('preysOn', 'preyedUponBy')
   rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", interactiontype = interaction_types)
   rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", interactiontype= interaction_types)
+  expect_equal(class(rattus$source_taxon_name), "character")
   expect_true(dim(rattus)[1] > 0)
   expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
   expect_equal(dim(merge(rattusaves,rattus, all.x=T, all.y=T)), dim(rattus))
@@ -83,6 +85,7 @@ test_that("interaction types", {
 
 test_that("interaction in area", {
   interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31))
+  expect_equal(class(interactions$source_taxon_name), "character")
   expect_true(length(interactions$source_taxon_name) > 10)
 })
 

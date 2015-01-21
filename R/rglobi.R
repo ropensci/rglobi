@@ -19,6 +19,12 @@ get_globi_url <- function(suffix, opts = list()) {
   paste("http://", opts$host, ":", opts$port, suffix, sep = "")
 }
 
+# Read csv URL
+# @param url points to csv resource
+read_csv <- function(url) {
+  read.csv(url, stringsAsFactors=FALSE)
+}
+
 #' Get Species Interaction from GloBI
 #'
 #' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens)
@@ -183,7 +189,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
         ), collapse = "&")
   })()
   requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
-  read.csv(requesturl)
+  read_csv(requesturl)
 }
 
 
@@ -223,7 +229,7 @@ get_interactions_in_area <- function(bbox){
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 get_interaction_areas <- function(bbox = NULL){
-  requesturl <- read.csv (get_globi_url("/locations?type=csv"),
+  requesturl <- read_csv (get_globi_url("/locations?type=csv"),
     stringsAsFactors = F)
   names (requesturl) <- c ("Latitude", "Longitude")
   requesturl$Latitude <- as.numeric (requesturl$Latitude)
@@ -254,7 +260,7 @@ get_interaction_areas <- function(bbox = NULL){
 #' @examples
 #' get_interaction_types()
 get_interaction_types <- function() {
-  read.csv(get_globi_url("/interactionTypes?type=csv"))
+  read_csv(get_globi_url("/interactionTypes?type=csv"))
 }
 
 # Generate Diet Matrices using https://github.com/ropensci/rglobi
