@@ -9,13 +9,17 @@ get_interaction_table(source.taxon.names = list(),
   limit = 100, opts = list(port = 7474))
 }
 \arguments{
+\item{source.taxon.names}{list of taxon names for source}
+
+\item{target.taxon.names}{list of taxon names for target}
+
 \item{interaction.type}{kind of interaction}
 
+\item{skip}{number of records skipped before including record in result table, used in pagination}
+
+\item{limit}{maximum number of interaction to include}
+
 \item{opts}{connection parameters and other options}
-
-\item{source.taxon.name}{list of taxon names for source}
-
-\item{target.taxon.name}{list of taxon names for target}
 }
 \value{
 table of matching source, target and interaction types
@@ -24,7 +28,7 @@ table of matching source, target and interaction types
 Returns all known child taxa with known interaction of specified source and target taxa on any rank.
 }
 \examples{
-get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'), interaction.type = 'preysOn')
+get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'))
 }
 \seealso{
 Other interactions: \code{\link{get_child_taxa}};

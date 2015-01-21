@@ -24,7 +24,8 @@ Depends:
     R (>= 3.0.1)
 License: MIT + file LICENSE
 Imports:
-    rjson (>= 0.2.13)
+    rjson (>= 0.2.13), 
+    RCurl
 Suggests:
     testthat (>= 0.8.0),
     knitr  (>= 1.6)

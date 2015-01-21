@@ -315,8 +315,8 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 
 #' Get Interaction Matrix. Constructs an interaction matrix indicating whether source taxa (rows) or target taxa (columns) are known to interact with given type.
 #'
-#' @param list of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis'))
-#' @param list of target taxon names
+#' @param source.taxon.names list of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis'))
+#' @param target.taxon.names list of target taxon names
 #' @param interaction.type the preferred interaction type (e.g. preysOn)
 #' @param opts list of options to configure GloBI API
 #' @return matrix representing species interactions between source and target taxa
@@ -334,6 +334,7 @@ get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), ta
 #' @param rank selected taxonomic rank of child taxa
 #' @param skip number of child taxon names to skip before returning result. May be used for pagination.
 #' @param limit maximum number of child taxon names returned
+#' @param opts list of options including web service configuration like "port" and "host"
 #' @return list of child taxon names
 #' @family interactions
 #' @export
@@ -352,15 +353,17 @@ interaction_id_for_type <- function(interaction.type) {
 
 #' Returns all known child taxa with known interaction of specified source and target taxa on any rank.
 #'
-#' @param source.taxon.name list of taxon names for source
-#' @param target.taxon.name list of taxon names for target
+#' @param source.taxon.names list of taxon names for source
+#' @param target.taxon.names list of taxon names for target
 #' @param interaction.type kind of interaction
+#' @param skip number of records skipped before including record in result table, used in pagination
+#' @param limit maximum number of interaction to include
 #' @param opts connection parameters and other options
 #' @return table of matching source, target and interaction types
 #' @family interactions
 #' @export
 #' @examples
-#' get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'), interaction.type = 'preysOn')
+#' get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'))
 get_interaction_table <- function(source.taxon.names = list(), target.taxon.names = list(), interaction.type = "preysOn", skip = 0, limit = 100, opts = list(port = 7474)) {
   interaction.id <- interaction_id_for_type(interaction.type)
   rel_type <- rel_type_interaction_type(interaction.type)

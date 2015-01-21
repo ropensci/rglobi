@@ -9,13 +9,13 @@ get_interaction_matrix(source.taxon.names = list("Homo sapiens"),
   opts = list(port = 7474))
 }
 \arguments{
+\item{source.taxon.names}{list of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis'))}
+
+\item{target.taxon.names}{list of target taxon names}
+
 \item{interaction.type}{the preferred interaction type (e.g. preysOn)}
 
 \item{opts}{list of options to configure GloBI API}
-
-\item{list}{of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis'))}
-
-\item{list}{of target taxon names}
 }
 \value{
 matrix representing species interactions between source and target taxa

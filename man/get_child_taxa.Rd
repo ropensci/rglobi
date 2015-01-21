@@ -15,6 +15,8 @@ get_child_taxa(taxon.names, rank = "Species", skip = 0, limit = 25,
 \item{skip}{number of child taxon names to skip before returning result. May be used for pagination.}
 
 \item{limit}{maximum number of child taxon names returned}
+
+\item{opts}{list of options including web service configuration like "port" and "host"}
 }
 \value{
 list of child taxon names
