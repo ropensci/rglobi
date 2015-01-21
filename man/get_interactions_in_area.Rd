@@ -18,7 +18,9 @@ Returns all interactions in data base in area specified in
 arguments
 }
 \examples{
+\dontrun{
 get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
+}
 }
 \seealso{
 Other areas: \code{\link{get_interaction_areas}}

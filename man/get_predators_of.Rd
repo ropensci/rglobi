@@ -18,8 +18,10 @@ list of recorded prey-predator interactions that involve the desired prey taxon.
 Get a List of Predators of a Given Prey Taxon
 }
 \examples{
+\dontrun{
 get_predators_of("Rattus rattus")
 get_predators_of("Primates")
+}
 }
 \seealso{
 Other interactions: \code{\link{get_child_taxa}};

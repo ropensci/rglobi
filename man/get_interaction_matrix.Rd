@@ -24,7 +24,9 @@ matrix representing species interactions between source and target taxa
 Get Interaction Matrix. Constructs an interaction matrix indicating whether source taxa (rows) or target taxa (columns) are known to interact with given type.
 }
 \examples{
+\dontrun{
 get_interaction_matrix("Homo sapiens", "Mammalia", "preysOn")
+}
 }
 \seealso{
 Other interactions: \code{\link{get_child_taxa}};

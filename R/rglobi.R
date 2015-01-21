@@ -33,9 +33,10 @@ read_csv <- function(url) {
 #' @return species interactions between source and target taxa
 #' @family interactions
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
+#' }
 get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
   get_interactions_by_taxa (sourcetaxon = taxon, interactiontype = interaction.type)
 }
@@ -47,9 +48,10 @@ get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn
 #' @return list of recorded predator-prey interactions that involve the desired predator taxon
 #' @export
 #' @family interactions
-#' @examples
+#' @examples \dontrun{
 #' get_prey_of("Homo sapiens")
 #' get_prey_of("Primates")
+#'}
 get_prey_of <- function(taxon = "Homo sapiens", opts = list()) {
   get_interactions(taxon, opts = opts)
 }
@@ -61,9 +63,10 @@ get_prey_of <- function(taxon = "Homo sapiens", opts = list()) {
 #' @return list of recorded prey-predator interactions that involve the desired prey taxon.
 #' @export
 #' @family interactions
-#' @examples
+#' @examples \dontrun{
 #' get_predators_of("Rattus rattus")
 #' get_predators_of("Primates")
+#' }
 get_predators_of <- function(taxon = "Rattus rattus", opts = list()) {
   get_interactions(taxon, "preyedUponBy", opts = opts)
 }
@@ -147,11 +150,12 @@ create_bbox_param <- function(bbox) {
 #' @export
 #' @note For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
 #' @family interactions
-#' @examples
+#' @examples \dontrun{
 #' get_interactions_by_taxa(sourcetaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 #' bbox = c(-67.87,12.79,-57.08,23.32))
+#' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL,
   bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
@@ -204,8 +208,9 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
 #' @keywords database
 #' @export
 #' @family areas
-#' @examples
+#' @examples \dontrun{
 #' get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
+#' }
 get_interactions_in_area <- function(bbox){
   if (is.null(bbox)) {
     stop("no coordinates provided")
@@ -225,12 +230,12 @@ get_interactions_in_area <- function(bbox){
 #' @keywords database
 #' @export
 #' @family areas
-#' @examples
+#' @examples \dontrun{
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
+#' }
 get_interaction_areas <- function(bbox = NULL){
-  requesturl <- read_csv (get_globi_url("/locations?type=csv"),
-    stringsAsFactors = F)
+  requesturl <- read_csv (get_globi_url("/locations?type=csv"))
   names (requesturl) <- c ("Latitude", "Longitude")
   requesturl$Latitude <- as.numeric (requesturl$Latitude)
   requesturl$Longitude <- as.numeric (requesturl$Longitude)
@@ -257,8 +262,9 @@ get_interaction_areas <- function(bbox = NULL){
 #' @keywords database
 #' @export
 #' @family interactions
-#' @examples
+#' @examples \dontrun{
 #' get_interaction_types()
+#' }
 get_interaction_types <- function() {
   read_csv(get_globi_url("/interactionTypes?type=csv"))
 }
@@ -328,8 +334,9 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 #' @return matrix representing species interactions between source and target taxa
 #' @family interactions
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' get_interaction_matrix("Homo sapiens", "Mammalia", "preysOn")
+#' }
 get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'preysOn', opts = list(port = 7474)) {
   Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts)), source.taxon.names, init=data.frame())
 }
@@ -344,8 +351,9 @@ get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), ta
 #' @return list of child taxon names
 #' @family interactions
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' get_child_taxa(list("Aves"))
+#' }
 get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list(port = 7474)) {
   luceneQuery <- paste('path:', taxon.names, ' ', sep='', collapse='')
   cypher <- paste("START taxon = node:taxonPaths('", luceneQuery , "') WHERE has(taxon.rank) AND taxon.rank = '", rank, "' RETURN distinct(taxon.name) as `taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
@@ -368,8 +376,9 @@ interaction_id_for_type <- function(interaction.type) {
 #' @return table of matching source, target and interaction types
 #' @family interactions
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'))
+#' }
 get_interaction_table <- function(source.taxon.names = list(), target.taxon.names = list(), interaction.type = "preysOn", skip = 0, limit = 100, opts = list(port = 7474)) {
   interaction.id <- interaction_id_for_type(interaction.type)
   rel_type <- rel_type_interaction_type(interaction.type)

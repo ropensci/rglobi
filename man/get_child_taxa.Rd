@@ -25,7 +25,9 @@ list of child taxon names
 Returns all known child taxa with known interaction of specified taxa and rank.
 }
 \examples{
+\dontrun{
 get_child_taxa(list("Aves"))
+}
 }
 \seealso{
 Other interactions: \code{\link{get_interaction_matrix}};

@@ -13,7 +13,9 @@ Returns data frame of supported interaction types
 Returns data frame with supported interaction types
 }
 \examples{
+\dontrun{
 get_interaction_types()
+}
 }
 \seealso{
 Other interactions: \code{\link{get_child_taxa}};

@@ -34,10 +34,12 @@ taxa and spatial boundaries may also be set
 For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
 }
 \examples{
+\dontrun{
 get_interactions_by_taxa(sourcetaxon = "Rattus")
 get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 bbox = c(-67.87,12.79,-57.08,23.32))
+}
 }
 \seealso{
 Other interactions: \code{\link{get_child_taxa}};

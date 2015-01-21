@@ -28,7 +28,9 @@ table of matching source, target and interaction types
 Returns all known child taxa with known interaction of specified source and target taxa on any rank.
 }
 \examples{
+\dontrun{
 get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'))
+}
 }
 \seealso{
 Other interactions: \code{\link{get_child_taxa}};
