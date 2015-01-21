@@ -81,6 +81,7 @@ cypher_result_as_dataframe <- function(result) {
 
 #' Executes a Cypher Query Against GloBI's Neo4j Instance
 #'
+#' @import RCurl
 #' @param cypherQuery Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
 #' @param opts list of named options to configure GloBI API
 #' @return result of cypher query string
@@ -124,6 +125,7 @@ create_bbox_param <- function(bbox) {
 #' @description Returns interactions involving specific taxa.  Secondary (target)
 #' taxa and spatial boundaries may also be set
 #'
+#' @import RCurl
 #' @param sourcetaxon Taxa of interest (consumer, predator, parasite); may be
 #' specified as "Genus species" or higher level (e.g., Genus, Family, Class).
 #' @param targettaxon Taxa of interest (prey, host); may be specified as "Genus
