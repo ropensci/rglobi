@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (<a href="http://globalbioticinteractions.org">http://globalbioticinteractions.org</a>)</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{rglobi vignette}
+-->
+
+<h1>rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (<a href="http://globalbioticinteractions.org">http://globalbioticinteractions.org</a>)</h1>
+
+<h3>About the package</h3>
+
+<p><code>rglobi</code> allows easy access to the GLoBI database by wrapping the existing API.  </p>
+
+<hr/>
+
+<h3>Quick start</h3>
+
+<h4>First, install <code>rglobi</code></h4>
+
+<pre><code class="r">install.packages(&quot;devtools&quot;)
+</code></pre>
+
+<pre><code>## Installing package into &#39;/Volumes/Data/Users/unencrypted/jorrit/Library/R/3.0/library&#39;
+## (as &#39;lib&#39; is unspecified)
+</code></pre>
+
+<pre><code>## 
+## The downloaded binary packages are in
+##  /var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmptgaLYk/downloaded_packages
+</code></pre>
+
+<pre><code class="r">devtools::install_github(&quot;rglobi&quot;, &quot;ropensci&quot;)
+</code></pre>
+
+<pre><code>## Warning: Username parameter is deprecated. Please use ropensci/rglobi
+</code></pre>
+
+<pre><code>## Downloading github repo ropensci/rglobi@master
+## Installing rglobi
+## &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39; --vanilla CMD INSTALL  \
+##   &#39;/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmptgaLYk/devtools1fd744d4751b/ropensci-rglobi-7ec6694&#39;  \
+##   --library=&#39;/Volumes/Data/Users/unencrypted/jorrit/Library/R/3.0/library&#39;  \
+##   --install-tests 
+## 
+## Reloading installed rglobi
+</code></pre>
+
+<pre><code class="r">library(&quot;rglobi&quot;)
+</code></pre>
+
+<p>Note that since rglobi is still pretty new, only the dev version of the library is available at this time. We hope to publish a version to CRAN once the library matures. For more information see <a href="https://github.com/ropensci/rglobi">GitHub</a>.</p>
+
+<h4>Find interactions involving a certain species</h4>
+
+<p>Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the <code>rglobi</code> library offers several ways to specify and access these interactions. <code>get_interactions()</code> is the primary function used if data on a specific interaction type is required.  A focus taxon is entered (may be specified as &quot;Genus species&quot; or higher level (e.g., Genus, Family, Class)).</p>
+
+<pre><code class="r">hsapiens &lt;- get_interactions(taxon = &quot;Homo sapiens&quot;, interaction.type = &quot;preysOn&quot;)
+head(hsapiens)
+</code></pre>
+
+<pre><code>##   source_taxon_external_id source_taxon_name
+## 1               EOL:327955      Homo sapiens
+## 2               EOL:327955      Homo sapiens
+## 3               EOL:327955      Homo sapiens
+## 4               EOL:327955      Homo sapiens
+## 5               EOL:327955      Homo sapiens
+## 6               EOL:327955      Homo sapiens
+##                                                                                                                                                                                                           source_taxon_path
+## 1 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 2 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 3 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 4 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 5 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 6 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+##   source_specimen_life_stage interaction_type target_taxon_external_id
+## 1                         NA          preysOn               EOL:328048
+## 2                         NA          preysOn               EOL:328716
+## 3                         NA          preysOn                 EOL:1666
+## 4                         NA          preysOn               EOL:326518
+## 5                         NA          preysOn              EOL:4453589
+## 6                         NA          preysOn              EOL:2815988
+##                   target_taxon_name
+## 1                 Nandinia binotata
+## 2             Cephalophus monticola
+## 3                           Manidae
+## 4               Atherurus africanus
+## 5 Cercopithecus nictitans nictitans
+## 6                         Serpentes
+##                                                                                                                                                                                                                                                                                                      target_taxon_path
+## 1                                                                                                                                                                                                                              Animalia | Chordata | Mammalia | Carnivora | Nandiniidae | Nandinia | Nandinia binotata
+## 2                                                                                                                                                                                                                        Animalia | Chordata | Mammalia | Artiodactyla | Bovidae | Cephalophus | Cephalophus monticola
+## 3                                                                                                                                                                                                                                                                 Animalia | Chordata | Mammalia | Pholidota | Manidae
+## 4                                                                                                                                                                                                                            Animalia | Chordata | Mammalia | Rodentia | Hystricidae | Atherurus | Atherurus africanus
+## 5 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Cercopithecoidea | Cercopithecidae | Cercopithecinae | Cercopithecini | Cercopithecus | Cercopithecus nictitans | Cercopithecus nictitans nictitans
+## 6                                                                                                                                                                                           Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Reptilia | Squamata | Serpentes
+##   target_specimen_life_stage latitude longitude study_title
+## 1                         NA       NA        NA          NA
+## 2                         NA       NA        NA          NA
+## 3                         NA       NA        NA          NA
+## 4                         NA       NA        NA          NA
+## 5                         NA       NA        NA          NA
+## 6                         NA       NA        NA          NA
+</code></pre>
+
+<p><code>get_predators_of()</code> and <code>get_prey_of()</code> are wrappers for <code>get_interactions()</code> that remove the need to specify interaction type</p>
+
+<pre><code class="r">hsapiens &lt;- get_prey_of(&quot;Homo sapiens&quot;)
+head(hsapiens)
+</code></pre>
+
+<pre><code>##   source_taxon_external_id source_taxon_name
+## 1               EOL:327955      Homo sapiens
+## 2               EOL:327955      Homo sapiens
+## 3               EOL:327955      Homo sapiens
+## 4               EOL:327955      Homo sapiens
+## 5               EOL:327955      Homo sapiens
+## 6               EOL:327955      Homo sapiens
+##                                                                                                                                                                                                           source_taxon_path
+## 1 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 2 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 3 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 4 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 5 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+## 6 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Hominoidea | Hominidae | Homininae | Homo | Homo sapiens
+##   source_specimen_life_stage interaction_type target_taxon_external_id
+## 1                         NA          preysOn               EOL:328048
+## 2                         NA          preysOn               EOL:328716
+## 3                         NA          preysOn                 EOL:1666
+## 4                         NA          preysOn               EOL:326518
+## 5                         NA          preysOn              EOL:4453589
+## 6                         NA          preysOn              EOL:2815988
+##                   target_taxon_name
+## 1                 Nandinia binotata
+## 2             Cephalophus monticola
+## 3                           Manidae
+## 4               Atherurus africanus
+## 5 Cercopithecus nictitans nictitans
+## 6                         Serpentes
+##                                                                                                                                                                                                                                                                                                      target_taxon_path
+## 1                                                                                                                                                                                                                              Animalia | Chordata | Mammalia | Carnivora | Nandiniidae | Nandinia | Nandinia binotata
+## 2                                                                                                                                                                                                                        Animalia | Chordata | Mammalia | Artiodactyla | Bovidae | Cephalophus | Cephalophus monticola
+## 3                                                                                                                                                                                                                                                                 Animalia | Chordata | Mammalia | Pholidota | Manidae
+## 4                                                                                                                                                                                                                            Animalia | Chordata | Mammalia | Rodentia | Hystricidae | Atherurus | Atherurus africanus
+## 5 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Primates | Haplorrhini | Simiiformes | Cercopithecoidea | Cercopithecidae | Cercopithecinae | Cercopithecini | Cercopithecus | Cercopithecus nictitans | Cercopithecus nictitans nictitans
+## 6                                                                                                                                                                                           Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Reptilia | Squamata | Serpentes
+##   target_specimen_life_stage latitude longitude study_title
+## 1                         NA       NA        NA          NA
+## 2                         NA       NA        NA          NA
+## 3                         NA       NA        NA          NA
+## 4                         NA       NA        NA          NA
+## 5                         NA       NA        NA          NA
+## 6                         NA       NA        NA          NA
+</code></pre>
+
+<p>For a complete list of supported interaction types, </p>
+
+<pre><code class="r">get_interaction_types()
+</code></pre>
+
+<pre><code>##      interaction     source     target
+## 1        preysOn   predator       prey
+## 2   preyedUponBy       prey   predator
+## 3     parasiteOf   parasite       host
+## 4    hasParasite       host   parasite
+## 5     pollinates pollinator      plant
+## 6   pollinatedBy      plant pollinator
+## 7     pathogenOf   pathogen       host
+## 8    hasPathogen      plant pollinator
+## 9     symbiontOf     source     target
+## 10 interactsWith     source     target
+</code></pre>
+
+<p>For data sources in which type of interactions was not specified, the interaction is labeled &quot;interacts_with&quot;.</p>
+
+<p>If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the <code>get_interactions_by_taxa()</code> function allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.</p>
+
+<pre><code class="r">rattus &lt;- get_interactions_by_taxa(sourcetaxon = &quot;Rattus&quot;)
+head(rattus)
+</code></pre>
+
+<pre><code>##   source_taxon_external_id source_taxon_name
+## 1               EOL:328447     Rattus rattus
+## 2               EOL:328447     Rattus rattus
+## 3               EOL:328447     Rattus rattus
+## 4               EOL:328447     Rattus rattus
+## 5               EOL:328447     Rattus rattus
+## 6               EOL:328447     Rattus rattus
+##                                                                                                                                                                             source_taxon_path
+## 1 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Rodentia | Myomorpha | Muridae | Murinae | Rattus | Rattus rattus
+## 2 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Rodentia | Myomorpha | Muridae | Murinae | Rattus | Rattus rattus
+## 3 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Rodentia | Myomorpha | Muridae | Murinae | Rattus | Rattus rattus
+## 4 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Rodentia | Myomorpha | Muridae | Murinae | Rattus | Rattus rattus
+## 5 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Rodentia | Myomorpha | Muridae | Murinae | Rattus | Rattus rattus
+## 6 Animalia | Bilateria | Deuterostomia | Chordata | Vertebrata | Gnathostomata | Tetrapoda | Mammalia | Theria | Eutheria | Rodentia | Myomorpha | Muridae | Murinae | Rattus | Rattus rattus
+##   source_specimen_life_stage interaction_type target_taxon_external_id
+## 1                         NA    interactsWith             EOL:13340393
+## 2                         NA    interactsWith             EOL:10702710
+## 3                         NA    interactsWith              EOL:5004474
+## 4                         NA    interactsWith              EOL:4968671
+## 5                         NA    interactsWith              EOL:4965412
+## 6                         NA    interactsWith              EOL:4963889
+##              target_taxon_name
+## 1            Mastophorus muris
+## 2           Trypanosoma lewisi
+## 3           Calodium hepaticum
+## 4                  Raillietina
+## 5 Nippostrongylus brasiliensis
+## 6                     Syphacia
+##                                                                                                                  target_taxon_path
+## 1                                     Animalia | Nematoda | Secernentea | Spirurida | Spiruridae | Mastophorus | Mastophorus muris
+## 2 Cellular organisms | Eukaryota | Euglenozoa | Kinetoplastida | Trypanosomatidae | Trypanosoma | Herpetosoma | Trypanosoma lewisi
+## 3                                                                                                               Calodium hepaticum
+## 4                                                Animalia | Platyhelminthes | Cestoda | Cyclophyllidea | Davaineidae | Raillietina
+## 5                 Animalia | Nematoda | Secernentea | Strongylida | Heligosomidae | Nippostrongylus | Nippostrongylus brasiliensis
+## 6                                                            Animalia | Nematoda | Secernentea | Ascaridida | Oxyuridae | Syphacia
+##   target_specimen_life_stage latitude longitude study_title
+## 1                         NA       NA        NA          NA
+## 2                         NA       NA        NA          NA
+## 3                         NA       NA        NA          NA
+## 4                         NA       NA        NA          NA
+## 5                         NA       NA        NA          NA
+## 6                         NA       NA        NA          NA
+</code></pre>
+
+<p>Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees (<a href="http://spatialreference.org/ref/epsg/wgs-84/">EPSG:4326</a>) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  </p>
+
+<pre><code class="r">aves_crustacea_northern_hemisphere &lt;- get_interactions_by_taxa( sourcetaxon = &quot;Aves&quot;, targettaxon = &quot;Crustacea&quot;, bbox=c(-180, 0, 180, 90 ))
+head(aves_crustacea_northern_hemisphere)
+</code></pre>
+
+<pre><code>##   source_taxon_external_id          source_taxon_name
+## 1                EOL:18884                    Cepphus
+## 2              EOL:1049577              Larus marinus
+## 3              EOL:1049366       Pluvialis squatarola
+## 4              EOL:1049366       Pluvialis squatarola
+## 5              EOL:1049366       Pluvialis squatarola
+## 6              EOL:1048643 Phalacrocorax penicillatus
+##                                                                                          source_taxon_path
+## 1                                         Animalia | Chordata | Aves | Charadriiformes | Alcidae | Cepphus
+## 2                           Animalia | Chordata | Aves | Charadriiformes | Laridae | Larus | Larus marinus
+## 3           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
+## 4           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
+## 5           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
+## 6 Animalia | Chordata | Aves | Suliformes | Phalacrocoracidae | Phalacrocorax | Phalacrocorax penicillatus
+##   source_specimen_life_stage interaction_type target_taxon_external_id
+## 1                         NA          preysOn              EOL:2625033
+## 2                         NA          preysOn                EOL:35798
+## 3                         NA    interactsWith              EOL:2625033
+## 4                         NA          preysOn              EOL:2615930
+## 5                         NA          preysOn              EOL:2620777
+## 6                         NA    interactsWith              EOL:2625033
+##   target_taxon_name
+## 1          Copepoda
+## 2           Balanus
+## 3          Copepoda
+## 4         Oniscidea
+## 5        Gammaridea
+## 6          Copepoda
+##                                                                                                                                                         target_taxon_path
+## 1                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 2 Biota | Animalia | Arthropoda | Crustacea | Maxillopoda | Thecostraca | Cirripedia | Thoracica | Sessilia | Balanomorpha | Balanoidea | Balanidae | Balaninae | Balanus
+## 3                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 4                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Isopoda | Oniscidea
+## 5                           Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
+## 6                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+##   target_specimen_life_stage latitude longitude study_title
+## 1                         NA       NA        NA          NA
+## 2                         NA       NA        NA          NA
+## 3                         NA       NA        NA          NA
+## 4                         NA       NA        NA          NA
+## 5                         NA       NA        NA          NA
+## 6                         NA       NA        NA          NA
+</code></pre>
+
+<h4>Find interactions in a geographic areas</h4>
+
+<p>Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  <code>rglobi</code> enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees (<a href="http://spatialreference.org/ref/epsg/wgs-84/">EPSG:4326</a>) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  </p>
+
+<pre><code class="r">gulfinteractions &lt;- get_interactions_in_area( bbox=c(-97.0, 17.5, -81, 31))
+head(gulfinteractions)
+</code></pre>
+
+<pre><code>##   source_taxon_external_id        source_taxon_name
+## 1                    EOL:1                 Animalia
+## 2                 EOL:1905           Actinopterygii
+## 3              EOL:2598871                Crustacea
+## 4               EOL:208553 Chloroscombrus chrysurus
+## 5               EOL:208553 Chloroscombrus chrysurus
+## 6               EOL:208553 Chloroscombrus chrysurus
+##                                                                                             source_taxon_path
+## 1                                                                                                    Animalia
+## 2                          Biota | Animalia | Chordata | Vertebrata | Gnathostomata | Pisces | Actinopterygii
+## 3                                     Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea
+## 4 Animalia | Chordata | Actinopterygii | Perciformes | Carangidae | Chloroscombrus | Chloroscombrus chrysurus
+## 5 Animalia | Chordata | Actinopterygii | Perciformes | Carangidae | Chloroscombrus | Chloroscombrus chrysurus
+## 6 Animalia | Chordata | Actinopterygii | Perciformes | Carangidae | Chloroscombrus | Chloroscombrus chrysurus
+##   source_specimen_life_stage interaction_type target_taxon_external_id
+## 1                         NA     preyedUponBy               EOL:208553
+## 2                         NA     preyedUponBy               EOL:208553
+## 3                         NA     preyedUponBy               EOL:208553
+## 4                         NA          preysOn                    EOL:1
+## 5                         NA          preysOn                 EOL:1905
+## 6                         NA          preysOn              EOL:2598871
+##          target_taxon_name
+## 1 Chloroscombrus chrysurus
+## 2 Chloroscombrus chrysurus
+## 3 Chloroscombrus chrysurus
+## 4                 Animalia
+## 5           Actinopterygii
+## 6                Crustacea
+##                                                                                             target_taxon_path
+## 1 Animalia | Chordata | Actinopterygii | Perciformes | Carangidae | Chloroscombrus | Chloroscombrus chrysurus
+## 2 Animalia | Chordata | Actinopterygii | Perciformes | Carangidae | Chloroscombrus | Chloroscombrus chrysurus
+## 3 Animalia | Chordata | Actinopterygii | Perciformes | Carangidae | Chloroscombrus | Chloroscombrus chrysurus
+## 4                                                                                                    Animalia
+## 5                          Biota | Animalia | Chordata | Vertebrata | Gnathostomata | Pisces | Actinopterygii
+## 6                                     Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea
+##   target_specimen_life_stage latitude longitude study_title
+## 1                         NA       NA        NA          NA
+## 2                         NA       NA        NA          NA
+## 3                         NA       NA        NA          NA
+## 4                         NA       NA        NA          NA
+## 5                         NA       NA        NA          NA
+## 6                         NA       NA        NA          NA
+</code></pre>
+
+<p>To see all locations for which interactions have entered in GloBi, </p>
+
+<pre><code class="r">areas &lt;- get_interaction_areas()
+head(areas)
+</code></pre>
+
+<pre><code>##   Latitude Longitude
+## 1    29.35    -92.98
+## 2    29.03    -92.29
+## 3    28.04    -96.11
+## 4    27.62    -95.77
+## 5    26.33    -96.03
+## 6    30.14    -86.17
+</code></pre>
+
+<p>You can also restrict this search to a certain area:</p>
+
+<pre><code class="r">areas &lt;- get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
+head(areas)
+</code></pre>
+
+<pre><code>##      Latitude Longitude
+## 1251    18.25    -66.50
+## 1255    18.34    -65.83
+## 1268    18.07    -63.07
+## 1339    13.17    -59.53
+</code></pre>
+
+<h4>Custom Queries using Cypher</h4>
+
+<p>Currently, GloBI is powered by <a href="http://neo4j.org">neo4j</a>, a graph database. Most results created by the R functions provided by <code>rglobi</code> are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function <code>query()</code>:</p>
+
+<pre><code class="r">result &lt;- query(&quot;START taxon = node:taxons(name=&#39;Homo sapiens&#39;) MATCH taxon&lt;-[:CLASSIFIED_AS]-predator-[:ATE|PREYS_ON]-&gt;prey-[:CLASSIFIED_AS]-&gt;preyTaxon RETURN distinct(preyTaxon.name) as `prey.taxon.name` LIMIT 10&quot;)
+result
+</code></pre>
+
+<pre><code>##         prey.taxon.name
+## 1          Homo sapiens
+## 2    Macropus bernardus
+## 3             Mysticeti
+## 4   Dendrolagus scottae
+## 5   Engraulis japonicus
+## 6         Sergia lucens
+## 7       Martes melampus
+## 8   Lophocebus albigena
+## 9            Salmonidae
+## 10 Moschus chrysogaster
+</code></pre>
+
+<p>This particular query returns the names of the first ten known prey or diet items of humans (<em>Homo sapiens</em>). More examples of GloBI specific Cypher queries can be found on the <a href="https://github.com/jhpoelen/eol-globi-data/wiki/cypher">GloBI Cypher Wiki</a>. </p>
+
+</body>
+
+</html>
