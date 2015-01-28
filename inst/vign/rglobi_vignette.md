@@ -1,227 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-<title>rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (<a href="http://globalbioticinteractions.org">http://globalbioticinteractions.org</a>)</title>
-
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
-
-
-
-
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
-
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 {
-   font-size:2.2em;
-}
-
-h2 {
-   font-size:1.8em;
-}
-
-h3 {
-   font-size:1.4em;
-}
-
-h4 {
-   font-size:1.0em;
-}
-
-h5 {
-   font-size:0.9em;
-}
-
-h6 {
-   font-size:0.8em;
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre, img {
-  max-width: 100%;
-}
-pre {
-  overflow-x: auto;
-}
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code {
-  font-size: 92%;
-  border: 1px solid #ccc;
-}
-
-code[class] {
-  background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
-</style>
-
-
-
-</head>
-
-<body>
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{rglobi vignette}
+%\VignetteIndexEntry{Introduction to the rglobi package}
 -->
 
-<h1>rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (<a href="http://globalbioticinteractions.org">http://globalbioticinteractions.org</a>)</h1>
 
-<h3>About the package</h3>
 
-<p><code>rglobi</code> allows easy access to the GLoBI database by wrapping the existing API.  </p>
+rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (http://globalbioticinteractions.org)
+======
 
-<hr/>
+### About the package
 
-<h3>Quick start</h3>
+`rglobi` allows easy access to the GLoBI database by wrapping the existing API.  
 
-<h4>First, install <code>rglobi</code></h4>
+********************
 
-<pre><code class="r">install.packages(&quot;devtools&quot;)
-</code></pre>
+### Quick start
 
-<pre><code>## Installing package into &#39;/Volumes/Data/Users/unencrypted/jorrit/Library/R/3.0/library&#39;
-## (as &#39;lib&#39; is unspecified)
-</code></pre>
+#### First, install `rglobi`
 
-<pre><code>## 
+
+
+```r
+install.packages("devtools")
+```
+
+```
+## 
 ## The downloaded binary packages are in
-##  /var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmptgaLYk/downloaded_packages
-</code></pre>
+## 	/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpF6qc1T/downloaded_packages
+```
 
-<pre><code class="r">devtools::install_github(&quot;rglobi&quot;, &quot;ropensci&quot;)
-</code></pre>
+```r
+devtools::install_github("ropensci/rglobi")
+```
 
-<pre><code>## Warning: Username parameter is deprecated. Please use ropensci/rglobi
-</code></pre>
-
-<pre><code>## Downloading github repo ropensci/rglobi@master
+```
+## Downloading github repo ropensci/rglobi@master
 ## Installing rglobi
-## &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39; --vanilla CMD INSTALL  \
-##   &#39;/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmptgaLYk/devtools1fd744d4751b/ropensci-rglobi-7ec6694&#39;  \
-##   --library=&#39;/Volumes/Data/Users/unencrypted/jorrit/Library/R/3.0/library&#39;  \
+## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
+##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpF6qc1T/devtools15b730380a08/ropensci-rglobi-0b49250'  \
+##   --library='/Library/Frameworks/R.framework/Versions/3.1/Resources/library'  \
 ##   --install-tests 
 ## 
 ## Reloading installed rglobi
-</code></pre>
+```
 
-<pre><code class="r">library(&quot;rglobi&quot;)
-</code></pre>
 
-<p>Note that since rglobi is still pretty new, only the dev version of the library is available at this time. We hope to publish a version to CRAN once the library matures. For more information see <a href="https://github.com/ropensci/rglobi">GitHub</a>.</p>
+```r
+library("rglobi")
+```
 
-<h4>Find interactions involving a certain species</h4>
+Note that since rglobi is still pretty new, only the dev version of the library is available at this time. We hope to publish a version to CRAN once the library matures. For more information see [GitHub](https://github.com/ropensci/rglobi).
 
-<p>Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the <code>rglobi</code> library offers several ways to specify and access these interactions. <code>get_interactions()</code> is the primary function used if data on a specific interaction type is required.  A focus taxon is entered (may be specified as &quot;Genus species&quot; or higher level (e.g., Genus, Family, Class)).</p>
+#### Find interactions involving a certain species
 
-<pre><code class="r">hsapiens &lt;- get_interactions(taxon = &quot;Homo sapiens&quot;, interaction.type = &quot;preysOn&quot;)
+Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the `rglobi` library offers several ways to specify and access these interactions. `get_interactions()` is the primary function used if data on a specific interaction type is required.  A focus taxon is entered (may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)).
+
+
+```r
+hsapiens <- get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn")
 head(hsapiens)
-</code></pre>
+```
 
-<pre><code>##   source_taxon_external_id source_taxon_name
+```
+##   source_taxon_external_id source_taxon_name
 ## 1               EOL:327955      Homo sapiens
 ## 2               EOL:327955      Homo sapiens
 ## 3               EOL:327955      Homo sapiens
@@ -263,15 +105,18 @@ head(hsapiens)
 ## 4                         NA       NA        NA          NA
 ## 5                         NA       NA        NA          NA
 ## 6                         NA       NA        NA          NA
-</code></pre>
+```
 
-<p><code>get_predators_of()</code> and <code>get_prey_of()</code> are wrappers for <code>get_interactions()</code> that remove the need to specify interaction type</p>
+`get_predators_of()` and `get_prey_of()` are wrappers for `get_interactions()` that remove the need to specify interaction type
 
-<pre><code class="r">hsapiens &lt;- get_prey_of(&quot;Homo sapiens&quot;)
+
+```r
+hsapiens <- get_prey_of("Homo sapiens")
 head(hsapiens)
-</code></pre>
+```
 
-<pre><code>##   source_taxon_external_id source_taxon_name
+```
+##   source_taxon_external_id source_taxon_name
 ## 1               EOL:327955      Homo sapiens
 ## 2               EOL:327955      Homo sapiens
 ## 3               EOL:327955      Homo sapiens
@@ -313,14 +158,17 @@ head(hsapiens)
 ## 4                         NA       NA        NA          NA
 ## 5                         NA       NA        NA          NA
 ## 6                         NA       NA        NA          NA
-</code></pre>
+```
 
-<p>For a complete list of supported interaction types, </p>
+For a complete list of supported interaction types, 
 
-<pre><code class="r">get_interaction_types()
-</code></pre>
 
-<pre><code>##      interaction     source     target
+```r
+get_interaction_types()
+```
+
+```
+##      interaction     source     target
 ## 1        preysOn   predator       prey
 ## 2   preyedUponBy       prey   predator
 ## 3     parasiteOf   parasite       host
@@ -331,17 +179,20 @@ head(hsapiens)
 ## 8    hasPathogen      plant pollinator
 ## 9     symbiontOf     source     target
 ## 10 interactsWith     source     target
-</code></pre>
+```
 
-<p>For data sources in which type of interactions was not specified, the interaction is labeled &quot;interacts_with&quot;.</p>
+For data sources in which type of interactions was not specified, the interaction is labeled "interacts_with".
 
-<p>If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the <code>get_interactions_by_taxa()</code> function allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.</p>
+If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the `get_interactions_by_taxa()` function allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.
 
-<pre><code class="r">rattus &lt;- get_interactions_by_taxa(sourcetaxon = &quot;Rattus&quot;)
+
+```r
+rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus")
 head(rattus)
-</code></pre>
+```
 
-<pre><code>##   source_taxon_external_id source_taxon_name
+```
+##   source_taxon_external_id source_taxon_name
 ## 1               EOL:328447     Rattus rattus
 ## 2               EOL:328447     Rattus rattus
 ## 3               EOL:328447     Rattus rattus
@@ -383,49 +234,52 @@ head(rattus)
 ## 4                         NA       NA        NA          NA
 ## 5                         NA       NA        NA          NA
 ## 6                         NA       NA        NA          NA
-</code></pre>
+```
 
-<p>Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees (<a href="http://spatialreference.org/ref/epsg/wgs-84/">EPSG:4326</a>) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  </p>
+Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
-<pre><code class="r">aves_crustacea_northern_hemisphere &lt;- get_interactions_by_taxa( sourcetaxon = &quot;Aves&quot;, targettaxon = &quot;Crustacea&quot;, bbox=c(-180, 0, 180, 90 ))
+
+```r
+aves_crustacea_northern_hemisphere <- get_interactions_by_taxa( sourcetaxon = "Aves", targettaxon = "Crustacea", bbox=c(-180, 0, 180, 90 ))
 head(aves_crustacea_northern_hemisphere)
-</code></pre>
+```
 
-<pre><code>##   source_taxon_external_id          source_taxon_name
-## 1                EOL:18884                    Cepphus
-## 2              EOL:1049577              Larus marinus
-## 3              EOL:1049366       Pluvialis squatarola
-## 4              EOL:1049366       Pluvialis squatarola
-## 5              EOL:1049366       Pluvialis squatarola
-## 6              EOL:1048643 Phalacrocorax penicillatus
-##                                                                                          source_taxon_path
-## 1                                         Animalia | Chordata | Aves | Charadriiformes | Alcidae | Cepphus
-## 2                           Animalia | Chordata | Aves | Charadriiformes | Laridae | Larus | Larus marinus
-## 3           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
-## 4           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
-## 5           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
-## 6 Animalia | Chordata | Aves | Suliformes | Phalacrocoracidae | Phalacrocorax | Phalacrocorax penicillatus
+```
+##   source_taxon_external_id       source_taxon_name
+## 1                EOL:18884                 Cepphus
+## 2              EOL:1047918      Anas platyrhynchos
+## 3              EOL:1049560 Recurvirostra americana
+## 4              EOL:1049376  Arenaria melanocephala
+## 5              EOL:1048977       Bucephala albeola
+## 6              EOL:1048977       Bucephala albeola
+##                                                                                           source_taxon_path
+## 1                                          Animalia | Chordata | Aves | Charadriiformes | Alcidae | Cepphus
+## 2                          Animalia | Chordata | Aves | Anseriformes | Anatidae | Anas | Anas platyrhynchos
+## 3 Animalia | Chordata | Aves | Charadriiformes | Recurvirostridae | Recurvirostra | Recurvirostra americana
+## 4           Animalia | Chordata | Aves | Charadriiformes | Scolopacidae | Arenaria | Arenaria melanocephala
+## 5                      Animalia | Chordata | Aves | Anseriformes | Anatidae | Bucephala | Bucephala albeola
+## 6                      Animalia | Chordata | Aves | Anseriformes | Anatidae | Bucephala | Bucephala albeola
 ##   source_specimen_life_stage interaction_type target_taxon_external_id
 ## 1                         NA          preysOn              EOL:2625033
-## 2                         NA          preysOn                EOL:35798
+## 2                         NA          preysOn              EOL:2620777
 ## 3                         NA    interactsWith              EOL:2625033
-## 4                         NA          preysOn              EOL:2615930
-## 5                         NA          preysOn              EOL:2620777
-## 6                         NA    interactsWith              EOL:2625033
+## 4                         NA          preysOn              EOL:2620777
+## 5                         NA    interactsWith              EOL:2625033
+## 6                         NA          preysOn              EOL:2620777
 ##   target_taxon_name
 ## 1          Copepoda
-## 2           Balanus
+## 2        Gammaridea
 ## 3          Copepoda
-## 4         Oniscidea
-## 5        Gammaridea
-## 6          Copepoda
-##                                                                                                                                                         target_taxon_path
-## 1                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
-## 2 Biota | Animalia | Arthropoda | Crustacea | Maxillopoda | Thecostraca | Cirripedia | Thoracica | Sessilia | Balanomorpha | Balanoidea | Balanidae | Balaninae | Balanus
-## 3                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
-## 4                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Isopoda | Oniscidea
-## 5                           Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
-## 6                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 4        Gammaridea
+## 5          Copepoda
+## 6        Gammaridea
+##                                                                                                                               target_taxon_path
+## 1                                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 2 Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
+## 3                                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 4 Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
+## 5                                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 6 Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
 ##   target_specimen_life_stage latitude longitude study_title
 ## 1                         NA       NA        NA          NA
 ## 2                         NA       NA        NA          NA
@@ -433,17 +287,20 @@ head(aves_crustacea_northern_hemisphere)
 ## 4                         NA       NA        NA          NA
 ## 5                         NA       NA        NA          NA
 ## 6                         NA       NA        NA          NA
-</code></pre>
+```
 
-<h4>Find interactions in a geographic areas</h4>
+#### Find interactions in a geographic areas
 
-<p>Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  <code>rglobi</code> enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees (<a href="http://spatialreference.org/ref/epsg/wgs-84/">EPSG:4326</a>) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  </p>
+Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  `rglobi` enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
-<pre><code class="r">gulfinteractions &lt;- get_interactions_in_area( bbox=c(-97.0, 17.5, -81, 31))
+
+```r
+gulfinteractions <- get_interactions_in_area( bbox=c(-97.0, 17.5, -81, 31))
 head(gulfinteractions)
-</code></pre>
+```
 
-<pre><code>##   source_taxon_external_id        source_taxon_name
+```
+##   source_taxon_external_id        source_taxon_name
 ## 1                    EOL:1                 Animalia
 ## 2                 EOL:1905           Actinopterygii
 ## 3              EOL:2598871                Crustacea
@@ -485,45 +342,53 @@ head(gulfinteractions)
 ## 4                         NA       NA        NA          NA
 ## 5                         NA       NA        NA          NA
 ## 6                         NA       NA        NA          NA
-</code></pre>
+```
 
-<p>To see all locations for which interactions have entered in GloBi, </p>
+To see all locations for which interactions have entered in GloBi, 
 
-<pre><code class="r">areas &lt;- get_interaction_areas()
+
+```r
+areas <- get_interaction_areas()
 head(areas)
-</code></pre>
+```
 
-<pre><code>##   Latitude Longitude
-## 1    29.35    -92.98
-## 2    29.03    -92.29
-## 3    28.04    -96.11
-## 4    27.62    -95.77
-## 5    26.33    -96.03
-## 6    30.14    -86.17
-</code></pre>
+```
+##   Latitude Longitude
+## 1 29.34695 -92.98061
+## 2 29.03260 -92.28701
+## 3 28.03673 -96.11108
+## 4 27.62409 -95.77403
+## 5 26.33146 -96.03294
+## 6 30.25024 -86.13114
+```
+You can also restrict this search to a certain area:
 
-<p>You can also restrict this search to a certain area:</p>
 
-<pre><code class="r">areas &lt;- get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
+```r
+areas <- get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 head(areas)
-</code></pre>
+```
 
-<pre><code>##      Latitude Longitude
-## 1251    18.25    -66.50
-## 1255    18.34    -65.83
-## 1268    18.07    -63.07
-## 1339    13.17    -59.53
-</code></pre>
+```
+##      Latitude Longitude
+## 1251 18.24829 -66.49989
+## 1255 18.33884 -65.82572
+## 1268 18.06667 -63.06667
+## 1339 13.16667 -59.53333
+```
 
-<h4>Custom Queries using Cypher</h4>
+#### Custom Queries using Cypher
 
-<p>Currently, GloBI is powered by <a href="http://neo4j.org">neo4j</a>, a graph database. Most results created by the R functions provided by <code>rglobi</code> are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function <code>query()</code>:</p>
+Currently, GloBI is powered by [neo4j](http://neo4j.org), a graph database. Most results created by the R functions provided by `rglobi` are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function `query()`:
 
-<pre><code class="r">result &lt;- query(&quot;START taxon = node:taxons(name=&#39;Homo sapiens&#39;) MATCH taxon&lt;-[:CLASSIFIED_AS]-predator-[:ATE|PREYS_ON]-&gt;prey-[:CLASSIFIED_AS]-&gt;preyTaxon RETURN distinct(preyTaxon.name) as `prey.taxon.name` LIMIT 10&quot;)
+
+```r
+result <- query("START taxon = node:taxons(name='Homo sapiens') MATCH taxon<-[:CLASSIFIED_AS]-predator-[:ATE|PREYS_ON]->prey-[:CLASSIFIED_AS]->preyTaxon RETURN distinct(preyTaxon.name) as `prey.taxon.name` LIMIT 10")
 result
-</code></pre>
+```
 
-<pre><code>##         prey.taxon.name
+```
+##         prey.taxon.name
 ## 1          Homo sapiens
 ## 2    Macropus bernardus
 ## 3             Mysticeti
@@ -534,10 +399,6 @@ result
 ## 8   Lophocebus albigena
 ## 9            Salmonidae
 ## 10 Moschus chrysogaster
-</code></pre>
+```
 
-<p>This particular query returns the names of the first ten known prey or diet items of humans (<em>Homo sapiens</em>). More examples of GloBI specific Cypher queries can be found on the <a href="https://github.com/jhpoelen/eol-globi-data/wiki/cypher">GloBI Cypher Wiki</a>. </p>
-
-</body>
-
-</html>
+This particular query returns the names of the first ten known prey or diet items of humans (_Homo sapiens_). More examples of GloBI specific Cypher queries can be found on the [GloBI Cypher Wiki](https://github.com/jhpoelen/eol-globi-data/wiki/cypher). 

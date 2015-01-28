@@ -1,7 +1,9 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{rglobi vignette}
+%\VignetteIndexEntry{Introduction to the rglobi package}
 -->
+
+
 
 rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (http://globalbioticinteractions.org)
 ======
@@ -23,30 +25,21 @@ install.packages("devtools")
 ```
 
 ```
-## Installing package into '/Volumes/Data/Users/unencrypted/jorrit/Library/R/3.0/library'
-## (as 'lib' is unspecified)
-```
-
-```
 ## 
 ## The downloaded binary packages are in
-## 	/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmptgaLYk/downloaded_packages
+## 	/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T//RtmpF6qc1T/downloaded_packages
 ```
 
 ```r
-devtools::install_github("rglobi", "ropensci")
-```
-
-```
-## Warning: Username parameter is deprecated. Please use ropensci/rglobi
+devtools::install_github("ropensci/rglobi")
 ```
 
 ```
 ## Downloading github repo ropensci/rglobi@master
 ## Installing rglobi
 ## '/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
-##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmptgaLYk/devtools1fd744d4751b/ropensci-rglobi-7ec6694'  \
-##   --library='/Volumes/Data/Users/unencrypted/jorrit/Library/R/3.0/library'  \
+##   '/private/var/folders/v4/0_y78_xj1x7b72l89cwc2kq80000gp/T/RtmpF6qc1T/devtools15b730380a08/ropensci-rglobi-0b49250'  \
+##   --library='/Library/Frameworks/R.framework/Versions/3.1/Resources/library'  \
 ##   --install-tests 
 ## 
 ## Reloading installed rglobi
@@ -252,41 +245,41 @@ head(aves_crustacea_northern_hemisphere)
 ```
 
 ```
-##   source_taxon_external_id          source_taxon_name
-## 1                EOL:18884                    Cepphus
-## 2              EOL:1049577              Larus marinus
-## 3              EOL:1049366       Pluvialis squatarola
-## 4              EOL:1049366       Pluvialis squatarola
-## 5              EOL:1049366       Pluvialis squatarola
-## 6              EOL:1048643 Phalacrocorax penicillatus
-##                                                                                          source_taxon_path
-## 1                                         Animalia | Chordata | Aves | Charadriiformes | Alcidae | Cepphus
-## 2                           Animalia | Chordata | Aves | Charadriiformes | Laridae | Larus | Larus marinus
-## 3           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
-## 4           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
-## 5           Animalia | Chordata | Aves | Charadriiformes | Charadriidae | Pluvialis | Pluvialis squatarola
-## 6 Animalia | Chordata | Aves | Suliformes | Phalacrocoracidae | Phalacrocorax | Phalacrocorax penicillatus
+##   source_taxon_external_id       source_taxon_name
+## 1                EOL:18884                 Cepphus
+## 2              EOL:1047918      Anas platyrhynchos
+## 3              EOL:1049560 Recurvirostra americana
+## 4              EOL:1049376  Arenaria melanocephala
+## 5              EOL:1048977       Bucephala albeola
+## 6              EOL:1048977       Bucephala albeola
+##                                                                                           source_taxon_path
+## 1                                          Animalia | Chordata | Aves | Charadriiformes | Alcidae | Cepphus
+## 2                          Animalia | Chordata | Aves | Anseriformes | Anatidae | Anas | Anas platyrhynchos
+## 3 Animalia | Chordata | Aves | Charadriiformes | Recurvirostridae | Recurvirostra | Recurvirostra americana
+## 4           Animalia | Chordata | Aves | Charadriiformes | Scolopacidae | Arenaria | Arenaria melanocephala
+## 5                      Animalia | Chordata | Aves | Anseriformes | Anatidae | Bucephala | Bucephala albeola
+## 6                      Animalia | Chordata | Aves | Anseriformes | Anatidae | Bucephala | Bucephala albeola
 ##   source_specimen_life_stage interaction_type target_taxon_external_id
 ## 1                         NA          preysOn              EOL:2625033
-## 2                         NA          preysOn                EOL:35798
+## 2                         NA          preysOn              EOL:2620777
 ## 3                         NA    interactsWith              EOL:2625033
-## 4                         NA          preysOn              EOL:2615930
-## 5                         NA          preysOn              EOL:2620777
-## 6                         NA    interactsWith              EOL:2625033
+## 4                         NA          preysOn              EOL:2620777
+## 5                         NA    interactsWith              EOL:2625033
+## 6                         NA          preysOn              EOL:2620777
 ##   target_taxon_name
 ## 1          Copepoda
-## 2           Balanus
+## 2        Gammaridea
 ## 3          Copepoda
-## 4         Oniscidea
-## 5        Gammaridea
-## 6          Copepoda
-##                                                                                                                                                         target_taxon_path
-## 1                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
-## 2 Biota | Animalia | Arthropoda | Crustacea | Maxillopoda | Thecostraca | Cirripedia | Thoracica | Sessilia | Balanomorpha | Balanoidea | Balanidae | Balaninae | Balanus
-## 3                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
-## 4                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Isopoda | Oniscidea
-## 5                           Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
-## 6                                                                        Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 4        Gammaridea
+## 5          Copepoda
+## 6        Gammaridea
+##                                                                                                                               target_taxon_path
+## 1                                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 2 Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
+## 3                                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 4 Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
+## 5                                              Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Maxillopoda | Copepoda
+## 6 Animalia | Bilateria | Protostomia | Ecdysozoa | Arthropoda | Crustacea | Malacostraca | Eumalacostraca | Peracarida | Amphipoda | Gammaridea
 ##   target_specimen_life_stage latitude longitude study_title
 ## 1                         NA       NA        NA          NA
 ## 2                         NA       NA        NA          NA
@@ -361,12 +354,12 @@ head(areas)
 
 ```
 ##   Latitude Longitude
-## 1    29.35    -92.98
-## 2    29.03    -92.29
-## 3    28.04    -96.11
-## 4    27.62    -95.77
-## 5    26.33    -96.03
-## 6    30.14    -86.17
+## 1 29.34695 -92.98061
+## 2 29.03260 -92.28701
+## 3 28.03673 -96.11108
+## 4 27.62409 -95.77403
+## 5 26.33146 -96.03294
+## 6 30.25024 -86.13114
 ```
 You can also restrict this search to a certain area:
 
@@ -378,10 +371,10 @@ head(areas)
 
 ```
 ##      Latitude Longitude
-## 1251    18.25    -66.50
-## 1255    18.34    -65.83
-## 1268    18.07    -63.07
-## 1339    13.17    -59.53
+## 1251 18.24829 -66.49989
+## 1255 18.33884 -65.82572
+## 1268 18.06667 -63.06667
+## 1339 13.16667 -59.53333
 ```
 
 #### Custom Queries using Cypher

@@ -1,4 +1,6 @@
 .travis.yml
 .gitignore
 inst/.gitkeep
+inst/vign
 cran-comments.md
+Makefile
