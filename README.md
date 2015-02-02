@@ -1,10 +1,10 @@
-rglobi
+
 =======
 [![Build Status](https://travis-ci.org/ropensci/rglobi.svg?branch=master)](https://travis-ci.org/ropensci/rglobi)
 
 R library to access species interaction data of http://globalbioticinteractions.org
 
-To install ```rglobi``` from [CRAN](http://cran.r-project.org/):
+To install ```rglobi``` from [CRAN](http://cran.r-project.org/web/packages/rglobi/):
 ```R
 install.packages("rglobi")
 ```
