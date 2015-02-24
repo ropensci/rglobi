@@ -1,6 +1,6 @@
 Package: rglobi
 Type: Package
-Title: R interface to Global Biotic Interactions
+Title: R Interface to Global Biotic Interactions
 Description: A programmatic interface to the web service methods
     provided by Global Biotic Interactions (GloBI). GloBI provides 
     access to spatial-temporal species interaction records from 
