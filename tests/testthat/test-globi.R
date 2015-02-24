@@ -17,7 +17,7 @@ test_that("predator of rats", {
 })
 
 test_that("cypher query", {
-  human <- query("START taxon = node:taxons(name='Homo sapiens') RETURN taxon.name as `name`, taxon.path as `path`")
+  human <- query("START taxon = node:taxons(name='Homo sapiens') RETURN taxon.name as `name`, taxon.path as `path` LIMIT 1")
   expect_equal(as.character(human$name), "Homo sapiens")
   expect_equal(class(human$name), "character") 
   taxon_path <- as.character(human$path)
