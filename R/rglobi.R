@@ -37,7 +37,7 @@ read_csv <- function(url) {
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
 #' }
-get_interactions <- function(taxon = "Homo sapiens", interaction.type = "eats", opts = list()) {
+get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
   get_interactions_by_taxa (sourcetaxon = taxon, interactiontype = interaction.type)
 }
 
