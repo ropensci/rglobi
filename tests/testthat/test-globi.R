@@ -41,7 +41,7 @@ test_that("interactions returned based on species", {
 })
 
 test_that("interactions subsetted by adding additional information", {
-  interaction_types <- c('preysOn', 'preyedUponBy')
+  interaction_types <- c('eats', 'eatenBy')
   rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", interactiontype = interaction_types)
   rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", interactiontype= interaction_types)
   expect_equal(class(rattus$source_taxon_name), "character")
