@@ -1,7 +1,16 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{rglobi vignette}
+%\VignetteIndexEntry{Introduction to the rglobi package}
 -->
+
+```{r echo=FALSE, eval=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>", 
+  warning = FALSE, 
+  message = FALSE,
+  cache = TRUE
+)
+```
 
 rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (http://globalbioticinteractions.org)
 ======
@@ -19,7 +28,7 @@ rglobi vignette - an R interface to the aggregated biotic interaction data of Gl
 
 ```{r}
 install.packages("devtools")
-devtools::install_github("rglobi", "ropensci")
+devtools::install_github("ropensci/rglobi")
 ```
 
 ```{r}
@@ -30,15 +39,14 @@ Note that since rglobi is still pretty new, only the dev version of the library 
 
 #### Find interactions involving a certain species
 
-Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the rglobi library offers several ways to specify and access these interactions.  get_interactions is the primary function used if data on a specific interaction type is required.  A focus taxon is entered (may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)).
+Determining which species interact with each other (and how and where) is a major focus of ecology.  The Global Biotic Interactions Database offers data on multiple interaction types, and the `rglobi` library offers several ways to specify and access these interactions. `get_interactions()` is the primary function used if data on a specific interaction type is required.  A focus taxon is entered (may be specified as "Genus species" or higher level (e.g., Genus, Family, Class)).
 
 ```{r}
 hsapiens <- get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn")
 head(hsapiens)
 ```
 
-get_predators_of and get_prey_of are wrappers for get_interactions that remove the need to specify interaction type
-
+`get_predators_of()` and `get_prey_of()` are wrappers for `get_interactions()` that remove the need to specify interaction type
 
 ```{r}
 hsapiens <- get_prey_of("Homo sapiens")
@@ -53,7 +61,7 @@ get_interaction_types()
 
 For data sources in which type of interactions was not specified, the interaction is labeled "interacts_with".
 
-If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the get_interactions_by_taxa function allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.
+If you wish to view all interactions instead of specific types (e.g., parasitism and predation instead of just one of the two), the `get_interactions_by_taxa()` function allows this. In addition, the function provides options to search for interactions between two groups (source and target taxa, see above table) and only find interactions in a certain region.
 
 ```{r}
 rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus")
@@ -69,7 +77,7 @@ head(aves_crustacea_northern_hemisphere)
 
 #### Find interactions in a geographic areas
 
-Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  rglobi enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
+Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  `rglobi` enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
 ```{r}
 gulfinteractions <- get_interactions_in_area( bbox=c(-97.0, 17.5, -81, 31))
@@ -91,7 +99,7 @@ head(areas)
 
 #### Custom Queries using Cypher
 
-Currently, GloBI is powered by [neo4j](http://neo4j.org), a graph database. Most results created by the R functions provided by rglobi are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurious, you can execute queries using Cypher only using the function query():
+Currently, GloBI is powered by [neo4j](http://neo4j.org), a graph database. Most results created by the R functions provided by `rglobi` are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function `query()`:
 
 ```{r}
 result <- query("START taxon = node:taxons(name='Homo sapiens') MATCH taxon<-[:CLASSIFIED_AS]-predator-[:ATE|PREYS_ON]->prey-[:CLASSIFIED_AS]->preyTaxon RETURN distinct(preyTaxon.name) as `prey.taxon.name` LIMIT 10")

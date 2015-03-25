@@ -1,21 +1,31 @@
 Package: rglobi
 Type: Package
-Title: R interface to the aggregated biotic interaction data of GloBI
-    (http://globalbioticinteractions.org)
-Version: 0.2.1
-Date: 2014-06-02
-Author: Jorrit Poelen <jhpoelen+rglobi@gmail.com>; Stephen Gosnell
-    (stephen.gosnell@baruch.cuny.edu)
-Maintainer: Jorrit Poelen <jhpoelen+rglobi@gmail.com>
+Title: R Interface to Global Biotic Interactions
+Description: A programmatic interface to the web service methods
+    provided by Global Biotic Interactions (GloBI). GloBI provides 
+    access to spatial-temporal species interaction records from 
+    sources all over the world. rglobi provides methods to search 
+    species interactions by location, interaction type, and 
+    taxonomic name. In addition, it supports Cypher, a graph query
+    language, to allow for executing custom queries on the GloBI 
+    aggregate species interaction dataset.
+Version: 0.2.6
+Date: 2015-03-17
+Authors@R: c(person("Jorrit", "Poelen", role = c("aut", "cre"),
+    email = "jhpoelen@xs4all.nl"),
+    person("Stephen", "Gosnell", role = "aut",
+    email = "stephen.gosnell@baruch.cuny.edu"),
+    person("Sergey", "Slyusarev", role = "aut",
+    email = "cph.lmy@gmail.com"))
+URL: https://github.com/ropensci/rglobi
+BugReports: https://github.com/ropensci/rglobi/issues
+VignetteBuilder: knitr
 Depends:
     R (>= 3.0.1)
 License: MIT + file LICENSE
-Description: Access to Encyclopedia of Life Global Interactions Data that
-    describes how organisms interact with each other on earth.
 Imports:
-    httr (>= 0.3),
-    rjson (>= 0.2.13)
+    rjson (>= 0.2.13), 
+    RCurl
 Suggests:
-    testthat (>= 0.8.0),
-    knitr  (>= 1.6)
-VignetteBuilder: knitr
+    testthat,
+    knitr
