@@ -156,7 +156,7 @@ create_bbox_param <- function(bbox) {
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 #' }
-get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL,
+get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
   bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types()[,1])
@@ -178,8 +178,8 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
   requestsequence <- (function(
-    argumentnames = c("sourceTaxon", "targetTaxon", "interactionType"),
-    values = list(sourcetaxon, targettaxon, interactiontype)
+    argumentnames = c("sourceTaxon", "targetTaxon", "interactionType", "accordingTo"),
+    values = list(sourcetaxon, targettaxon, interactiontype, accordingto)
     ){
       paste(
       na.omit(
