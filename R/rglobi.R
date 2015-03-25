@@ -157,7 +157,7 @@ create_bbox_param <- function(bbox) {
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 #' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
-  showField = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_title"),
+  showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
   bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types()[,1])
@@ -180,7 +180,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
   requestsequence <- (function(
     argumentnames = c("sourceTaxon", "targetTaxon", "interactionType", "accordingTo", "field"),
-    values = list(sourcetaxon, targettaxon, interactiontype, accordingto, showField)
+    values = list(sourcetaxon, targettaxon, interactiontype, accordingto, showfield)
     ){
       paste(
       na.omit(
