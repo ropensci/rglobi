@@ -37,8 +37,8 @@ read_csv <- function(url) {
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
 #' }
-get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", opts = list()) {
-  get_interactions_by_taxa (sourcetaxon = taxon, interactiontype = interaction.type)
+get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn", ...) {
+  get_interactions_by_taxa (sourcetaxon = taxon, interactiontype = interaction.type, ...)
 }
 
 #' Get a List of Prey for given Predator Taxon
@@ -52,8 +52,8 @@ get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn
 #' get_prey_of("Homo sapiens")
 #' get_prey_of("Primates")
 #'}
-get_prey_of <- function(taxon = "Homo sapiens", opts = list()) {
-  get_interactions(taxon, opts = opts)
+get_prey_of <- function(taxon = "Homo sapiens", ...) {
+  get_interactions(taxon, ...)
 }
 
 #' Get a List of Predators of a Given Prey Taxon
@@ -67,8 +67,8 @@ get_prey_of <- function(taxon = "Homo sapiens", opts = list()) {
 #' get_predators_of("Rattus rattus")
 #' get_predators_of("Primates")
 #' }
-get_predators_of <- function(taxon = "Rattus rattus", opts = list()) {
-  get_interactions(taxon, "preyedUponBy", opts = opts)
+get_predators_of <- function(taxon = "Rattus rattus", ...) {
+  get_interactions(taxon, "preyedUponBy", ...)
 }
 
 cypher_result_as_dataframe <- function(result) {
@@ -158,7 +158,7 @@ create_bbox_param <- function(bbox) {
 #' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
   showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
-  bbox = NULL, returnobservations = F){
+  otherkeys = NULL, bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types()[,1])
     if(length(intersect(interactiontypes, interactiontype)) == 0){
@@ -179,14 +179,20 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
   requestsequence <- (function(
-    argumentnames = c("sourceTaxon", "targetTaxon", "interactionType", "accordingTo", "field"),
-    values = list(sourcetaxon, targettaxon, interactiontype, accordingto, showfield)
+    keyvaluelist = append(
+      list(
+      "sourceTaxon" = sourcetaxon, 
+      "targetTaxon" = targettaxon, 
+      "interactionType" = interactiontype, 
+      "accordingTo" = accordingto, 
+      "field" = showfield
+      ), otherkeys)
     ){
       paste(
       na.omit(
-          sapply(1:length(argumentnames), function(i){
-          if(length(values[[i]])>0){
-              paste(paste(argumentnames[i], "=", RCurl::curlEscape(values[[i]]), sep = ""), collapse = "&")
+          sapply(1:length(keyvaluelist), function(i){
+          if(length(keyvaluelist[[i]])>0){
+              paste(paste(names(keyvaluelist)[i], "=", RCurl::curlEscape(keyvaluelist[[i]]), sep = ""), collapse = "&")
             } else {
               NA
             }
@@ -212,11 +218,11 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
 #' @examples \dontrun{
 #' get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
 #' }
-get_interactions_in_area <- function(bbox){
+get_interactions_in_area <- function(bbox, ...){
   if (is.null(bbox)) {
     stop("no coordinates provided")
   } else {
-    get_interactions_by_taxa (sourcetaxon = NULL, bbox = bbox)
+    get_interactions_by_taxa (sourcetaxon = NULL, bbox = bbox, ...)
   }
 }
 
