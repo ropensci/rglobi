@@ -4,7 +4,7 @@
 \alias{get_predators_of}
 \title{Get a List of Predators of a Given Prey Taxon}
 \usage{
-get_predators_of(taxon = "Rattus rattus", opts = list())
+get_predators_of(taxon = "Rattus rattus", ...)
 }
 \arguments{
 \item{taxon}{scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)}

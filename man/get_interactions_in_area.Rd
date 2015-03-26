@@ -4,7 +4,7 @@
 \alias{get_interactions_in_area}
 \title{Return all interactions in specified area}
 \usage{
-get_interactions_in_area(bbox)
+get_interactions_in_area(bbox, ...)
 }
 \arguments{
 \item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom,

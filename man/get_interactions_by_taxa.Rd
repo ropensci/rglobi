@@ -5,7 +5,13 @@
 \title{Return interactions involving specific taxa}
 \usage{
 get_interactions_by_taxa(sourcetaxon, targettaxon = NULL,
-  interactiontype = NULL, bbox = NULL, returnobservations = F)
+  interactiontype = NULL, accordingto = NULL,
+  showfield = c("source_taxon_external_id", "source_taxon_name",
+  "source_taxon_path", "source_specimen_life_stage", "interaction_type",
+  "target_taxon_external_id", "target_taxon_name", "target_taxon_path",
+  "target_specimen_life_stage", "latitude", "longitude", "study_citation",
+  "study_external_id", "study_source_citation"), otherkeys = NULL,
+  bbox = NULL, returnobservations = F)
 }
 \arguments{
 \item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be
@@ -16,6 +22,14 @@ species" or higher level (e.g., Genus, Family, Class)}
 
 \item{interactiontype}{Interaction types of interest (prey, host); may be
 specified as listed by get_interaction_types()}
+
+\item{accordingto}{Data source of interest}
+
+\item{showfield}{Data fields of interest (e. g. source_taxon_external_id, source_taxon_name);
+may be specified as listed by get_data_fields()}
+
+\item{otherkeys}{list of key-value pairs to query any field not covered by other parameters;
+keys may be specified as listed by get_data_fields()}
 
 \item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 right, top" of bounding box}

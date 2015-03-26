@@ -4,8 +4,7 @@
 \alias{get_interactions}
 \title{Get Species Interaction from GloBI}
 \usage{
-get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn",
-  opts = list())
+get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn", ...)
 }
 \arguments{
 \item{taxon}{canonical scientic name of source taxon (e.g. Homo sapiens)}

@@ -4,7 +4,7 @@
 \alias{get_prey_of}
 \title{Get a List of Prey for given Predator Taxon}
 \usage{
-get_prey_of(taxon = "Homo sapiens", opts = list())
+get_prey_of(taxon = "Homo sapiens", ...)
 }
 \arguments{
 \item{taxon}{scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)}
