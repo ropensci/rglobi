@@ -141,6 +141,11 @@ create_bbox_param <- function(bbox) {
 #' species" or higher level (e.g., Genus, Family, Class)
 #' @param interactiontype Interaction types of interest (prey, host); may be
 #' specified as listed by get_interaction_types()
+#' @param accordingto Data source of interest
+#' @param showfield Data fields of interest (e. g. source_taxon_external_id, source_taxon_name);
+#' may be specified as listed by get_data_fields()
+#' @param otherkeys list of key-value pairs to query any field not covered by other parameters;
+#' keys may be specified as listed by get_data_fields()
 #' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 #'  right, top" of bounding box
 #' @param returnobservations if true, all individual observations are returned,
@@ -182,10 +187,10 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   requestsequence <- (function(
     keyvaluelist = append(
       list(
-      "sourceTaxon" = sourcetaxon, 
-      "targetTaxon" = targettaxon, 
-      "interactionType" = interactiontype, 
-      "accordingTo" = accordingto, 
+      "sourceTaxon" = sourcetaxon,
+      "targetTaxon" = targettaxon,
+      "interactionType" = interactiontype,
+      "accordingTo" = accordingto,
       "field" = showfield
       ), otherkeys)
     ){
@@ -275,6 +280,21 @@ get_interaction_areas <- function(bbox = NULL){
 #' }
 get_interaction_types <- function() {
   read_csv(get_globi_url("/interactionTypes?type=csv"))
+}
+
+#' @title List data fields identified in GloBI database
+#'
+#' @description Returns data frame with supported data fields
+#'
+#' @return Returns data frame of supported data fields
+#' @keywords database
+#' @export
+#' @family data
+#' @examples \dontrun{
+#' get_data_fields()
+#' }
+get_data_fields <- function() {
+  read_csv(get_globi_url("/interactionFields?type=csv"))
 }
 
 # Generate Diet Matrices using https://github.com/ropensci/rglobi

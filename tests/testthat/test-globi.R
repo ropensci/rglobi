@@ -19,7 +19,7 @@ test_that("predator of rats", {
 test_that("cypher query", {
   human <- query("START taxon = node:taxons(name='Homo sapiens') RETURN taxon.name as `name`, taxon.path as `path` LIMIT 1")
   expect_equal(as.character(human$name), "Homo sapiens")
-  expect_equal(class(human$name), "character") 
+  expect_equal(class(human$name), "character")
   taxon_path <- as.character(human$path)
   expect_equal(grep('Primates', taxon_path), 1)
 })
@@ -56,7 +56,7 @@ test_that("interactions subsetted by adding additional information all interacti
   expect_true(dim(rattus)[1] > 0)
   expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
   # note that some interaction types (e.g. interactsWith) are symmetric
-  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith. 
+  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith.
   expect_equal(dim(merge(rattusaves,rattus, all.x=T, all.y=T)), dim(rattus))
 })
 
@@ -66,7 +66,17 @@ test_that("interactions subsetted by adding additional information all interacti
   expect_true(dim(rattus)[1] > 0)
   expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
   # note that some interaction types (e.g. interactsWith) are symmetric
-  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith. 
+  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith.
+  expect_equal(dim(merge(unique(rattusaves),unique(rattus), all.x=T, all.y=T)), dim(unique(rattus)))
+})
+
+test_that("interactions subsetted by adding additional information using otherkeys, all interaction types include observations", {
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", otherkeys = list("targetTaxon" = "Aves"))
+  expect_true(dim(rattus)[1] > 0)
+  expect_less_than(dim(rattusaves)[1], dim(rattus)[1])
+  # note that some interaction types (e.g. interactsWith) are symmetric
+  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith.
   expect_equal(dim(merge(unique(rattusaves),unique(rattus), all.x=T, all.y=T)), dim(unique(rattus)))
 })
 
