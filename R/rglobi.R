@@ -157,7 +157,8 @@ create_bbox_param <- function(bbox) {
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 #' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
-  showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude"),
+  showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
+  otherkeys = NULL,
   bbox = NULL, returnobservations = F){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types()[,1])
@@ -179,14 +180,20 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
   requestsequence <- (function(
-    argumentnames = c("sourceTaxon", "targetTaxon", "interactionType", "accordingTo", "field"),
-    values = list(sourcetaxon, targettaxon, interactiontype, accordingto, showfield)
+    keyvaluelist = append(
+      list(
+      "sourceTaxon" = sourcetaxon, 
+      "targetTaxon" = targettaxon, 
+      "interactionType" = interactiontype, 
+      "accordingTo" = accordingto, 
+      "field" = showfield
+      ), otherkeys)
     ){
       paste(
       na.omit(
-          sapply(1:length(argumentnames), function(i){
-          if(length(values[[i]])>0){
-              paste(paste(argumentnames[i], "=", RCurl::curlEscape(values[[i]]), sep = ""), collapse = "&")
+          sapply(1:length(keyvaluelist), function(i){
+          if(length(keyvaluelist[[i]])>0){
+              paste(paste(names(keyvaluelist)[i], "=", RCurl::curlEscape(keyvaluelist[[i]]), sep = ""), collapse = "&")
             } else {
               NA
             }
