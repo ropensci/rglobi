@@ -278,7 +278,7 @@ get_interaction_areas <- function(bbox = NULL){
 #' get_interaction_types()
 #' }
 get_interaction_types <- function() {
-  read_csv(get_globi_url("/interactionTypes?type=csv"))
+  read_csv(get_globi_url("/interactionTypes.csv?type=csv"))
 }
 
 #' @title List data fields identified in GloBI database
@@ -293,7 +293,7 @@ get_interaction_types <- function() {
 #' get_data_fields()
 #' }
 get_data_fields <- function() {
-  read_csv(get_globi_url("/interactionFields?type=csv"))
+  read_csv(get_globi_url("/interactionFields.csv?type=csv"))
 }
 
 # Generate Diet Matrices using https://github.com/ropensci/rglobi

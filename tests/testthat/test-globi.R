@@ -93,6 +93,11 @@ test_that("interaction types", {
   expect_true('preyedUponBy' %in% types$interaction)
 })
 
+test_that("data fields can be retrieved", {
+  fields <- get_data_fields()
+  expect_true('source_taxon_name' %in% fields$name)
+})
+
 test_that("interaction in area", {
   interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31))
   expect_equal(class(interactions$source_taxon_name), "character")
