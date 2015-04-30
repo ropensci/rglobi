@@ -3,8 +3,8 @@
 # @param opts list containing options
 # @return list with options including default for missing options
 
-add_missing_options <- function(opts) {
-  defaults <- list(host = 'api.globalbioticinteractions.org', port = 80)
+add_missing_options <- function(opts, host = "api.globalbioticinteractions.org") {
+  defaults <- list(host = host, port = 80)
   opts <- c(opts, defaults)
   opts[unique(names(opts))]
 }
@@ -95,11 +95,11 @@ cypher_result_as_dataframe <- function(result) {
 #' @param opts list of named options to configure GloBI API
 #' @return result of cypher query string
 #' @export
-query <- function(cypherQuery, opts = list(port = 7474)) {
+query <- function(cypherQuery, opts = list()) {
   h <- RCurl::basicTextGatherer()
-
+  opts_cypher <- add_missing_options(opts, host = "neo4j.globalbioticinteractions.org")
   RCurl::curlPerform(
-    url=get_globi_url("/db/data/ext/CypherPlugin/graphdb/execute_query", opts),
+    url=get_globi_url("/db/data/ext/CypherPlugin/graphdb/execute_query", opts_cypher),
     postfields=paste('query',RCurl::curlEscape(cypherQuery), sep='='),
 		writefunction = h$update,
 		verbose = FALSE
@@ -336,7 +336,7 @@ rel_type_interaction_type <- function(interaction.type) {
 
 # Retrieves diet items of given predator and classifies them by matching the prey categories against
 # both taxon hierarchy of prey and the name that was originally used to describe the prey.
-unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.names, interaction.type, opts = list(port = 7474)) {
+unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.names, interaction.type, opts = list()) {
   cypher <- paste("START predatorTaxon = node:taxons(name='", source.taxon.name, "') MATCH preyTaxon<-[:CLASSIFIED_AS]-prey<-[:", rel_type_interaction_type(interaction.type), "]-predator-[:CLASSIFIED_AS]->predatorTaxon, prey-[:ORIGINALLY_DESCRIBED_AS]->preyTaxonOrig WHERE has(preyTaxon.path) RETURN distinct(preyTaxonOrig.name) as `prey.taxon.name.orig`, preyTaxon.path as `prey.taxon.path`", sep="")
   result <- query(cypher, opts = opts)
   ReportProgress()
@@ -364,7 +364,7 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 #' @examples \dontrun{
 #' get_interaction_matrix("Homo sapiens", "Mammalia", "preysOn")
 #' }
-get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'preysOn', opts = list(port = 7474)) {
+get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'preysOn', opts = list()) {
   Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts)), source.taxon.names, init=data.frame())
 }
 
@@ -381,7 +381,7 @@ get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), ta
 #' @examples \dontrun{
 #' get_child_taxa(list("Aves"))
 #' }
-get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list(port = 7474)) {
+get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list()) {
   luceneQuery <- paste('path:', taxon.names, ' ', sep='', collapse='')
   cypher <- paste("START taxon = node:taxonPaths('", luceneQuery , "') WHERE has(taxon.rank) AND taxon.rank = '", rank, "' RETURN distinct(taxon.name) as `taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
   query(cypher, opts = opts)$taxon.name
@@ -406,7 +406,7 @@ interaction_id_for_type <- function(interaction.type) {
 #' @examples \dontrun{
 #' get_interaction_table(source.taxon.names = list("Aves"), target.taxon.names = list('Insecta'))
 #' }
-get_interaction_table <- function(source.taxon.names = list(), target.taxon.names = list(), interaction.type = "preysOn", skip = 0, limit = 100, opts = list(port = 7474)) {
+get_interaction_table <- function(source.taxon.names = list(), target.taxon.names = list(), interaction.type = "preysOn", skip = 0, limit = 100, opts = list()) {
   interaction.id <- interaction_id_for_type(interaction.type)
   rel_type <- rel_type_interaction_type(interaction.type)
 
