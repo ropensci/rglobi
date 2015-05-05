@@ -29,7 +29,7 @@ read_csv <- function(url, ...) {
 #'
 #' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens)
 #' @param interaction.type the preferred interaction type (e.g. preysOn)
-#' @param opts list of options to configure GloBI API
+#' @param ... list of options to configure GloBI API
 #' @return species interactions between source and target taxa
 #' @family interactions
 #' @export
@@ -44,7 +44,7 @@ get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn
 #' Get a List of Prey for given Predator Taxon
 #'
 #' @param taxon scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)
-#' @param opts list of named options to configure GloBI API
+#' @param ... list of named options to configure GloBI API
 #' @return list of recorded predator-prey interactions that involve the desired predator taxon
 #' @export
 #' @family interactions
@@ -59,7 +59,7 @@ get_prey_of <- function(taxon = "Homo sapiens", ...) {
 #' Get a List of Predators of a Given Prey Taxon
 #'
 #' @param taxon scientific name of prey taxon. Can be any taxonomic rank (e.g. Rattus rattus, Decapoda)
-#' @param opts list of named options to configure the GloBI API
+#' @param ... list of named options to configure the GloBI API
 #' @return list of recorded prey-predator interactions that involve the desired prey taxon.
 #' @export
 #' @family interactions
@@ -150,6 +150,7 @@ create_bbox_param <- function(bbox) {
 #'  right, top" of bounding box
 #' @param returnobservations if true, all individual observations are returned,
 #' else only distinct relationships
+#' @param opts list of named options to configure GloBI API
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
@@ -163,7 +164,7 @@ create_bbox_param <- function(bbox) {
 #' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
   showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
-  otherkeys = NULL, bbox = NULL, returnobservations = F){
+  otherkeys = NULL, bbox = NULL, returnobservations = F, opts = list()){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types()[,1])
     if(length(intersect(interactiontypes, interactiontype)) == 0){
@@ -216,6 +217,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
 #'
 #' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 #' right, top" of bounding box
+#' @param ... list of named options to configure GloBI API
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
@@ -238,6 +240,7 @@ get_interactions_in_area <- function(bbox, ...){
 #'
 #' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 #' right, top" of bounding box
+#' @param ... list of named options to configure GloBI API
 #' @return Returns data frame of coordinates
 #' @keywords database
 #' @export
@@ -246,8 +249,8 @@ get_interactions_in_area <- function(bbox, ...){
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 #' }
-get_interaction_areas <- function(bbox = NULL){
-  requesturl <- read_csv (get_globi_url("/locations?type=csv"))
+get_interaction_areas <- function(bbox = NULL, ...){
+  requesturl <- read_csv (get_globi_url("/locations?type=csv", ...))
   names (requesturl) <- c ("Latitude", "Longitude")
   requesturl$Latitude <- as.numeric (requesturl$Latitude)
   requesturl$Longitude <- as.numeric (requesturl$Longitude)
@@ -270,6 +273,7 @@ get_interaction_areas <- function(bbox = NULL){
 #'
 #' @description Returns data frame with supported interaction types
 #'
+#' @param opts list of named options to configure GloBI API
 #' @return Returns data frame of supported interaction types
 #' @keywords database
 #' @export
@@ -277,14 +281,15 @@ get_interaction_areas <- function(bbox = NULL){
 #' @examples \dontrun{
 #' get_interaction_types()
 #' }
-get_interaction_types <- function() {
-  read_csv(get_globi_url("/interactionTypes.csv?type=csv"))
+get_interaction_types <- function(opts = list()) {
+  read_csv(get_globi_url("/interactionTypes.csv?type=csv", opts = opts))
 }
 
 #' @title List data fields identified in GloBI database
 #'
 #' @description Returns data frame with supported data fields
 #'
+#' @param opts list of named options to configure GloBI API
 #' @return Returns data frame of supported data fields
 #' @keywords database
 #' @export
@@ -292,8 +297,8 @@ get_interaction_types <- function() {
 #' @examples \dontrun{
 #' get_data_fields()
 #' }
-get_data_fields <- function() {
-  read_csv(get_globi_url("/interactionFields.csv?type=csv"))
+get_data_fields <- function(opts = list()) {
+  read_csv(get_globi_url("/interactionFields.csv?type=csv", opts = opts))
 }
 
 # Generate Diet Matrices using https://github.com/ropensci/rglobi

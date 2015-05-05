@@ -4,7 +4,10 @@
 \alias{get_interaction_types}
 \title{List interactions identified in GloBI database}
 \usage{
-get_interaction_types()
+get_interaction_types(opts = list())
+}
+\arguments{
+\item{opts}{list of named options to configure GloBI API}
 }
 \value{
 Returns data frame of supported interaction types

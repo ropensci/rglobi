@@ -11,7 +11,7 @@ get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn", ...)
 
 \item{interaction.type}{the preferred interaction type (e.g. preysOn)}
 
-\item{opts}{list of options to configure GloBI API}
+\item{...}{list of options to configure GloBI API}
 }
 \value{
 species interactions between source and target taxa

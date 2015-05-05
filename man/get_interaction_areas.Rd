@@ -4,11 +4,13 @@
 \alias{get_interaction_areas}
 \title{Find locations at which interactions were observed}
 \usage{
-get_interaction_areas(bbox = NULL)
+get_interaction_areas(bbox = NULL, ...)
 }
 \arguments{
 \item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 right, top" of bounding box}
+
+\item{...}{list of named options to configure GloBI API}
 }
 \value{
 Returns data frame of coordinates

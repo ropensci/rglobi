@@ -11,7 +11,7 @@ get_interactions_by_taxa(sourcetaxon, targettaxon = NULL,
   "target_taxon_external_id", "target_taxon_name", "target_taxon_path",
   "target_specimen_life_stage", "latitude", "longitude", "study_citation",
   "study_external_id", "study_source_citation"), otherkeys = NULL,
-  bbox = NULL, returnobservations = F)
+  bbox = NULL, returnobservations = F, opts = list())
 }
 \arguments{
 \item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be
@@ -36,6 +36,8 @@ right, top" of bounding box}
 
 \item{returnobservations}{if true, all individual observations are returned,
 else only distinct relationships}
+
+\item{opts}{list of named options to configure GloBI API}
 }
 \value{
 Returns data frame of interactions

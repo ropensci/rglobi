@@ -9,7 +9,7 @@ get_prey_of(taxon = "Homo sapiens", ...)
 \arguments{
 \item{taxon}{scientific name of predator taxon. Can be any taxonomic rank (e.g. Homo sapiens, Animalia)}
 
-\item{opts}{list of named options to configure GloBI API}
+\item{...}{list of named options to configure GloBI API}
 }
 \value{
 list of recorded predator-prey interactions that involve the desired predator taxon

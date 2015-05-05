@@ -4,7 +4,10 @@
 \alias{get_data_fields}
 \title{List data fields identified in GloBI database}
 \usage{
-get_data_fields()
+get_data_fields(opts = list())
+}
+\arguments{
+\item{opts}{list of named options to configure GloBI API}
 }
 \value{
 Returns data frame of supported data fields

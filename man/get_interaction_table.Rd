@@ -6,7 +6,7 @@
 \usage{
 get_interaction_table(source.taxon.names = list(),
   target.taxon.names = list(), interaction.type = "preysOn", skip = 0,
-  limit = 100, opts = list(port = 7474))
+  limit = 100, opts = list())
 }
 \arguments{
 \item{source.taxon.names}{list of taxon names for source}

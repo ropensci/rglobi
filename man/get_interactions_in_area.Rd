@@ -9,6 +9,8 @@ get_interactions_in_area(bbox, ...)
 \arguments{
 \item{bbox}{Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 right, top" of bounding box}
+
+\item{...}{list of named options to configure GloBI API}
 }
 \value{
 Returns data frame of interactions

@@ -5,7 +5,7 @@
 \title{Returns all known child taxa with known interaction of specified taxa and rank.}
 \usage{
 get_child_taxa(taxon.names, rank = "Species", skip = 0, limit = 25,
-  opts = list(port = 7474))
+  opts = list())
 }
 \arguments{
 \item{taxon.names}{list of taxa of which child taxa should be included.}

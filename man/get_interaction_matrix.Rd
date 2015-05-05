@@ -6,7 +6,7 @@
 \usage{
 get_interaction_matrix(source.taxon.names = list("Homo sapiens"),
   target.taxon.names = list("Mammalia"), interaction.type = "preysOn",
-  opts = list(port = 7474))
+  opts = list())
 }
 \arguments{
 \item{source.taxon.names}{list of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis'))}
