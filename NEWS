@@ -1,0 +1,10 @@
+rgbif 0.2.8
+===============
+
+NEW FEATURES
+
+IMPROVEMENTS
+
+BUG FIXES
+
+* Switch neo4j port from 7474 to 80 following changes to the neo4j endpoint.
