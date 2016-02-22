@@ -1,3 +1,13 @@
+rglobi 0.2.9 (not yet released)
+===============
+NEW FEATURES
+
+IMPROVEMENT
+
+BUG FIXES
+
+* make get_interaction_matrix use same name matching method as get_interactions . See https://github.com/globalbioticinteractions/globalbioticinteractions.github.io/issues/63 .
+
 rglobi 0.2.8
 ===============
 
