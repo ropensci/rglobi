@@ -342,10 +342,9 @@ rel_type_interaction_type <- function(interaction.type) {
 # Retrieves diet items of given predator and classifies them by matching the prey categories against
 # both taxon hierarchy of prey and the name that was originally used to describe the prey.
 unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.names, interaction.type, opts = list()) {
-  cypher <- paste("START predatorTaxon = node:taxons(name='", source.taxon.name, "') MATCH preyTaxon<-[:CLASSIFIED_AS]-prey<-[:", rel_type_interaction_type(interaction.type), "]-predator-[:CLASSIFIED_AS]->predatorTaxon, prey-[:ORIGINALLY_DESCRIBED_AS]->preyTaxonOrig WHERE has(preyTaxon.path) RETURN distinct(preyTaxonOrig.name) as `prey.taxon.name.orig`, preyTaxon.path as `prey.taxon.path`", sep="")
-  result <- query(cypher, opts = opts)
+  result <- get_interactions_by_taxa(sourcetaxon = source.taxon.name, interactiontype = interaction.type, targettaxon = target.taxon.names, opts = opts) 
   ReportProgress()
-  all.taxa.paths <- Reduce(function(accum, path) paste(accum, path), paste('{',result$prey.taxon.path,'}', sep=''))
+  all.taxa.paths <- Reduce(function(accum, path) paste(accum, path), paste('{',result$target_taxon_path,'}', sep=''))
   has.prey.category <- lapply(target.taxon.names, function(prey.category) {
     match <- grep(prey.category, all.taxa.paths, perl=TRUE)
     ifelse(length(match) > 0, 1, 0)
@@ -369,7 +368,7 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 #' @examples \dontrun{
 #' get_interaction_matrix("Homo sapiens", "Mammalia", "preysOn")
 #' }
-get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'preysOn', opts = list()) {
+get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'interactsWith', opts = list()) {
   Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts)), source.taxon.names, init=data.frame())
 }
 
