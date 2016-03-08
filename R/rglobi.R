@@ -22,7 +22,7 @@ get_globi_url <- function(suffix, opts = list()) {
 # Read csv URL
 # @param url points to csv resource
 read_csv <- function(url, ...) {
-  read.csv(url, stringsAsFactors=FALSE, ...)
+  utils::read.csv(url, stringsAsFactors=FALSE, ...)
 }
 
 #' Get Species Interaction from GloBI
@@ -195,7 +195,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
       ), otherkeys)
     ){
       paste(
-      na.omit(
+      stats::na.omit(
           sapply(1:length(keyvaluelist), function(i){
           if(length(keyvaluelist[[i]])>0){
               paste(paste(names(keyvaluelist)[i], "=", RCurl::curlEscape(keyvaluelist[[i]]), sep = ""), collapse = "&")
