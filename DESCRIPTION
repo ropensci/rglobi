@@ -8,7 +8,7 @@ Description: A programmatic interface to the web service methods
     species interactions by location, interaction type, and 
     taxonomic name. In addition, it supports Cypher, a graph query
     language, to allow for executing custom queries on the GloBI 
-    aggregate species interaction dataset.
+    aggregate species interaction data set.
 Version: 0.2.9
 Date: 2016-03-08
 Authors@R: c(person("Jorrit", "Poelen", role = c("aut", "cre"),
