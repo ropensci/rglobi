@@ -27,5 +27,5 @@ Imports:
     rjson (>= 0.2.13), 
     RCurl
 Suggests:
-    testthat,
+    testthat(>= 0.7),
     knitr
