@@ -17,7 +17,7 @@ install.packages("devtools")
 devtools::install_github("ropensci/rglobi")
 ```
 
-## Examples
+## examples
 
 ```R
 library(rglobi)
@@ -35,7 +35,7 @@ locations <- cbind(obs$target_taxon_name, obs$latitude, obs$longitude)
 ```
 Please see R help pages (e.g. ```?get_interactions_by_taxa``` and [vignettes](http://cran.r-project.org/package=rglobi) for more information.
 
-## Tests
+## tests
 Tests can be executed using devtools package.
 ```R
 # workdir should be rglobi repo root directory (check with getwd())
@@ -43,7 +43,7 @@ devtools::test()
 ```
 This should reload the library, executes the test_that testcases and show test reports.
 
-## Documentation
+## documentation
 roxygen2 is used to generate .Rd and NAMESPACE by running:
 ```R
  library(roxygen2)
@@ -52,7 +52,7 @@ roxygen2 is used to generate .Rd and NAMESPACE by running:
 
 Vignettes are generated using ```knitr``` and ```markdown``` packages.
 
-## Meta
+## meta
 
 Please [report any issues or bugs](https://github.com/ropensci/rglobi/issues).
 
