@@ -1,10 +1,11 @@
 
-=======
+# rGloBI 
+R library to access species interaction data of http://globalbioticinteractions.org
+
 [![Build Status](https://travis-ci.org/ropensci/rglobi.svg?branch=master)](https://travis-ci.org/ropensci/rglobi)[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/rglobi?color=E664A4)](https://github.com/metacran/cranlogs.app)[![cran version](http://www.r-pkg.org/badges/version/rglobi)](http://cran.r-project.org/package=rglobi)
 [![codecov.io](https://codecov.io/github/ropensci/rglobi/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rglobi?branch=master)
 
-R library to access species interaction data of http://globalbioticinteractions.org
-
+## install 
 To install ```rglobi``` from [CRAN](http://cran.r-project.org/package=rglobi):
 ```R
 install.packages("rglobi")
@@ -16,7 +17,7 @@ install.packages("devtools")
 devtools::install_github("ropensci/rglobi")
 ```
 
-## Getting Data
+## Examples
 
 ```R
 library(rglobi)
