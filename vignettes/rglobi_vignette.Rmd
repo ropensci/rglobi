@@ -18,7 +18,27 @@ rglobi vignette - an R interface to the aggregated biotic interaction data of Gl
 
 #### First, install `rglobi`
 
+For released version, use:
 
+```r
+install.packages("rglobi")
+```
+
+```
+* installing *source* package ‘rglobi’ ...
+** package ‘rglobi’ successfully unpacked and MD5 sums checked
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (rglobi)
+```
+
+For most recent development version, use:
 
 ```r
 install.packages("devtools")
