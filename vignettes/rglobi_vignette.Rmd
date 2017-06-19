@@ -24,20 +24,6 @@ For released version, use:
 install.packages("rglobi")
 ```
 
-```
-* installing *source* package ‘rglobi’ ...
-** package ‘rglobi’ successfully unpacked and MD5 sums checked
-** R
-** inst
-** preparing package for lazy loading
-** help
-*** installing help indices
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded
-* DONE (rglobi)
-```
-
 For most recent development version, use:
 
 ```r
