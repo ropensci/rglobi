@@ -5,7 +5,7 @@
 \title{Get Interaction Matrix. Constructs an interaction matrix indicating whether source taxa (rows) or target taxa (columns) are known to interact with given type.}
 \usage{
 get_interaction_matrix(source.taxon.names = list("Homo sapiens"),
-  target.taxon.names = list("Mammalia"), interaction.type = "interactsWith",
+  target.taxon.names = list("Mammalia"), interaction.type = "eats",
   opts = list())
 }
 \arguments{
@@ -25,7 +25,7 @@ Get Interaction Matrix. Constructs an interaction matrix indicating whether sour
 }
 \examples{
 \dontrun{
-get_interaction_matrix("Homo sapiens", "Mammalia", "interactsWith")
+get_interaction_matrix("Homo sapiens", "Mammalia", "eats")
 }
 }
 \seealso{
