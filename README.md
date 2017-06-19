@@ -39,6 +39,8 @@ Please see R help pages (e.g. ```?get_interactions_by_taxa``` and [vignettes](ht
 Tests can be executed using devtools package.
 ```R
 # workdir should be rglobi repo root directory (check with getwd())
+# install dependencies 
+devtools::install('.')
 devtools::test()
 ```
 This should reload the library, executes the test_that testcases and show test reports.
