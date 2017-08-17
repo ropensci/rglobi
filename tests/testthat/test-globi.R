@@ -115,3 +115,8 @@ test_that("interaction matrix with interaction type can be retrieved", {
   interaction.matrix <- get_interaction_matrix(list('Cymothoa excisa'), list('Micropogonias undulatus'), 'parasiteOf')
   expect_equal(unlist(interaction.matrix[[2]]), 1)
 })
+
+test_that("interactions can be retrieved by type", {
+  interactions <- rglobi::get_interactions_by_type(interactiontype = c('eats', 'eatenBy'), showfield = c('source_taxon_name', 'interaction_type', 'target_taxon_name'), otherkeys = list(limit=5))
+  expect_equal(length(interactions$source_taxon_name), 5)
+})
