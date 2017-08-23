@@ -43,7 +43,7 @@ get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn
 
 #' Get Species Interactions by Interaction Type from GloBI
 #'
-#' @param interaction.type the preferred interaction type (e.g. preysOn)
+#' @param interactiontype the requested interaction type (e.g. preysOn)
 #' @param ... list of options to configure GloBI API
 #' @return species interactions given provided interaction type(s)
 #' @family interactions

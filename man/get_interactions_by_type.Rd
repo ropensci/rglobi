@@ -7,9 +7,9 @@
 get_interactions_by_type(interactiontype = c("interactsWith"), ...)
 }
 \arguments{
-\item{...}{list of options to configure GloBI API}
+\item{interactiontype}{the requested interaction type (e.g. preysOn)}
 
-\item{interaction.type}{the preferred interaction type (e.g. preysOn)}
+\item{...}{list of options to configure GloBI API}
 }
 \value{
 species interactions given provided interaction type(s)
