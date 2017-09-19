@@ -4,3 +4,6 @@ inst/.gitkeep
 inst/vign
 cran-comments.md
 Makefile
+^README\.Rmd$
+^README-.*\.png$
+*.tar.gz

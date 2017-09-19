@@ -12,3 +12,5 @@ rglobi.Rcheck
 #vignette files besides source
 vignette/*.html
 vignette/*.md
+
+*.tar.gz
