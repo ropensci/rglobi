@@ -1,3 +1,12 @@
+rglobi 0.2.10
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* a rglobi user requested to search by interactions type (see https://github.com/ropensci/rglobi/issues/23). The functionality was implemented by adding method ```get_interactions_by_type```.
+
+BUG FIXES
+
 rglobi 0.2.9
 ===============
 NEW FEATURES
