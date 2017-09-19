@@ -59,4 +59,4 @@ Please [report any issues or bugs](https://github.com/ropensci/rglobi/issues).
 
 This package is part of the [rOpenSci](http://ropensci.org/packages) project.
 
-[![rOpenSci footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![rOpenSci footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
