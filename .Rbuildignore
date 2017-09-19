@@ -6,4 +6,4 @@ cran-comments.md
 Makefile
 ^README\.Rmd$
 ^README-.*\.png$
-*.tar.gz
+^.*\.tar.gz
