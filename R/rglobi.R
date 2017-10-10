@@ -16,7 +16,7 @@ add_missing_options <- function(opts, host = "api.globalbioticinteractions.org")
 # @return url address used to call api
 get_globi_url <- function(suffix, opts = list()) {
   opts <- add_missing_options(opts)
-  paste("http://", opts$host, ":", opts$port, suffix, sep = "")
+  paste("https://", opts$host, ":", opts$port, suffix, sep = "")
 }
 
 # Read csv URL
