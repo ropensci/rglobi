@@ -4,7 +4,7 @@
 # @return list with options including default for missing options
 
 add_missing_options <- function(opts, host = "api.globalbioticinteractions.org") {
-  defaults <- list(host = host, port = 80)
+  defaults <- list(host = host, port = 443)
   opts <- c(opts, defaults)
   opts[unique(names(opts))]
 }
