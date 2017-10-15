@@ -27,7 +27,7 @@ read_csv <- function(url, ...) {
 
 #' Get Species Interaction from GloBI
 #'
-#' @param taxon canonical scientic name of source taxon (e.g. Homo sapiens)
+#' @param taxon canonical scientific name of source taxon (e.g. Homo sapiens)
 #' @param interaction.type the preferred interaction type (e.g. preysOn)
 #' @param ... list of options to configure GloBI API
 #' @return species interactions between source and target taxa

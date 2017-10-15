@@ -7,7 +7,7 @@
 get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn", ...)
 }
 \arguments{
-\item{taxon}{canonical scientic name of source taxon (e.g. Homo sapiens)}
+\item{taxon}{canonical scientific name of source taxon (e.g. Homo sapiens)}
 
 \item{interaction.type}{the preferred interaction type (e.g. preysOn)}
 
