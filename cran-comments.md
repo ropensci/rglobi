@@ -8,11 +8,6 @@ Bug fix:
 The remaining note for this version is:
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘Jorrit Poelen <jhpoelen@xs4all.nl>’
-Components with restrictions and base license permitting such:
-  MIT + file LICENSE
-File 'LICENSE':
-  YEAR: 2017
-  COPYRIGHT HOLDER: Jorrit Poelen
 
 Thank you for taking the time to review my submission.
 
