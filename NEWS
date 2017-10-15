@@ -1,4 +1,21 @@
+rglobi 0.2.11
+===============
+NEW FEATURES
+
+IMPROVEMENT
+
+BUG FIXES
+* After switching to https endpoint for GloBI APIs, the default configuration needed updating to ensure existing functions to continue to work.
+
+
 rglobi 0.2.10
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* a rglobi user requested to search by interactions type (see https://github.com/ropensci/rglobi/issues/23). The functionality was implemented by adding method ```get_interactions_by_type```.
+
+BUG FIXES
 ===============
 NEW FEATURES
 
