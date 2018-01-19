@@ -35,7 +35,7 @@ test_that("invalid cypher query", {
 
 test_that("interactions returned based on species", {
   rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
-  expect_equal(as.character(rattus$source_taxon_name[1]), "Rattus rattus")
+  expect_match(as.character(rattus$source_taxon_name[1]), "^Rattus rattus")
   taxon_path <- as.character(rattus$source_taxon_path[1])
   expect_equal(grep('Muridae', taxon_path), 1)
 })
