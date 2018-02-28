@@ -1,3 +1,12 @@
+rglobi 0.2.13
+===============
+NEW FEATURES
+
+IMPROVEMENT
+
+BUG FIXES
+* Fix another test error caused by overly restrictive assertion.
+
 rglobi 0.2.12
 ===============
 NEW FEATURES
