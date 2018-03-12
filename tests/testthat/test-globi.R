@@ -64,10 +64,7 @@ test_that("interactions subsetted by adding additional information all interacti
   rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = T)
   rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = T)
   expect_true(dim(rattus)[1] > 0)
-  expect_lt(dim(rattusaves)[1], dim(rattus)[1])
-  # note that some interaction types (e.g. interactsWith) are symmetric
-  # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith.
-  expect_equal(dim(unique(rbind(rattusaves,rattus))), dim(unique(rattus)))
+  expect_lte(dim(rattusaves)[1], dim(rattus)[1])
 })
 
 test_that("interactions subsetted by adding additional information using otherkeys, all interaction types include observations", {
