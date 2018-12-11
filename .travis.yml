@@ -2,6 +2,10 @@ language: r
 sudo: false
 cache: packages
 
+r_packages:
+  - rjson
+  - RCurl
+
 notifications:
   email:
     on_success: change
