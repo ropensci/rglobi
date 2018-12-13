@@ -1,17 +1,19 @@
 Dear Reviewers:
 
-I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.14.tar.gz] on my Ubuntu 16.04 LTS Xenial (4.4.0-112-generic) machine running R 3.4.4 . Also, the checks were executed on travis-ci.org (running Ubuntu) and winbuilder (running windows). 
+I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.15.tar.gz] on my Ubuntu 18.04 LTS Bionic Beaver (4.15.0-42-generic) machine running R 3.5.1 . Also, the checks were executed on travis-ci.org (running Ubuntu) and winbuilder (running windows). 
 
 Bug fix:
-* Fix yet another test error caused by overly restrictive assertion.
+* Enforce utf-8 encoding on reading csv results.
 
-The remaining warning for this version is:
-* checking top-level files ... WARNING
-Conversion of ‘README.md’ failed:
-pandoc: Could not fetch https://cranlogs.r-pkg.org/badges/rglobi?color=E664A4
-TlsExceptionHostPort (HandshakeFailed Error_EOF) "cranlogs.r-pkg.org" 443
+The remaining note for this version is:
 
-I've checked this badge url in a browser and it rendered just fine. I am assuming this warning is not critical. 
+Possibly mis-spelled words in DESCRIPTION:
+  Biotic (3:30, 5:24)
+  Cypher (9:46)
+  GloBI (5:45, 5:53, 10:60)
+  rglobi (7:33)
+
+I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
 
 Thank you for taking the time to review my submission.
 
