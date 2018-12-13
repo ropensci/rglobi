@@ -22,7 +22,7 @@ get_globi_url <- function(suffix, opts = list()) {
 # Read csv URL
 # @param url points to csv resource
 read_csv <- function(url, ...) {
-  utils::read.csv(url, stringsAsFactors=FALSE, ...)
+  utils::read.csv(url, encoding = "UTF-8", stringsAsFactors = FALSE, ...)
 }
 
 #' Get Species Interaction from GloBI
