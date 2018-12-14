@@ -1,3 +1,12 @@
+rglobi 0.2.17
+===============
+NEW FEATURES
+
+IMPROVEMENT
+
+BUG FIXES
+* Use utils::download.file in an attempt to avoid intermittent download issues on debian.  
+
 rglobi 0.2.16
 ===============
 NEW FEATURES
