@@ -116,8 +116,10 @@ query <- function(cypherQuery, opts = list()) {
   h <- RCurl::basicTextGatherer()
   opts_cypher <- add_missing_options(opts, host = "neo4j.globalbioticinteractions.org")
   RCurl::curlPerform(
-    url=get_globi_url("/db/data/ext/CypherPlugin/graphdb/execute_query", opts_cypher),
-    postfields=paste('query',RCurl::curlEscape(cypherQuery), sep='='),
+    url=get_globi_url("/db/data/cypher", opts_cypher),
+    postfields=rjson::toJSON(list('query' = cypherQuery)),
+                httpheader=c(Accept="application/json",
+                           'Content-Type' = "application/json"),
 		writefunction = h$update,
 		verbose = FALSE
   )
