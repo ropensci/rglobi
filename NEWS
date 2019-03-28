@@ -1,3 +1,12 @@
+rglobi 0.2.18
+===============
+NEW FEATURES
+
+IMPROVEMENT
+
+BUG FIXES
+* Update cypher query endpoint after server upgrade to neo4j v2.3.12
+
 rglobi 0.2.17
 ===============
 NEW FEATURES
