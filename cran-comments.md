@@ -1,9 +1,9 @@
 Dear Reviewers:
 
-I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.18.tar.gz] on my Ubuntu 18.04 LTS Bionic Beaver (4.15.0-42-generic) machine running R 3.5.3 . Also, the checks were executed on travis-ci.org (running Ubuntu) and winbuilder (running windows). 
+I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.19.tar.gz] on my Ubuntu 18.04 LTS Bionic Beaver (4.15.0-42-generic) machine running R 3.5.3 . Also, the checks were executed on travis-ci.org (running Ubuntu) and winbuilder (running windows). Note that R 3.6.0 was not used, because no ubuntu packages were available at this time. 
 
-Bug fix:
-* Update cypher query endpoint after upgrade to neo4j v2.3.12 
+IMPROVEMENT
+* show informative messages like ```GloBI data services are not available at [api.globalbioticinteractions.org]. Are you connected to the internet?``` when internet resources are not available. Suggested by Brian D. Ripley . Also see https://github.com/ropensci/rglobi/issues/31 .
 
 The remaining note for this version is:
 

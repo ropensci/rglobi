@@ -1,3 +1,12 @@
+rglobi 0.2.19
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* show informative messages like ```GloBI data services are not available at [api.globalbioticinteractions.org]. Are you connected to the internet?``` when internet resources are not available. Suggested by Brian D. Ripley . Also see https://github.com/ropensci/rglobi/issues/31 .
+
+BUG FIXES
+
 rglobi 0.2.18
 ===============
 NEW FEATURES
