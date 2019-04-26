@@ -25,7 +25,7 @@ Depends:
 License: MIT + file LICENSE
 Imports:
     rjson (>= 0.2.13),
-    RCurl (>= 0.3.4)
+    RCurl (>= 0.3.4),
     curl (>= 0.3.3)
 Suggests:
     testthat(>= 0.7),
