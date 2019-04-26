@@ -1,9 +1,13 @@
+
+globi_api_url <- "api.globalbioticinteractions.org"
+globi_neo4j_url <- "neo4j.globalbioticinteractions.org"
+
 # Get GloBI Options
 
 # @param opts list containing options
 # @return list with options including default for missing options
 
-add_missing_options <- function(opts, host = "api.globalbioticinteractions.org") {
+add_missing_options <- function(opts, host = globi_api_url) {
   defaults <- list(host = host, port = 443)
   opts <- c(opts, defaults)
   opts[unique(names(opts))]
@@ -19,12 +23,31 @@ get_globi_url <- function(suffix, opts = list()) {
   paste("https://", opts$host, ":", opts$port, suffix, sep = "")
 }
 
+# Check If Web API resolvable
+#
+# @return true if api is available, false otherwise 
+has_api <- function() {
+  !is.null(curl::nslookup(globi_api_url, error = FALSE))
+}
+
+# Check If Neo4J API available
+#
+# @return true if neo4j api is resolvable, false otherwise
+has_neo4j_api <- function() {
+  !is.null(curl::nslookup(globi_neo4j_url, error = FALSE))
+}
+
 # Read csv URL
 # @param url points to csv resource
 read_csv <- function(url, ...) {
-    tf <- tempfile()
-    utils::download.file(url, tf, quiet = TRUE)
-    utils::read.csv(tf, encoding = "UTF-8", stringsAsFactors = FALSE, fileEncoding = "UTF-8", ...)
+    if (has_api()) {
+      tf <- tempfile()
+      req <- curl::curl_fetch_disk(url, tf)
+      message(req$status_code)
+      utils::read.csv(tf, encoding = "UTF-8", stringsAsFactors = FALSE, fileEncoding = "UTF-8", ...)
+    } else {
+      stop(paste("GloBI data services are not available at [", globi_api_url, "]. Are you connected to the internet?", sep = ""))
+    }
 }
 
 #' Get Species Interaction from GloBI
@@ -113,21 +136,25 @@ cypher_result_as_dataframe <- function(result) {
 #' @return result of cypher query string
 #' @export
 query <- function(cypherQuery, opts = list()) {
-  h <- RCurl::basicTextGatherer()
-  opts_cypher <- add_missing_options(opts, host = "neo4j.globalbioticinteractions.org")
-  RCurl::curlPerform(
-    url=get_globi_url("/db/data/cypher", opts_cypher),
-    postfields=rjson::toJSON(list('query' = cypherQuery)),
+  if (has_neo4j_api()) {
+    h <- RCurl::basicTextGatherer()
+    opts_cypher <- add_missing_options(opts, host = globi_neo4j_url)
+    RCurl::curlPerform(
+      url=get_globi_url("/db/data/cypher", opts_cypher),
+      postfields=rjson::toJSON(list('query' = cypherQuery)),
                 httpheader=c(Accept="application/json",
                            'Content-Type' = "application/json"),
 		writefunction = h$update,
 		verbose = FALSE
-  )
-  result <- rjson::fromJSON(h$value())
-  if (is.null(result$message)) {
-    cypher_result_as_dataframe(result)
+    )
+    result <- rjson::fromJSON(h$value())
+    if (is.null(result$message)) {
+      cypher_result_as_dataframe(result)
+    } else {
+      stop(result$message)
+    }
   } else {
-    stop(result$message)
+    stop(paste("GloBI Neo4j data services not available at [", globi_neo4j_url, "]. Are you connected to the internet?", sep = ""))
   }
 }
 
