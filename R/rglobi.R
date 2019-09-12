@@ -130,7 +130,7 @@ cypher_result_as_dataframe <- function(result) {
 #' Executes a Cypher Query Against GloBI's Neo4j Instance
 #'
 #' @import RCurl
-#' @param cypherQuery Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)
+#' @param cypherQuery Cypher query (see http://github.com/globalbioticinteractions/globalbioticinteractions/wiki/cypher for examples)
 #' @param opts list of named options to configure GloBI API
 #' @return result of cypher query string
 #' @export

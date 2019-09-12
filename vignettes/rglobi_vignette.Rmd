@@ -405,7 +405,7 @@ result
 ## 10 Moschus chrysogaster
 ```
 
-This particular query returns the names of the first ten known prey or diet items of humans (_Homo sapiens_). More examples of GloBI specific Cypher queries can be found on the [GloBI Cypher Wiki](https://github.com/jhpoelen/eol-globi-data/wiki/cypher).
+This particular query returns the names of the first ten known prey or diet items of humans (_Homo sapiens_). More examples of GloBI specific Cypher queries can be found on the [GloBI Cypher Wiki](https://github.com/globalbioticinteractions/globalbioticinteractions/wiki/cypher).
 
 #### Pagination
 
@@ -423,7 +423,7 @@ To exhaust all available interactions, you can keep paging results until the siz
 
 #### Selecting Taxonomic Schemes
 
-GloBI integrations with various different taxonomies (see [Selecting specific taxonomies](https://github.com/jhpoelen/eol-globi-data/wiki/api#selecting-specific-taxonomies)). 
+GloBI integrations with various different taxonomies (see [Selecting specific taxonomies](https://github.com/globalbioticinteractions/globalbioticinteractions/wiki/api#selecting-specific-taxonomies)). 
 
 To select a specific preferred taxonomy like the [Open Tree of Life](http://opentreeoflife.org) reference taxonomy to retrieve up to 10 parasitic interactions, use:
 

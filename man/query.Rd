@@ -7,7 +7,7 @@
 query(cypherQuery, opts = list())
 }
 \arguments{
-\item{cypherQuery}{Cypher query (see http://github.com/jhpoelen/eol-globi-data/wiki/cypher for examples)}
+\item{cypherQuery}{Cypher query (see http://github.com/globalbioticinteractions/globalbioticinteractions/wiki/cypher for examples)}
 
 \item{opts}{list of named options to configure GloBI API}
 }

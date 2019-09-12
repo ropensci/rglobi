@@ -401,4 +401,4 @@ result
 ## 10 Moschus chrysogaster
 ```
 
-This particular query returns the names of the first ten known prey or diet items of humans (_Homo sapiens_). More examples of GloBI specific Cypher queries can be found on the [GloBI Cypher Wiki](https://github.com/jhpoelen/eol-globi-data/wiki/cypher). 
+This particular query returns the names of the first ten known prey or diet items of humans (_Homo sapiens_). More examples of GloBI specific Cypher queries can be found on the [GloBI Cypher Wiki](https://github.com/globalbioticinteractions/globalbioticinteractions/wiki/cypher). 
