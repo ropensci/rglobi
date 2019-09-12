@@ -43,7 +43,6 @@ read_csv <- function(url, ...) {
     if (has_api()) {
       tf <- tempfile()
       req <- curl::curl_fetch_disk(url, tf)
-      message(req$status_code)
       utils::read.csv(tf, encoding = "UTF-8", stringsAsFactors = FALSE, fileEncoding = "UTF-8", ...)
     } else {
       stop(paste("GloBI data services are not available at [", globi_api_url, "]. Are you connected to the internet?", sep = ""))
