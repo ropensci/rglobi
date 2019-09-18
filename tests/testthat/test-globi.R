@@ -2,8 +2,8 @@ context("rglobi")
 
 test_that("default prey", {
   predatorPrey <- get_prey_of()
-  expect_that(length(predatorPrey) > 0, is_true())
-  expect_that(length(predatorPrey$source_taxon_name)>10, is_true())
+  expect_true(length(predatorPrey) > 0)
+  expect_true(length(predatorPrey$source_taxon_name) > 10)
 })
 
 test_that("prey of Ariopsis felis", {
