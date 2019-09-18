@@ -41,9 +41,7 @@ has_neo4j_api <- function() {
 # @param url points to csv resource
 read_csv <- function(url, ...) {
     if (has_api()) {
-      tf <- tempfile()
-      req <- curl::curl_fetch_disk(url, tf)
-      utils::read.csv(tf, encoding = "UTF-8", stringsAsFactors = FALSE, fileEncoding = "UTF-8", ...)
+      as.data.frame(readr::read_csv(url))
     } else {
       stop(paste("GloBI data services are not available at [", globi_api_url, "]. Are you connected to the internet?", sep = ""))
     }
