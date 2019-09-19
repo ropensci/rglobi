@@ -1,3 +1,14 @@
+rglobi 0.2.20
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* Use readr package to handle incoming csv streams to help avoid encoding issues on Windows . Also see https://github.com/ropensci/rglobi/issues/33 .
+* remove debug messages
+* updates reference to https://github.com/globalbioticinteractions/globalbioticinteractions after repo migration from https://github.com/jhpoelen/eol-globi-data . 
+
+BUG FIXES
+
 rglobi 0.2.19
 ===============
 NEW FEATURES
