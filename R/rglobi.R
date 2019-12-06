@@ -194,6 +194,7 @@ create_bbox_param <- function(bbox) {
 #' @param returnobservations if true, all individual observations are returned,
 #' else only distinct relationships
 #' @param opts list of named options to configure GloBI API
+#' @param read_csv function used to find csv associated to query url, defaulting to online query method
 #' @return Returns data frame of interactions
 #' @keywords database
 #' @export
@@ -284,6 +285,7 @@ get_interactions_in_area <- function(bbox, ...){
 #' @param bbox Coordinates in EPSG:4326 decimal degrees defining "left, bottom,
 #' right, top" of bounding box
 #' @param ... list of named options to configure GloBI API
+#' @param read_csv function used to find csv associated to query url, defaulting to online query method
 #' @return Returns data frame of coordinates
 #' @keywords database
 #' @export
@@ -317,6 +319,7 @@ get_interaction_areas <- function(bbox = NULL, read_csv = read_csv_online, ...){
 #' @description Returns data frame with supported interaction types
 #'
 #' @param opts list of named options to configure GloBI API
+#' @param read_csv function used to find csv associated to query url, defaulting to online query method
 #' @return Returns data frame of supported interaction types
 #' @keywords database
 #' @export
@@ -333,6 +336,7 @@ get_interaction_types <- function(opts = list(), read_csv = read_csv_online) {
 #' @description Returns data frame with supported data fields
 #'
 #' @param opts list of named options to configure GloBI API
+#' @param read_csv function used to find csv associated to query url, defaulting to online query method
 #' @return Returns data frame of supported data fields
 #' @keywords database
 #' @export
@@ -405,6 +409,7 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 #' @param target.taxon.names list of target taxon names
 #' @param interaction.type the preferred interaction type (e.g. preysOn)
 #' @param opts list of options to configure GloBI API
+#' @param read_csv function used to find csv associated to query url, defaulting to online query method
 #' @return matrix representing species interactions between source and target taxa
 #' @family interactions
 #' @export
