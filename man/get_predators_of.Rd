@@ -32,3 +32,4 @@ Other interactions: \code{\link{get_child_taxa}},
   \code{\link{get_interactions_by_type}},
   \code{\link{get_interactions}}, \code{\link{get_prey_of}}
 }
+\concept{interactions}

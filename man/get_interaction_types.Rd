@@ -4,10 +4,12 @@
 \alias{get_interaction_types}
 \title{List interactions identified in GloBI database}
 \usage{
-get_interaction_types(opts = list())
+get_interaction_types(opts = list(), read_csv = read_csv_online)
 }
 \arguments{
 \item{opts}{list of named options to configure GloBI API}
+
+\item{read_csv}{function used to find csv associated to query url, defaulting to online query method}
 }
 \value{
 Returns data frame of supported interaction types
@@ -29,4 +31,5 @@ Other interactions: \code{\link{get_child_taxa}},
   \code{\link{get_interactions}},
   \code{\link{get_predators_of}}, \code{\link{get_prey_of}}
 }
+\concept{interactions}
 \keyword{database}

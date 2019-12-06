@@ -6,7 +6,7 @@
 \usage{
 get_interaction_matrix(source.taxon.names = list("Homo sapiens"),
   target.taxon.names = list("Mammalia"), interaction.type = "eats",
-  opts = list())
+  opts = list(), read_csv = read_csv_online)
 }
 \arguments{
 \item{source.taxon.names}{list of source taxon names (e.g. list('Mammalia', 'Aves', 'Ariopsis felis'))}
@@ -16,6 +16,8 @@ get_interaction_matrix(source.taxon.names = list("Homo sapiens"),
 \item{interaction.type}{the preferred interaction type (e.g. preysOn)}
 
 \item{opts}{list of options to configure GloBI API}
+
+\item{read_csv}{function used to find csv associated to query url, defaulting to online query method}
 }
 \value{
 matrix representing species interactions between source and target taxa
@@ -37,3 +39,4 @@ Other interactions: \code{\link{get_child_taxa}},
   \code{\link{get_interactions}},
   \code{\link{get_predators_of}}, \code{\link{get_prey_of}}
 }
+\concept{interactions}

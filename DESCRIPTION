@@ -1,3 +1,4 @@
+Encoding: UTF-8
 Package: rglobi
 Type: Package
 Title: R Interface to Global Biotic Interactions

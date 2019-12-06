@@ -4,10 +4,12 @@
 \alias{get_data_fields}
 \title{List data fields identified in GloBI database}
 \usage{
-get_data_fields(opts = list())
+get_data_fields(opts = list(), read_csv = read_csv_online)
 }
 \arguments{
 \item{opts}{list of named options to configure GloBI API}
+
+\item{read_csv}{function used to find csv associated to query url, defaulting to online query method}
 }
 \value{
 Returns data frame of supported data fields
@@ -20,4 +22,5 @@ Returns data frame with supported data fields
 get_data_fields()
 }
 }
+\concept{data}
 \keyword{database}

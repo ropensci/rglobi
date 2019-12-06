@@ -11,7 +11,8 @@ get_interactions_by_taxa(sourcetaxon, targettaxon = NULL,
   "target_taxon_external_id", "target_taxon_name", "target_taxon_path",
   "target_specimen_life_stage", "latitude", "longitude", "study_citation",
   "study_external_id", "study_source_citation"), otherkeys = NULL,
-  bbox = NULL, returnobservations = F, opts = list())
+  bbox = NULL, returnobservations = F, opts = list(),
+  read_csv = read_csv_online)
 }
 \arguments{
 \item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be
@@ -38,6 +39,8 @@ right, top" of bounding box}
 else only distinct relationships}
 
 \item{opts}{list of named options to configure GloBI API}
+
+\item{read_csv}{function used to find csv associated to query url, defaulting to online query method}
 }
 \value{
 Returns data frame of interactions
@@ -66,4 +69,5 @@ Other interactions: \code{\link{get_child_taxa}},
   \code{\link{get_interactions}},
   \code{\link{get_predators_of}}, \code{\link{get_prey_of}}
 }
+\concept{interactions}
 \keyword{database}

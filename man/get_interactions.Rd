@@ -4,7 +4,8 @@
 \alias{get_interactions}
 \title{Get Species Interaction from GloBI}
 \usage{
-get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn", ...)
+get_interactions(taxon = "Homo sapiens", interaction.type = "preysOn",
+  ...)
 }
 \arguments{
 \item{taxon}{canonical scientific name of source taxon (e.g. Homo sapiens)}
@@ -34,3 +35,4 @@ Other interactions: \code{\link{get_child_taxa}},
   \code{\link{get_interactions_by_type}},
   \code{\link{get_predators_of}}, \code{\link{get_prey_of}}
 }
+\concept{interactions}

@@ -5,8 +5,8 @@
 \title{Returns all known child taxa with known interaction of specified source and target taxa on any rank.}
 \usage{
 get_interaction_table(source.taxon.names = list(),
-  target.taxon.names = list(), interaction.type = "preysOn", skip = 0,
-  limit = 100, opts = list())
+  target.taxon.names = list(), interaction.type = "preysOn",
+  skip = 0, limit = 100, opts = list())
 }
 \arguments{
 \item{source.taxon.names}{list of taxon names for source}
@@ -41,3 +41,4 @@ Other interactions: \code{\link{get_child_taxa}},
   \code{\link{get_interactions}},
   \code{\link{get_predators_of}}, \code{\link{get_prey_of}}
 }
+\concept{interactions}
