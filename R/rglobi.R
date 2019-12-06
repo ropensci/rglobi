@@ -39,7 +39,7 @@ has_neo4j_api <- function() {
 
 # Read csv URL
 # @param url points to csv resource
-read_csv <- function(url, ...) {
+read_csv_online <- function(url, ...) {
     if (has_api()) {
       as.data.frame(suppressMessages(readr::read_csv(url)))
     } else {
@@ -207,7 +207,7 @@ create_bbox_param <- function(bbox) {
 #' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
   showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
-  otherkeys = NULL, bbox = NULL, returnobservations = F, opts = list()){
+  otherkeys = NULL, bbox = NULL, returnobservations = F, opts = list(), read_csv = read_csv_online){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types()[,1])
     if(length(intersect(interactiontypes, interactiontype)) == 0){
@@ -292,7 +292,7 @@ get_interactions_in_area <- function(bbox, ...){
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 #' }
-get_interaction_areas <- function(bbox = NULL, ...){
+get_interaction_areas <- function(bbox = NULL, read_csv = read_csv_online, ...){
   requesturl <- read_csv (get_globi_url("/locations?type=csv", ...))
   names (requesturl) <- c ("Latitude", "Longitude")
   requesturl$Latitude <- as.numeric (requesturl$Latitude)
@@ -324,7 +324,7 @@ get_interaction_areas <- function(bbox = NULL, ...){
 #' @examples \dontrun{
 #' get_interaction_types()
 #' }
-get_interaction_types <- function(opts = list()) {
+get_interaction_types <- function(opts = list(), read_csv = read_csv_online) {
   read_csv(get_globi_url("/interactionTypes.csv?type=csv", opts = opts))
 }
 
@@ -340,7 +340,7 @@ get_interaction_types <- function(opts = list()) {
 #' @examples \dontrun{
 #' get_data_fields()
 #' }
-get_data_fields <- function(opts = list()) {
+get_data_fields <- function(opts = list(), read_csv = read_csv_online) {
   read_csv(get_globi_url("/interactionFields.csv?type=csv", opts = opts))
 }
 
@@ -428,7 +428,7 @@ get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), ta
 #' @examples \dontrun{
 #' get_child_taxa(list("Aves"))
 #' }
-get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list()) {
+get_child_taxa <- function(taxon.names, rank = 'Species', skip = 0, limit = 25, opts = list(), query = query) {
   luceneQuery <- paste('path:', taxon.names, ' ', sep='', collapse='')
   cypher <- paste("START taxon = node:taxonPaths('", luceneQuery , "') WHERE has(taxon.rank) AND taxon.rank = '", rank, "' RETURN distinct(taxon.name) as `taxon.name` SKIP ", skip, " LIMIT ", limit, sep="")
   query(cypher, opts = opts)$taxon.name

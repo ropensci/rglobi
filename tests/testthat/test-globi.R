@@ -1,18 +1,20 @@
 context("rglobi")
 
+source('util.R')
+
 test_that("default prey", {
-  predatorPrey <- get_prey_of()
+  predatorPrey <- get_prey_of(taxon = "Homo sapiens", read_csv = read_csv_offline)
   expect_true(length(predatorPrey) > 0)
   expect_true(length(predatorPrey$source_taxon_name) > 10)
 })
 
 test_that("prey of Ariopsis felis", {
-  prey <- get_prey_of("Ariopsis felis")
+  prey <- get_prey_of(taxon = "Ariopsis felis", read_csv = read_csv_offline)
   expect_true(length(prey) > 0)
 })
 
 test_that("predator of rats", {
-  predators <- get_predators_of("Rattus rattus")
+  predators <- get_predators_of(taxon = "Rattus rattus", read_csv = read_csv_offline)
   expect_true(length(predators) > 0)
 })
 
@@ -34,7 +36,7 @@ test_that("invalid cypher query", {
 })
 
 test_that("interactions returned based on species", {
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", read_csv = read_csv_offline)
   expect_match(as.character(rattus$source_taxon_name[1]), "^Rattus rattus")
   taxon_path <- as.character(rattus$source_taxon_path[1])
   expect_equal(grep('Muridae', taxon_path), 1)
@@ -42,8 +44,8 @@ test_that("interactions returned based on species", {
 
 test_that("interactions subsetted by adding additional information", {
   interaction_types <- c('eats', 'eatenBy')
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", interactiontype = interaction_types)
-  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", interactiontype= interaction_types)
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", interactiontype = interaction_types, read_csv = read_csv_offline)
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", interactiontype= interaction_types, read_csv = read_csv_offline)
   expect_equal(class(rattus$source_taxon_name), "character")
   expect_true(dim(rattus)[1] > 0)
   expect_lt(dim(rattusaves)[1], dim(rattus)[1])
@@ -51,8 +53,8 @@ test_that("interactions subsetted by adding additional information", {
 })
 
 test_that("interactions subsetted by adding additional information all interaction types", {
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
-  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves")
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", read_csv = read_csv_offline)
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", read_csv = read_csv_offline)
   expect_true(dim(rattus)[1] > 0)
   expect_lt(dim(rattusaves)[1], dim(rattus)[1])
   # note that some interaction types (e.g. interactsWith) are symmetric
@@ -61,15 +63,15 @@ test_that("interactions subsetted by adding additional information all interacti
 })
 
 test_that("interactions subsetted by adding additional information all interaction types include observations", {
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = T)
-  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = T)
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = T, , read_csv = read_csv_offline)
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = T, , read_csv = read_csv_offline)
   expect_true(dim(rattus)[1] > 0)
   expect_lte(dim(rattusaves)[1], dim(rattus)[1])
 })
 
 test_that("interactions subsetted by adding additional information using otherkeys, all interaction types include observations", {
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus")
-  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", otherkeys = list("targetTaxon" = "Aves"))
+  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", read_csv = read_csv_offline)
+  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", otherkeys = list("targetTaxon" = "Aves"), read_csv = read_csv_offline)
   expect_true(dim(rattus)[1] > 0)
   expect_lt(dim(rattusaves)[1], dim(rattus)[1])
   # note that some interaction types (e.g. interactsWith) are symmetric
@@ -78,25 +80,25 @@ test_that("interactions subsetted by adding additional information using otherke
 })
 
 test_that("bad bouding box throws error", {
-  throws_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22,50)))
-  throws_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22)))
-  throws_error(get_interaction_areas(bbox=c(23,35,22,50)))
-  throws_error(get_interactions_in_area(bbox=c(23,35,22,50)))
+  throws_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22,50), read_csv = read_csv_offline ))
+  throws_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22), read_csv = read_csv_offline))
+  throws_error(get_interaction_areas(bbox=c(23,35,22,50), read_csv = read_csv_offline))
+  throws_error(get_interactions_in_area(bbox=c(23,35,22,50), read_csv = read_csv_offline))
 })
 
 test_that("interaction types", {
-  types <- get_interaction_types()
+  types <- get_interaction_types(read_csv = read_csv_offline)
   expect_true('preysOn' %in% types$interaction)
   expect_true('preyedUponBy' %in% types$interaction)
 })
 
 test_that("data fields can be retrieved", {
-  fields <- get_data_fields()
+  fields <- get_data_fields(read_csv = read_csv_offline)
   expect_true('source_taxon_name' %in% fields$name)
 })
 
 test_that("interaction in area", {
-  interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31))
+  interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31), read_csv = read_csv_offline)
   expect_equal(class(interactions$source_taxon_name), "character")
   expect_true(length(interactions$source_taxon_name) > 10)
 })
@@ -114,6 +116,6 @@ test_that("interaction matrix with interaction type can be retrieved", {
 })
 
 test_that("interactions can be retrieved by type", {
-  interactions <- rglobi::get_interactions_by_type(interactiontype = c('eats', 'eatenBy'), showfield = c('source_taxon_name', 'interaction_type', 'target_taxon_name'), otherkeys = list(limit=5))
+  interactions <- rglobi::get_interactions_by_type(interactiontype = c('eats', 'eatenBy'), showfield = c('source_taxon_name', 'interaction_type', 'target_taxon_name'), otherkeys = list(limit=5), read_csv = read_csv_offline)
   expect_equal(length(interactions$source_taxon_name), 5)
 })

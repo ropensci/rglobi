@@ -1,0 +1,8 @@
+"source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_source_citation"
+"FBC:FB:SpecCode:947","Ariopsis felis","Actinopterygii | Siluriformes | Ariidae | Ariopsis | Ariopsis felis",,"preysOn","FBC:FB:SpecCode:1133","Anchoa hepsetus","Actinopterygii | Clupeiformes | Engraulidae | Anchoa | Anchoa hepsetus",,,,,
+"FBC:FB:SpecCode:947","Ariopsis felis","Actinopterygii | Siluriformes | Ariidae | Ariopsis | Ariopsis felis",,"preysOn","FBC:FB:SpecCode:1480","Harengula jaguana","Actinopterygii | Clupeiformes | Clupeidae | Harengula | Harengula jaguana",,,,,
+"FBC:FB:SpecCode:947","Ariopsis felis","Actinopterygii | Siluriformes | Ariidae | Ariopsis | Ariopsis felis",,"preysOn","FBC:FB:SpecCode:1486","Opisthonema oglinum","Actinopterygii | Clupeiformes | Clupeidae | Opisthonema | Opisthonema oglinum",,,,,
+"FBC:FB:SpecCode:947","Ariopsis felis","Actinopterygii | Siluriformes | Ariidae | Ariopsis | Ariopsis felis",,"preysOn","FBC:FB:SpecCode:1133","Anchoa hepsetus","Actinopterygii | Clupeiformes | Engraulidae | Anchoa | Anchoa hepsetus",,,,,
+"FBC:FB:SpecCode:947","Ariopsis felis","Actinopterygii | Siluriformes | Ariidae | Ariopsis | Ariopsis felis",,"preysOn","FBC:FB:SpecCode:1486","Opisthonema oglinum","Actinopterygii | Clupeiformes | Clupeidae | Opisthonema | Opisthonema oglinum",,,,,
+"FBC:FB:SpecCode:947","Ariopsis felis","Actinopterygii | Siluriformes | Ariidae | Ariopsis | Ariopsis felis",,"preysOn","FBC:FB:SpecCode:1480","Harengula jaguana","Actinopterygii | Clupeiformes | Clupeidae | Harengula | Harengula jaguana",,,,,
+

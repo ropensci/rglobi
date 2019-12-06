@@ -1,0 +1,6 @@
+"source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_source_citation"
+"INAT_TAXON:44575","Rattus rattus","Animalia | Chordata | Mammalia | Rodentia | Muridae | Rattus | Rattus rattus",,"preyedUponBy","INAT_TAXON:204531","Lanius collaris","Animalia | Chordata | Aves | Passeriformes | Laniidae | Lanius | Lanius collaris",,,,,
+"INAT_TAXON:44575","Rattus rattus","Animalia | Chordata | Mammalia | Rodentia | Muridae | Rattus | Rattus rattus",,"preyedUponBy","INAT_TAXON:204531","Lanius collaris","Animalia | Chordata | Aves | Passeriformes | Laniidae | Lanius | Lanius collaris",,,,,
+"INAT_TAXON:44575","Rattus rattus","Animalia | Chordata | Mammalia | Rodentia | Muridae | Rattus | Rattus rattus",,"preyedUponBy","INAT_TAXON:118552","Felis catus","Animalia | Chordata | Mammalia | Carnivora | Felidae | Felis | Felis catus",,,,,
+"INAT_TAXON:44575","Rattus rattus","Animalia | Chordata | Mammalia | Rodentia | Muridae | Rattus | Rattus rattus",,"preyedUponBy","INAT_TAXON:118552","Felis catus","Animalia | Chordata | Mammalia | Carnivora | Felidae | Felis | Felis catus",,,,,
+
