@@ -1,0 +1,4 @@
+"source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_source_citation"
+"EOL:342916","Cymothoa excisa","Animalia | Arthropoda | Malacostraca | Isopoda | Cymothooidea | Cymothoidae | Cymothoa | Cymothoa excisa",,"parasiteOf","EOL_V2:994841","Micropogonias undulatus","Animalia | Chordata | Actinopterygii | Perciformes | Sciaenidae | Micropogonias | Micropogonias undulatus",,,,,
+"EOL:342916","Cymothoa excisa","Animalia | Arthropoda | Malacostraca | Isopoda | Cymothooidea | Cymothoidae | Cymothoa | Cymothoa excisa",,"parasiteOf","EOL_V2:994841","Micropogonias undulatus","Animalia | Chordata | Actinopterygii | Perciformes | Sciaenidae | Micropogonias | Micropogonias undulatus",,,,,
+
