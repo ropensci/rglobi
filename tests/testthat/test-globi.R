@@ -104,14 +104,14 @@ test_that("interaction in area", {
 })
 
 test_that("interaction matrix can be retrieved", {
-  interaction.matrix <- get_interaction_matrix(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia', 'Aves'));
+  interaction.matrix <- get_interaction_matrix(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia', 'Aves'), read_csv = read_csv_caching);
   expect_true('Mammalia' %in% names(interaction.matrix))
   expect_true('Homo sapiens' %in% interaction.matrix[,1][[1]])
   expect_equal(unlist(interaction.matrix[[2]]), 1)
 })
 
 test_that("interaction matrix with interaction type can be retrieved", {
-  interaction.matrix <- get_interaction_matrix(list('Cymothoa excisa'), list('Micropogonias undulatus'), 'parasiteOf')
+  interaction.matrix <- get_interaction_matrix(list('Cymothoa excisa'), list('Micropogonias undulatus'), 'parasiteOf', read_csv = read_csv_caching)
   expect_equal(unlist(interaction.matrix[[2]]), 1)
 })
 
