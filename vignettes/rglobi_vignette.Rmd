@@ -348,7 +348,7 @@ head(gulfinteractions)
 ## 6                         NA       NA        NA          NA
 ```
 
-To see all locations for which interactions have entered in GloBi, 
+To see all locations for which interactions have entered in GloBI, 
 
 
 ```r
