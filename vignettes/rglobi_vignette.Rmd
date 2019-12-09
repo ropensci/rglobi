@@ -1,18 +1,13 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Introduction to the rglobi package}
--->
+---
+title: Introduction to the rglobi package
+author: Scott Chamberlain
+vignette: >
+    %\VignetteIndexEntry{introduction}
+    %\VignetteEngine{knitr::knitr}
+    %\VignetteEncoding{UTF-8}
+---
 
-
-
-rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (http://globalbioticinteractions.org)
-======
-
-### About the package
-
-`rglobi` allows easy access to the GLoBI database by wrapping the existing API.  
-
-********************
+`rglobi` allows easy access to biotic interactions via the Global Biotic Interactions (GLoBI, https://globalbioticinteractions.org) database by wrapping the existing API.  
 
 ### Quick start
 
