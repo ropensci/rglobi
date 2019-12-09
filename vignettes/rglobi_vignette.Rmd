@@ -1,6 +1,6 @@
 ---
 title: Introduction to the rglobi package
-author: Scott Chamberlain
+author: Jorrit Poelen
 vignette: >
     %\VignetteIndexEntry{introduction}
     %\VignetteEngine{knitr::knitr}
