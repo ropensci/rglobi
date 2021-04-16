@@ -19,7 +19,7 @@ Authors@R: c(person("Jorrit", "Poelen", role = c("aut", "cre"),
     email = "stephen.gosnell@baruch.cuny.edu"),
     person("Sergey", "Slyusarev", role = "aut",
     email = "cph.lmy@gmail.com"))
-URL: https://docs.ropensci.org/rglobi, https://github.com/ropensci/rglobi
+URL: https://docs.ropensci.org/rglobi/, https://github.com/ropensci/rglobi
 BugReports: https://github.com/ropensci/rglobi/issues
 VignetteBuilder: knitr
 Depends:

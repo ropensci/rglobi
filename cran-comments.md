@@ -4,6 +4,8 @@ I built this package using [R CMD build .] and checked it with command [R CMD ch
 
 IMPROVEMENT
 * include markdown package in DESCRIPTION suggests as suggested by https://github.com/yihui/knitr/issues/1864
+* update urls as suggested by cran release checks
+* exclude .github workflow directory from R build
 
 I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
 
