@@ -3,7 +3,9 @@ rglobi 0.2.22
 NEW FEATURES
 
 IMPROVEMENT
-* include markdown in DESCRIPTION suggests list as instructed in https://github.com/yihui/knitr/issues/1864 
+* include markdown in DESCRIPTION suggests list as instructed in https://github.com/yihui/knitr/issues/1864
+* update urls as suggested by cran release checks
+* exclude .github workflow directory from R build
 
 BUG FIXES
 
