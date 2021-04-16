@@ -34,5 +34,6 @@ Suggests:
     testthat(>= 0.7),
     openssl,
     httr,
+    markdown,
     knitr
 RoxygenNote: 6.1.1
