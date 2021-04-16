@@ -11,8 +11,8 @@ Description: A programmatic interface to the web service methods
     taxonomic name. In addition, it supports Cypher, a graph query
     language, to allow for executing custom queries on the GloBI 
     aggregate species interaction data set.
-Version: 0.2.21
-Date: 2019-12-06
+Version: 0.2.22
+Date: 2021-04-16
 Authors@R: c(person("Jorrit", "Poelen", role = c("aut", "cre"),
     email = "jhpoelen@xs4all.nl"),
     person("Stephen", "Gosnell", role = "aut",
