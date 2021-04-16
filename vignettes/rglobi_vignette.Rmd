@@ -378,7 +378,7 @@ head(areas)
 
 #### Custom Queries using Cypher
 
-Currently, GloBI is powered by [neo4j](http://neo4j.org), a graph database. Most results created by the R functions provided by `rglobi` are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function `query()`:
+Currently, GloBI is powered by [neo4j](https://neo4j.com/), a graph database. Most results created by the R functions provided by `rglobi` are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function `query()`:
 
 
 ```r
