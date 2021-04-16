@@ -1,5 +1,6 @@
 ^CRAN-RELEASE$
 .travis.yml
+.github/
 .gitignore
 inst/.gitkeep
 inst/vign
