@@ -1,7 +1,5 @@
 context("rglobi")
 
-source('util.R')
-
 test_that("default prey", {
   predatorPrey <- get_prey_of(taxon = "Homo sapiens", read_csv = read_csv_offline)
   expect_true(length(predatorPrey) > 0)
