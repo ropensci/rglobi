@@ -12,5 +12,10 @@ read_csv_caching = function(url, ...) {
 }
 
 read_csv_offline = function(url, ...) {
-  readr::read_csv(cached_filename(url))
+  res <- suppressWarnings(suppressMessages(as.data.frame(readr::read_csv(cached_filename(url), progress = FALSE))))
+
+  # Drop rows with all NAs
+  res <- res[rowSums(is.na(res)) != ncol(res), ]
+
+  res
 }
