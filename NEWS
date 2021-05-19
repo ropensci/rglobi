@@ -1,3 +1,12 @@
+rglobi 0.2.24
+===============
+NEW FEATURES
+
+IMPROVEMENT
+
+BUG FIXES
+* replace broken url http://spatialreference.org/ref/epsg/wgs-84/ with https://en.wikipedia.org/wiki/World_Geodetic_System .
+
 rglobi 0.2.23
 ===============
 NEW FEATURES
