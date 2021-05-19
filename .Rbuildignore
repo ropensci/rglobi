@@ -9,3 +9,5 @@ Makefile
 ^README\.Rmd$
 ^README-.*\.png$
 ^.*\.tar.gz
+^doc$
+^Meta$

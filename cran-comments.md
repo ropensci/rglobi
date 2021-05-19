@@ -1,11 +1,9 @@
 Dear Reviewers:
 
-I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.22.tar.gz] on my Ubuntu 18.04 LTS Bionic Beaver (4.15.0-135-generic) machine running R version 4.0.5 (2021-03-31) . Also, the checks were executed on travis-ci.org (running Ubuntu), github workflows (windows/mac/ubuntu), and winbuilder (running windows). 
+I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.23.tar.gz] on my Ubuntu 18.04 LTS Bionic Beaver (4.15.0-135-generic) machine running R version 4.0.5 (2021-03-31) . Also, the checks were executed on travis-ci.org (running Ubuntu), github workflows (windows/mac/ubuntu), and winbuilder (running windows). 
 
 IMPROVEMENT
-* include markdown package in DESCRIPTION suggests as suggested by https://github.com/yihui/knitr/issues/1864
-* update urls as suggested by cran release checks
-* exclude .github workflow directory from R build
+* minor changes by @jimhester (thanks Jim!) to prepare for readr 2.0.0 release via https://github.com/ropensci/rglobi/pull/37 .
 
 I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
 

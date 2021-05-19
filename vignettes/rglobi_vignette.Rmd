@@ -235,7 +235,7 @@ head(rattus)
 ## 6                         NA       NA        NA          NA
 ```
 
-Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326](https://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
+Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326 aka WGS 84 or WGS 1984](https://en.wikipedia.org/wiki/World_Geodetic_System)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
 
 ```r

@@ -1,3 +1,12 @@
+rglobi 0.2.23
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* minor changes by @jimhester (thanks Jim!) to prepare for readr 2.0.0 release via https://github.com/ropensci/rglobi/pull/37 .
+
+BUG FIXES
+
 rglobi 0.2.22
 ===============
 NEW FEATURES
