@@ -159,6 +159,84 @@ head(hsapiens)
 ## 6                         NA       NA        NA          NA
 ```
 
+#### Find citations using individual interaction records
+
+By default, `get_interactions()` returns interaction records aggregated by source/target taxa and interaction type. This means that a single result can be based on a single claim, or many claims (e.g., many individual records claiming that sea otters (_Enhydra lutris_) eat (eats, [RO:0002470](http://purl.obolibrary.org/obo/RO_0002470)) Red Rock Crabs (_Cancer productus_)). In addition, the aggregated results exclude values specific to individual claims like latitude, longitude, study_citation, study_source_citation. This is why these and other values will show up as NA by default. 
+
+To retrieve an exhaustive list of _all_, unaggregated, interaction records, set the ```returnobservations=T```. For instance, 
+
+```r
+sea_otter_prey <- get_interactions(taxon = "Enhydra lutris", interaction.type = "preysOn", returnobservations=T)
+head(sea_otter_prey)
+```
+
+results in 
+
+```
+##  source_taxon_external_id      source_taxon_name
+## 1        INAT_TAXON:133061 Enhydra lutris kenyoni
+## 2        INAT_TAXON:117520  Enhydra lutris nereis
+## 3        INAT_TAXON:117520  Enhydra lutris nereis
+## 4        INAT_TAXON:117520  Enhydra lutris nereis
+## 5        INAT_TAXON:117520  Enhydra lutris nereis
+## 6        INAT_TAXON:117520  Enhydra lutris nereis
+##                                                                           source_taxon_path
+## 1 Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris kenyoni
+## 2  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
+## 3  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
+## 4  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
+## 5  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
+## 6  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
+##  source_specimen_life_stage interaction_type target_taxon_external_id
+## 1                       <NA>          preysOn             GBIF:2289226
+## 2                       <NA>          preysOn         INAT_TAXON:47828
+## 3                       <NA>          preysOn         INAT_TAXON:47828
+## 4                       <NA>          preysOn             GBIF:2285679
+## 5                       <NA>          preysOn                 GBIF:137
+## 6                       <NA>          preysOn         INAT_TAXON:47826
+##  target_taxon_name
+## 1           Octopus
+## 2         Cancridae
+## 3         Cancridae
+## 4           Mytilus
+## 5          Bivalvia
+## 6  Cancer productus
+##                                                                                                                           target_taxon_path
+## 1                                                                       Animalia | Mollusca | Cephalopoda | Octopoda | Octopodidae | Octopus
+## 2 Animalia | Arthropoda | Crustacea | Multicrustacea | Malacostraca | Eucarida | Decapoda | Pleocyemata | Brachyura | Cancroidea | Cancridae
+## 3 Animalia | Arthropoda | Crustacea | Multicrustacea | Malacostraca | Eucarida | Decapoda | Pleocyemata | Brachyura | Cancroidea | Cancridae
+## 4                                                                            Animalia | Mollusca | Bivalvia | Mytilida | Mytilidae | Mytilus
+## 5                                                                                                             Animalia | Mollusca | Bivalvia
+## 6                                                    Animalia | Arthropoda | Malacostraca | Decapoda | Cancridae | Cancer | Cancer productus
+##  target_specimen_life_stage latitude longitude
+## 1                       <NA> 56.93835 -135.7816
+## 2                       <NA> 35.39714 -120.9534
+## 3                       <NA> 35.39714 -120.9534
+## 4                       <NA> 36.95229 -121.6419
+## 5                       <NA> 36.90766 -121.7446
+## 6                       <NA> 36.99515 -121.6459
+##                                                                                                                                                       study_citation
+## 1        Donna Pomeroy. 2012. Enhydra lutris kenyoni prey id Octopus. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1181454> on 25 Jul 2021.
+## 2      Marisa Agarwal. 2014. Enhydra lutris nereis prey id Cancridae. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1130763> on 25 Jul 2021.
+## 3      Marisa Agarwal. 2014. Enhydra lutris nereis prey id Cancridae. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1130763> on 25 Jul 2021.
+## 4          James Maughn. 2015. Enhydra lutris nereis prey id Mytilus. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1964813> on 25 Jul 2021.
+## 5         James Maughn. 2014. Enhydra lutris nereis prey id Bivalvia. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1119439> on 25 Jul 2021.
+## 6 Donna Pomeroy. 2014. Enhydra lutris nereis prey id Cancer productus. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/799531> on 25 Jul 2021.
+##                                                                                                                        study_source_citation
+## 1 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
+## 2 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
+## 3 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
+## 4 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
+## 5 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
+## 6 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
+```
+
+After introducing the ```returnobservations=T```, the results now include values for ```study_citation``` and ```study_source_citation```. Also, if available, values for individual properties of interaction records (e.g., ```latitude```, ```longitude```) will be included. 
+
+Note that the arguments can also be used in related methods (e.g., ```get_interactions_by_taxa(sourcetaxon="Enhydra lutris", targettaxon="Cancer productus", interactiontype="eats", returnobservations=T)```). 
+
+#### Listing supported interaction types
+
 For a complete list of supported interaction types, 
 
 

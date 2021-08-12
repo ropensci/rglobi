@@ -1,3 +1,13 @@
+rglobi 0.2.25
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* added section on returnobservations=T in getting started vignette as suggested by @ZekeMarshall in https://github.com/ropensci/rglobi/issues/38#issuecomment-897603331 .
+
+BUG FIXES
+
+
 rglobi 0.2.24
 ===============
 NEW FEATURES
