@@ -30,7 +30,13 @@ test_that("no result cypher query", {
 })
 
 test_that("invalid cypher query", {
-  throws_error(query("this is not a valid cypher query"))
+  tryCatch (
+    query("this is not a valid cypher query"),
+    error = function(e) {
+      expect_equal(e$message, 'Invalid input \'t\': expected <init> (line 1, column 1 (offset: 0))\n\"this is not a valid cypher query\"\n ^') 
+    }
+
+  )
 })
 
 test_that("interactions returned based on species", {
@@ -77,11 +83,8 @@ test_that("interactions subsetted by adding additional information using otherke
   expect_equal(dim(merge(unique(rattusaves),unique(rattus), all.x=T, all.y=T)), dim(unique(rattus)))
 })
 
-test_that("bad bouding box throws error", {
-  throws_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22,50), read_csv = read_csv_offline ))
-  throws_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22), read_csv = read_csv_offline))
-  throws_error(get_interaction_areas(bbox=c(23,35,22,50), read_csv = read_csv_offline))
-  throws_error(get_interactions_in_area(bbox=c(23,35,22,50), read_csv = read_csv_offline))
+test_that("bad bounding box throws error", {
+  expect_error(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", bbox=c(23,35,22,50), read_csv = read_csv_offline ), "Coordinates entered incorrectly")
 })
 
 test_that("interaction types", {
