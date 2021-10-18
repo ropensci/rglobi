@@ -1,3 +1,12 @@
+rglobi 0.2.27
+===============
+NEW FEATURES
+
+IMPROVEMENT
+* improve test cases to skip with message if web apis are unavailable
+
+BUG FIXES
+
 rglobi 0.2.26
 ===============
 NEW FEATURES
