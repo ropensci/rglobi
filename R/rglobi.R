@@ -257,18 +257,16 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
   result <- read_csv(requesturl)
   
-  if(nrow(result) == 1024){
-    if(ifelse(!"limit" %in% names(otherkeys), TRUE, otherkeys$limit > 1024)){
-      testseq <- requestsequence
-      testseq <- ifelse(grepl("limit=", testseq), gsub("limit=.*?(&|$)", "limit=1\\1", testseq), paste(testseq, "&limit=1", sep=""))
-      testseq <- ifelse(grepl("skip=", testseq), gsub("skip=.*?(&|$)", 
-                                                      paste0("skip=", ifelse("skip" %in% names(otherkeys), otherkeys$skip+1024, 1024), "\\1"),
-                                                      testseq), 
-                        paste(testseq, "&skip=1024", sep=""))
-      testdf <- read_csv(paste(requesturlbase, testseq, create_bbox_param(bbox), includeobservations, "type=csv", sep="&"))
-      if(nrow(testdf) != 0){
-        warning ("Results limit reached. Query generated more results than can be returned via the Web API. Use pagination to retrieve all results.")
-      }
+  if(nrow(result) == 1024 & !"limit" %in% names(otherkeys)){
+    testseq <- paste0(requestsequence, "&limit=1")
+    testseq <- ifelse(grepl("skip=", testseq), 
+                      gsub("skip=.*?(&|$)", 
+                           paste0("skip=", ifelse("skip" %in% names(otherkeys), otherkeys$skip+1024, 1024), "\\1"), 
+                           testseq), 
+                      paste(testseq, "&skip=1024", sep=""))
+    testdf <- read_csv(paste(requesturlbase, testseq, create_bbox_param(bbox), includeobservations, "type=csv", sep="&"))
+    if(nrow(testdf) != 0){
+      warning ("Default results limit reached. Query generated more results than can be returned via the Web API. Increase limit and/or use pagination to retrieve all results.")
     }
   }
 
