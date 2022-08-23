@@ -255,7 +255,14 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
         ), collapse = "&")
   })()
   requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
-  read_csv(requesturl)
+  result <- read_csv(requesturl)
+  
+  if(nrow(result) == 1024 & !"limit" %in% names(otherkeys)){
+    warning("Default results limit reached. Consider increasing limit parameter and/or using pagination to retrieve all results. See rglobi vignette section on pagination for help modifying limit/skip parameters.")
+  }
+
+  return(result)
+  
 }
 
 
