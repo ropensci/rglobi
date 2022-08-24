@@ -44,9 +44,14 @@ test_that("interactions subsetted by adding additional information all interacti
   expect_equal(dim(unique(rbind(rattusaves,rattus))), dim(unique(rattus)))
 })
 
+
+expect_limit_warning <- function(x) {
+  expect_warning(x, "Default results limit reached. Consider increasing limit parameter and/or using pagination to retrieve all results. See rglobi vignette section on pagination for help modifying limit/skip parameters.");
+}
+
 test_that("interactions subsetted by adding additional information all interaction types include observations", {
-  rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = T, , read_csv = read_csv_offline)
-  rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = T, , read_csv = read_csv_offline)
+  expect_limit_warning(rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = T, , read_csv = read_csv_offline))
+  expect_limit_warning(rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = T, , read_csv = read_csv_offline))
   expect_true(dim(rattus)[1] > 0)
   expect_lte(dim(rattusaves)[1], dim(rattus)[1])
 })
@@ -76,8 +81,9 @@ test_that("data fields can be retrieved", {
   expect_true('source_taxon_name' %in% fields$name)
 })
 
+
 test_that("interaction in area", {
-  interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31), read_csv = read_csv_offline)
+  expect_limit_warning(interactions <- get_interactions_in_area(bbox=c(-97.0, 17.5, -81, 31), read_csv = read_csv_offline))
   expect_equal(class(interactions$source_taxon_name), "character")
   expect_true(length(interactions$source_taxon_name) > 10)
 })
