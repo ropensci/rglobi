@@ -11,3 +11,4 @@ Makefile
 ^.*\.tar.gz
 ^doc$
 ^Meta$
+^CRAN-SUBMISSION$
