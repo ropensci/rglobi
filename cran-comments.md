@@ -1,9 +1,9 @@
 Dear Reviewers:
 
-I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.27.tar.gz] on my Ubuntu 18.04 LTS Bionic Beaver (4.15.0-159-generic) machine running R 4.1.1 (2021-08-10). Also, the checks were executed on travis-ci.com (running Ubuntu), github workflows (windows/mac/ubuntu), and winbuilder (running windows). 
+I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.2.28.tar.gz] on my Ubuntu 20.04 LTS Focal Fossa (4.15.0-159-generic) machine running R version 4.2.1 (2022-06-23). 
 
 IMPROVEMENT
-* improve test cases to skip with message if web apis are unavailable
+* Adding warning message when query generates more results than can be returned. Big thanks for Helen Waters for their contributions @H-Waters https://github.com/H-Waters via https://github.com/ropensci/rglobi/pull/45
 
 I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
 

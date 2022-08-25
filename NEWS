@@ -1,3 +1,13 @@
+rglobi 0.2.28
+==============
+NEW FEATURES
+
+IMPROVEMENT
+* Adding warning message when query generates more results than can be returned. Big thanks for Helen Waters for their contributions @H-Waters https://github.com/H-Waters via https://github.com/ropensci/rglobi/pull/45
+
+BUG FIXES
+
+
 rglobi 0.2.27
 ===============
 NEW FEATURES
