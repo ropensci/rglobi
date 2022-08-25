@@ -4,6 +4,7 @@ I built this package using [R CMD build .] and checked it with command [R CMD ch
 
 IMPROVEMENT
 * Adding warning message when query generates more results than can be returned. Big thanks for Helen Waters for their contributions @H-Waters https://github.com/H-Waters via https://github.com/ropensci/rglobi/pull/45
+* update NEWS format
 
 I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
 
