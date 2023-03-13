@@ -1,6 +1,10 @@
+
+calc_content_id = function(url) {
+  digest::digest(txt, algo="sha256", serialize=F)
+}
+
 cached_filename = function(url) {
-  url_sha256 <- openssl::sha256(url)
-  paste('cache/', url_sha256, sep='')
+  paste('cache/', calc_content_id(url), sep='')
 }
 
 read_csv_caching = function(url, ...) {
