@@ -35,7 +35,7 @@ Imports:
     curl (>= 0.3.3)
 Suggests:
     testthat(>= 0.7),
-    digest,
+    openssl,
     httr,
     markdown,
     knitr
