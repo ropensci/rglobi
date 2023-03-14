@@ -1,5 +1,5 @@
 
-calc_content_id = function(txt) {
+calc_content_id = function(url) {
   digest::digest(txt, algo="sha256", serialize=F)
 }
 
