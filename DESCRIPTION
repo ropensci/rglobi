@@ -15,7 +15,7 @@ Description: A programmatic interface to the web service methods
 Version: 0.3.0
 Date: 2023-10-03
 Authors@R: c(person("Jorrit", "Poelen", role = c("aut", "cre"),
-    email = "jhpoelen@xs4all.nl"),
+    email = "jhpoelen@jhpoelen.nl"),
     person("Stephen", "Gosnell", role = "aut",
     email = "stephen.gosnell@baruch.cuny.edu"),
     person("Sergey", "Slyusarev", role = "aut",
