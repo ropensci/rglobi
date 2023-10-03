@@ -1,3 +1,6 @@
+# rglobi 0.3.0
+ * Removing support for directly executing Cypher queries: cypher queries are open ended, caused intermittent test errors, and subject to change in future neo4j upgrades. 
+
 # rglobi 0.2.28
 
  * Adding warning message when query generates more results than can be returned. Big thanks for Helen Waters for their contributions @H-Waters https://github.com/H-Waters via https://github.com/ropensci/# rglobi/pull/45
