@@ -4,15 +4,21 @@
 \alias{get_interactions_by_taxa}
 \title{Return interactions involving specific taxa}
 \usage{
-get_interactions_by_taxa(sourcetaxon, targettaxon = NULL,
-  interactiontype = NULL, accordingto = NULL,
-  showfield = c("source_taxon_external_id", "source_taxon_name",
-  "source_taxon_path", "source_specimen_life_stage", "interaction_type",
-  "target_taxon_external_id", "target_taxon_name", "target_taxon_path",
-  "target_specimen_life_stage", "latitude", "longitude", "study_citation",
-  "study_external_id", "study_source_citation"), otherkeys = NULL,
-  bbox = NULL, returnobservations = F, opts = list(),
-  read_csv = read_csv_online)
+get_interactions_by_taxa(
+  sourcetaxon,
+  targettaxon = NULL,
+  interactiontype = NULL,
+  accordingto = NULL,
+  showfield = c("source_taxon_external_id", "source_taxon_name", "source_taxon_path",
+    "source_specimen_life_stage", "interaction_type", "target_taxon_external_id",
+    "target_taxon_name", "target_taxon_path", "target_specimen_life_stage", "latitude",
+    "longitude", "study_citation", "study_external_id", "study_source_citation"),
+  otherkeys = NULL,
+  bbox = NULL,
+  returnobservations = F,
+  opts = list(),
+  read_csv = read_csv_online
+)
 }
 \arguments{
 \item{sourcetaxon}{Taxa of interest (consumer, predator, parasite); may be
@@ -61,13 +67,13 @@ bbox = c(-67.87,12.79,-57.08,23.32))
 }
 }
 \seealso{
-Other interactions:
-  \code{\link{get_interaction_matrix}},
-  \code{\link{get_interactions_by_taxa}},
-  \code{\link{get_interactions_by_type}},
-  \code{\link{get_interactions}},
-  \code{\link{get_predators_of}}, 
-  \code{\link{get_prey_of}}
+Other interactions: 
+\code{\link{get_interaction_matrix}()},
+\code{\link{get_interaction_types}()},
+\code{\link{get_interactions_by_type}()},
+\code{\link{get_interactions}()},
+\code{\link{get_predators_of}()},
+\code{\link{get_prey_of}()}
 }
 \concept{interactions}
 \keyword{database}

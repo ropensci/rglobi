@@ -24,12 +24,12 @@ get_interaction_types()
 }
 \seealso{
 Other interactions: 
-  \code{\link{get_interaction_matrix}},
-  \code{\link{get_interactions_by_taxa}},
-  \code{\link{get_interactions_by_type}},
-  \code{\link{get_interactions}},
-  \code{\link{get_predators_of}}, 
-  \code{\link{get_prey_of}}
+\code{\link{get_interaction_matrix}()},
+\code{\link{get_interactions_by_taxa}()},
+\code{\link{get_interactions_by_type}()},
+\code{\link{get_interactions}()},
+\code{\link{get_predators_of}()},
+\code{\link{get_prey_of}()}
 }
 \concept{interactions}
 \keyword{database}

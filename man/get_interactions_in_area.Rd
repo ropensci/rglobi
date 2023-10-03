@@ -25,7 +25,8 @@ get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
 }
 }
 \seealso{
-Other areas: \code{\link{get_interaction_areas}}
+Other areas: 
+\code{\link{get_interaction_areas}()}
 }
 \concept{areas}
 \keyword{database}
