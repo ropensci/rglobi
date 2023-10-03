@@ -31,12 +31,12 @@ get_interaction_matrix("Homo sapiens", "Mammalia", "interactsWith")
 }
 }
 \seealso{
-Other interactions: \code{\link{get_child_taxa}},
-  \code{\link{get_interaction_table}},
-  \code{\link{get_interaction_types}},
+Other interactions:
+  \code{\link{get_interaction_matrix}},
   \code{\link{get_interactions_by_taxa}},
   \code{\link{get_interactions_by_type}},
   \code{\link{get_interactions}},
-  \code{\link{get_predators_of}}, \code{\link{get_prey_of}}
+  \code{\link{get_predators_of}}, 
+  \code{\link{get_prey_of}}
 }
 \concept{interactions}
