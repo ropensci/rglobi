@@ -1,3 +1,7 @@
+# rglobi 0.3.1
+ * remove reference to Cypher in vignettes
+ * remove stale travis-ci badge reference
+
 # rglobi 0.3.0
  * Removing support for directly executing Cypher queries: cypher queries are open ended, caused intermittent test errors, and subject to change in future neo4j upgrades. 
 

@@ -1,25 +1,24 @@
----
-title: Introduction to the rglobi package
-author: Jorrit Poelen
-vignette: >
-    %\VignetteIndexEntry{introduction}
-    %\VignetteEngine{knitr::knitr}
-    %\VignetteEncoding{UTF-8}
----
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Introduction to the rglobi package}
+-->
 
-`rglobi` allows easy access to biotic interactions via the Global Biotic Interactions (GLoBI, https://www.globalbioticinteractions.org/) database by wrapping the existing API.  
+
+
+rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (http://globalbioticinteractions.org)
+======
+
+### About the package
+
+`rglobi` allows easy access to the GLoBI database by wrapping the existing API.  
+
+********************
 
 ### Quick start
 
 #### First, install `rglobi`
 
-For released version, use:
 
-```r
-install.packages("rglobi")
-```
-
-For most recent development version, use:
 
 ```r
 install.packages("devtools")
@@ -50,6 +49,8 @@ devtools::install_github("ropensci/rglobi")
 ```r
 library("rglobi")
 ```
+
+Note that since rglobi is still pretty new, only the dev version of the library is available at this time. We hope to publish a version to CRAN once the library matures. For more information see [GitHub](https://github.com/ropensci/rglobi).
 
 #### Find interactions involving a certain species
 
@@ -159,84 +160,6 @@ head(hsapiens)
 ## 6                         NA       NA        NA          NA
 ```
 
-#### Find citations using individual interaction records
-
-By default, `get_interactions()` returns interaction records aggregated by source/target taxa and interaction type. This means that a single result can be based on a single claim, or many claims (e.g., many individual records claiming that sea otters (_Enhydra lutris_) eat (eats, [RO:0002470](http://purl.obolibrary.org/obo/RO_0002470)) Red Rock Crabs (_Cancer productus_)). In addition, the aggregated results exclude values specific to individual claims like latitude, longitude, study_citation, study_source_citation. This is why these and other values will show up as NA by default. 
-
-To retrieve an exhaustive list of _all_, unaggregated, interaction records, set the ```returnobservations=T```. For instance, 
-
-```r
-sea_otter_prey <- get_interactions(taxon = "Enhydra lutris", interaction.type = "preysOn", returnobservations=T)
-head(sea_otter_prey)
-```
-
-results in 
-
-```
-##  source_taxon_external_id      source_taxon_name
-## 1        INAT_TAXON:133061 Enhydra lutris kenyoni
-## 2        INAT_TAXON:117520  Enhydra lutris nereis
-## 3        INAT_TAXON:117520  Enhydra lutris nereis
-## 4        INAT_TAXON:117520  Enhydra lutris nereis
-## 5        INAT_TAXON:117520  Enhydra lutris nereis
-## 6        INAT_TAXON:117520  Enhydra lutris nereis
-##                                                                           source_taxon_path
-## 1 Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris kenyoni
-## 2  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
-## 3  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
-## 4  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
-## 5  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
-## 6  Animalia | Chordata | Mammalia | Carnivora | Mustelidae | Enhydra | Enhydra lutris nereis
-##  source_specimen_life_stage interaction_type target_taxon_external_id
-## 1                       <NA>          preysOn             GBIF:2289226
-## 2                       <NA>          preysOn         INAT_TAXON:47828
-## 3                       <NA>          preysOn         INAT_TAXON:47828
-## 4                       <NA>          preysOn             GBIF:2285679
-## 5                       <NA>          preysOn                 GBIF:137
-## 6                       <NA>          preysOn         INAT_TAXON:47826
-##  target_taxon_name
-## 1           Octopus
-## 2         Cancridae
-## 3         Cancridae
-## 4           Mytilus
-## 5          Bivalvia
-## 6  Cancer productus
-##                                                                                                                           target_taxon_path
-## 1                                                                       Animalia | Mollusca | Cephalopoda | Octopoda | Octopodidae | Octopus
-## 2 Animalia | Arthropoda | Crustacea | Multicrustacea | Malacostraca | Eucarida | Decapoda | Pleocyemata | Brachyura | Cancroidea | Cancridae
-## 3 Animalia | Arthropoda | Crustacea | Multicrustacea | Malacostraca | Eucarida | Decapoda | Pleocyemata | Brachyura | Cancroidea | Cancridae
-## 4                                                                            Animalia | Mollusca | Bivalvia | Mytilida | Mytilidae | Mytilus
-## 5                                                                                                             Animalia | Mollusca | Bivalvia
-## 6                                                    Animalia | Arthropoda | Malacostraca | Decapoda | Cancridae | Cancer | Cancer productus
-##  target_specimen_life_stage latitude longitude
-## 1                       <NA> 56.93835 -135.7816
-## 2                       <NA> 35.39714 -120.9534
-## 3                       <NA> 35.39714 -120.9534
-## 4                       <NA> 36.95229 -121.6419
-## 5                       <NA> 36.90766 -121.7446
-## 6                       <NA> 36.99515 -121.6459
-##                                                                                                                                                       study_citation
-## 1        Donna Pomeroy. 2012. Enhydra lutris kenyoni prey id Octopus. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1181454> on 25 Jul 2021.
-## 2      Marisa Agarwal. 2014. Enhydra lutris nereis prey id Cancridae. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1130763> on 25 Jul 2021.
-## 3      Marisa Agarwal. 2014. Enhydra lutris nereis prey id Cancridae. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1130763> on 25 Jul 2021.
-## 4          James Maughn. 2015. Enhydra lutris nereis prey id Mytilus. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1964813> on 25 Jul 2021.
-## 5         James Maughn. 2014. Enhydra lutris nereis prey id Bivalvia. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/1119439> on 25 Jul 2021.
-## 6 Donna Pomeroy. 2014. Enhydra lutris nereis prey id Cancer productus. iNaturalist.org. Accessed at <https://www.inaturalist.org/observations/799531> on 25 Jul 2021.
-##                                                                                                                        study_source_citation
-## 1 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
-## 2 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
-## 3 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
-## 4 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
-## 5 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
-## 6 http://iNaturalist.org is a place where you can record what you see in nature, meet other nature lovers, and learn about the natural world.
-```
-
-After introducing the ```returnobservations=T```, the results now include values for ```study_citation``` and ```study_source_citation```. Also, if available, values for individual properties of interaction records (e.g., ```latitude```, ```longitude```) will be included. 
-
-Note that the arguments can also be used in related methods (e.g., ```get_interactions_by_taxa(sourcetaxon="Enhydra lutris", targettaxon="Cancer productus", interactiontype="eats", returnobservations=T)```). 
-
-#### Listing supported interaction types
-
 For a complete list of supported interaction types, 
 
 
@@ -313,7 +236,7 @@ head(rattus)
 ## 6                         NA       NA        NA          NA
 ```
 
-Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326 aka WGS 84 or WGS 1984](https://en.wikipedia.org/wiki/World_Geodetic_System)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
+Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
 
 ```r
@@ -368,7 +291,7 @@ head(aves_crustacea_northern_hemisphere)
 
 #### Find interactions in a geographic areas
 
-Instead of a taxon-specific approach, users may also wish to gather information on all interactions occurring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  `rglobi` enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326 aka WGS 84 or WGS 1984](https://en.wikipedia.org/wiki/World_Geodetic_System)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
+Instead of a taxon-specific approach, users may also wish to gather information on all interactions occuring in a specific area.  For example, a group developing ecoystem models for the Gulf of Mexico may want to consider all the data from that region.  `rglobi` enables this type of search by allowing users to specify a rectangular bounding box. Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
 
 
 ```r
@@ -421,7 +344,7 @@ head(gulfinteractions)
 ## 6                         NA       NA        NA          NA
 ```
 
-To see all locations for which interactions have entered in GloBI, 
+To see all locations for which interactions have entered in GloBi, 
 
 
 ```r
@@ -453,29 +376,3 @@ head(areas)
 ## 1268 18.06667 -63.06667
 ## 1339 13.16667 -59.53333
 ```
-
-#### Pagination
-
-By default, the amount of results are limited. If you'd like to retrieve all results, you can used pagination. For instance, to retrieve parasitic interactions using pagination, you can use:
-
-
-```r
-otherkeys = list("limit"=10, "skip"=0)
-first_page_of_ten <- get_interactions_by_type(interactiontype = c("hasParasite"), otherkeys = otherkeys)
-otherkeys = list("limit"=10, "skip"=10)
-second_page_of_ten <- get_interactions_by_type(interactiontype = c("hasParasite"), otherkeys = otherkeys)
-```
-
-To exhaust all available interactions, you can keep paging results until the size of the page is less than the limit (e.g., ```nrows(interactions) < limit```).
-
-#### Selecting Taxonomic Schemes
-
-GloBI integrations with various different taxonomies (see [Selecting specific taxonomies](https://github.com/globalbioticinteractions/globalbioticinteractions/wiki/api#selecting-specific-taxonomies)). 
-
-To select a specific preferred taxonomy like the [Open Tree of Life](http://opentreeoflife.org) reference taxonomy to retrieve up to 10 parasitic interactions, use:
-
-```r
-parasitic_interactions <- get_interactions_by_type(interactiontype = c("hasParasite"), otherkeys = list("taxonIdPrefix"="OTT", "limit"=10))
-```
-
-Note that if no taxonomic mapping for the preferred taxonomy is available, another taxonomy will be selected.

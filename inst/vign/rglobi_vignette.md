@@ -376,29 +376,3 @@ head(areas)
 ## 1268 18.06667 -63.06667
 ## 1339 13.16667 -59.53333
 ```
-
-#### Custom Queries using Cypher
-
-Currently, GloBI is powered by [neo4j](http://neo4j.org), a graph database. Most results created by the R functions provided by `rglobi` are basically wrappers for commonly used cypher queries. This way, you can still use the library without having to learn Cypher, a graph query language. However, if you feel adventurous, you can execute queries using Cypher only using the function `query()`:
-
-
-```r
-result <- query("START taxon = node:taxons(name='Homo sapiens') MATCH taxon<-[:CLASSIFIED_AS]-predator-[:ATE|PREYS_ON]->prey-[:CLASSIFIED_AS]->preyTaxon RETURN distinct(preyTaxon.name) as `prey.taxon.name` LIMIT 10")
-result
-```
-
-```
-##         prey.taxon.name
-## 1          Homo sapiens
-## 2    Macropus bernardus
-## 3             Mysticeti
-## 4   Dendrolagus scottae
-## 5   Engraulis japonicus
-## 6         Sergia lucens
-## 7       Martes melampus
-## 8   Lophocebus albigena
-## 9            Salmonidae
-## 10 Moschus chrysogaster
-```
-
-This particular query returns the names of the first ten known prey or diet items of humans (_Homo sapiens_). More examples of GloBI specific Cypher queries can be found on the [GloBI Cypher Wiki](https://github.com/globalbioticinteractions/globalbioticinteractions/wiki/cypher). 
