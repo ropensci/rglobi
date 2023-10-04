@@ -9,9 +9,7 @@ Description: A programmatic interface to the web service methods
     access to spatial-temporal species interaction records from 
     sources all over the world. rglobi provides methods to search 
     species interactions by location, interaction type, and 
-    taxonomic name. In addition, it supports Cypher, a graph query
-    language, to allow for executing custom queries on the GloBI 
-    aggregate species interaction data set.
+    taxonomic name.
 Version: 0.3.1
 Date: 2023-10-04
 Authors@R: c(person("Jorrit", "Poelen", role = c("aut", "cre"),
