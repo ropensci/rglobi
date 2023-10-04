@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (http://globalbioticinteractions.org)
+rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (https://globalbioticinteractions.org)
 ======
 
 ### About the package
@@ -68,7 +68,7 @@ rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus")
 head(rattus)
 ```
 
-Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326](http://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y).  
+Only a source taxa need be identified, but you can also specify a target taxon and/or geographic boundary (Coordinates must be in decimal degrees ([EPSG:4326](https://spatialreference.org/ref/epsg/wgs-84/)) and correspond to the west, south, east, and northern boundaries (i.e., min x, min y, max x, max y). 
 
 ```{r}
 aves_crustacea_northern_hemisphere <- get_interactions_by_taxa( sourcetaxon = "Aves", targettaxon = "Crustacea", bbox=c(-180, 0, 180, 90 ))
