@@ -5,7 +5,7 @@
 
 
 
-rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (https://globalbioticinteractions.org)
+rglobi vignette - an R interface to the aggregated biotic interaction data of GloBI (https://www.globalbioticinteractions.org)
 ======
 
 ### About the package
