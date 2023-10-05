@@ -58,6 +58,6 @@ Vignettes are generated using ```knitr``` and ```markdown``` packages.
 
 Please [report any issues or bugs](https://github.com/ropensci/rglobi/issues).
 
-This package is part of the [rOpenSci](http://ropensci.org/packages) project.
+This package is part of the [rOpenSci](https://ropensci.org/packages/) project.
 
 [![rOpenSci footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)

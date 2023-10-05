@@ -1,3 +1,6 @@
+# rglobi 0.3.3
+ * Change http://ropensci.org/packages to https://reopensci.org/packages/ to address a "note" due to 403 forbidden and a 301 redirect.
+
 # rglobi 0.3.2
  * Change https://globalbioticinteractions.org to https://www.globalbioticinteractions.org to address a "note" due to 301 redirect.
 
