@@ -1,3 +1,6 @@
+# rglobi 0.3.2
+ * Change https://globalbioticinteractions.org to https://www.globalbioticinteractions.org to address a "note" due to 301 redirect.
+
 # rglobi 0.3.1
  * Remove travis-ci badge in README.md that caused a "note" due to 301 redirect.
  * Remove references to Cypher query support in vignettes.
