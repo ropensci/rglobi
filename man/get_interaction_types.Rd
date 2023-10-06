@@ -18,7 +18,7 @@ Returns data frame of supported interaction types
 Returns data frame with supported interaction types
 }
 \examples{
-\dontrun{
+\donttest{
 get_interaction_types()
 }
 }

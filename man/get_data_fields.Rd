@@ -18,7 +18,7 @@ Returns data frame of supported data fields
 Returns data frame with supported data fields
 }
 \examples{
-\dontrun{
+\donttest{
 get_data_fields()
 }
 }

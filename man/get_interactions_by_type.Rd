@@ -18,7 +18,7 @@ species interactions given provided interaction type(s)
 Get Species Interactions by Interaction Type from GloBI
 }
 \examples{
-\dontrun{
+\donttest{
 get_interactions_by_type(interactiontype = c("eats", "eatenBy"))
 get_interactions_by_type(interactiontype = "parasiteOf")
 }

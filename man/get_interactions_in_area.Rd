@@ -20,7 +20,7 @@ Returns all interactions in data base in area specified in
 arguments
 }
 \examples{
-\dontrun{
+\donttest{
 get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
 }
 }

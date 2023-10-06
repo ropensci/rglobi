@@ -52,7 +52,7 @@ read_csv_online <- function(url, ...) {
 #' @return species interactions between source and target taxa
 #' @family interactions
 #' @export
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interactions("Homo sapiens", "preysOn")
 #' get_interactions("Insecta", "parasiteOf")
 #' }
@@ -67,7 +67,7 @@ get_interactions <- function(taxon = "Homo sapiens", interaction.type = "preysOn
 #' @return species interactions given provided interaction type(s)
 #' @family interactions
 #' @export
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interactions_by_type(interactiontype = c("eats", "eatenBy"))
 #' get_interactions_by_type(interactiontype = "parasiteOf")
 #' }
@@ -82,7 +82,7 @@ get_interactions_by_type <- function(interactiontype = c("interactsWith"), ...) 
 #' @return list of recorded predator-prey interactions that involve the desired predator taxon
 #' @export
 #' @family interactions
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_prey_of("Homo sapiens")
 #' get_prey_of("Primates")
 #'}
@@ -97,7 +97,7 @@ get_prey_of <- function(taxon = "Homo sapiens", ...) {
 #' @return list of recorded prey-predator interactions that involve the desired prey taxon.
 #' @export
 #' @family interactions
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_predators_of("Rattus rattus")
 #' get_predators_of("Primates")
 #' }
@@ -149,7 +149,7 @@ create_bbox_param <- function(bbox) {
 #' @export
 #' @note For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
 #' @family interactions
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interactions_by_taxa(sourcetaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
@@ -222,7 +222,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
 #' @keywords database
 #' @export
 #' @family areas
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interactions_in_area(bbox = c(-67.87, 12.79, -57.08, 23.32))
 #' }
 get_interactions_in_area <- function(bbox, ...){
@@ -246,7 +246,7 @@ get_interactions_in_area <- function(bbox, ...){
 #' @keywords database
 #' @export
 #' @family areas
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 #' }
@@ -280,7 +280,7 @@ get_interaction_areas <- function(bbox = NULL, read_csv = read_csv_online, ...){
 #' @keywords database
 #' @export
 #' @family interactions
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interaction_types()
 #' }
 get_interaction_types <- function(opts = list(), read_csv = read_csv_online) {
@@ -297,7 +297,7 @@ get_interaction_types <- function(opts = list(), read_csv = read_csv_online) {
 #' @keywords database
 #' @export
 #' @family data
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_data_fields()
 #' }
 get_data_fields <- function(opts = list(), read_csv = read_csv_online) {
@@ -369,7 +369,7 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 #' @return matrix representing species interactions between source and target taxa
 #' @family interactions
 #' @export
-#' @examples \dontrun{
+#' @examples \donttest{
 #' get_interaction_matrix("Homo sapiens", "Mammalia", "interactsWith")
 #' }
 get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'eats', opts = list(), read_csv = read_csv_online) {

@@ -30,7 +30,7 @@ matrix representing species interactions between source and target taxa
 Get Interaction Matrix. Constructs an interaction matrix indicating whether source taxa (rows) or target taxa (columns) are known to interact with given type.
 }
 \examples{
-\dontrun{
+\donttest{
 get_interaction_matrix("Homo sapiens", "Mammalia", "interactsWith")
 }
 }

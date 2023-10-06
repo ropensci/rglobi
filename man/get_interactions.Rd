@@ -20,7 +20,7 @@ species interactions between source and target taxa
 Get Species Interaction from GloBI
 }
 \examples{
-\dontrun{
+\donttest{
 get_interactions("Homo sapiens", "preysOn")
 get_interactions("Insecta", "parasiteOf")
 }

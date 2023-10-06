@@ -15,7 +15,7 @@ get_interactions_by_taxa(
     "longitude", "study_citation", "study_external_id", "study_source_citation"),
   otherkeys = NULL,
   bbox = NULL,
-  returnobservations = F,
+  returnobservations = FALSE,
   opts = list(),
   read_csv = read_csv_online
 )
@@ -59,7 +59,7 @@ taxa and spatial boundaries may also be set
 For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
 }
 \examples{
-\dontrun{
+\donttest{
 get_interactions_by_taxa(sourcetaxon = "Rattus")
 get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 get_interactions_by_taxa(sourcetaxon = "Rattus rattus",

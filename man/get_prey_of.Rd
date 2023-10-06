@@ -18,7 +18,7 @@ list of recorded predator-prey interactions that involve the desired predator ta
 Get a List of Prey for given Predator Taxon
 }
 \examples{
-\dontrun{
+\donttest{
 get_prey_of("Homo sapiens")
 get_prey_of("Primates")
 }
