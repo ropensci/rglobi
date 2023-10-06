@@ -1,3 +1,8 @@
+# rglobi 0.3.4
+ * changed package title to omit the leading "R" - from "R Interface to ..." to "Interface to ..."
+ * for boolean defaults, use "= TRUE" style, instead of shorthand "= T" 
+ * replaced wrapped examples from "dontrun{}" to "donttest{}" 
+
 # rglobi 0.3.3
  * Change http://ropensci.org/packages to https://reopensci.org/packages/ to address a "note" due to 403 forbidden and a 301 redirect.
 

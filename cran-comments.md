@@ -10,6 +10,8 @@ IMPROVEMENT
 
 I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
 
+Also, note that with the v0.3.0, and removal of Cypher query support, the root cause of the "policy violation" has been addressed.
+
 Thank you for taking the time to review my submission.
 
 -jorrit
