@@ -50,8 +50,8 @@ expect_limit_warning <- function(x) {
 }
 
 test_that("interactions subsetted by adding additional information all interaction types include observations", {
-  expect_limit_warning(rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = T, , read_csv = read_csv_offline))
-  expect_limit_warning(rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = T, , read_csv = read_csv_offline))
+  expect_limit_warning(rattus <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", returnobservations = TRUE, , read_csv = read_csv_offline))
+  expect_limit_warning(rattusaves <- get_interactions_by_taxa(sourcetaxon = "Rattus rattus", targettaxon="Aves", returnobservations = TRUE, , read_csv = read_csv_offline))
   expect_true(dim(rattus)[1] > 0)
   expect_lte(dim(rattusaves)[1], dim(rattus)[1])
 })
@@ -63,7 +63,7 @@ test_that("interactions subsetted by adding additional information using otherke
   expect_lt(dim(rattusaves)[1], dim(rattus)[1])
   # note that some interaction types (e.g. interactsWith) are symmetric
   # if a specific source (e.g. Thessen et al. 2014) reported a -[:INTERACTS_WITH]-> b and (a separate entry) b -[:INTERACTS_WITH]-> a, then both show up when looking for interactions between a and b, because the inverse of interactsWith is interactsWith.
-  expect_equal(dim(merge(unique(rattusaves),unique(rattus), all.x=T, all.y=T)), dim(unique(rattus)))
+  expect_equal(dim(merge(unique(rattusaves),unique(rattus), all.x=TRUE, all.y=TRUE)), dim(unique(rattus)))
 })
 
 test_that("bad bounding box throws error", {

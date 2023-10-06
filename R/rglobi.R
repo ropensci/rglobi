@@ -157,7 +157,7 @@ create_bbox_param <- function(bbox) {
 #' }
 get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactiontype = NULL, accordingto = NULL,
   showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
-  otherkeys = NULL, bbox = NULL, returnobservations = F, opts = list(), read_csv = read_csv_online){
+  otherkeys = NULL, bbox = NULL, returnobservations = FALSE, opts = list(), read_csv = read_csv_online){
   if(length(interactiontype)>0){
     interactiontypes <- as.vector(get_interaction_types(read_csv = read_csv)[,1])
     if(length(intersect(interactiontypes, interactiontype)) == 0){
