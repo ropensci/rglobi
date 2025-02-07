@@ -22,10 +22,10 @@ Returns all locations (latitude,longitude) of interactions in data
 base or area specified in arguments
 }
 \examples{
-\donttest{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 get_interaction_areas ()
 get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other areas: 

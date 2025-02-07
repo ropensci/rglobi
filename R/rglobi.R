@@ -246,10 +246,9 @@ get_interactions_in_area <- function(bbox, ...){
 #' @keywords database
 #' @export
 #' @family areas
-#' @examples \donttest{
+#' @examplesIf interactive()
 #' get_interaction_areas ()
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
-#' }
 get_interaction_areas <- function(bbox = NULL, read_csv = read_csv_online, ...){
   requesturl <- read_csv (get_globi_url("/locations?type=csv", ...))
   names (requesturl) <- c ("Latitude", "Longitude")
