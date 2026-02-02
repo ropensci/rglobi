@@ -153,6 +153,7 @@ create_bbox_param <- function(bbox) {
 #' get_interactions_by_taxa(sourcetaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Aves", accordingto = "globi:globalbioticinteractions/inaturalist")
+#' get_interactions_by_taxa(sourcetaxon = "Aves", accordingto = "globi:globalbioticinteractions/inaturalist", returnobservations = T)
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 #' }
