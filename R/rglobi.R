@@ -87,7 +87,7 @@ get_interactions_by_type <- function(interactiontype = c("interactsWith"), ...) 
 #' get_prey_of("Primates")
 #'}
 get_prey_of <- function(taxon = "Homo sapiens", ...) {
-  get_interactions(taxon, ...)
+  get_interactions(taxon, "preysOn", ...)
 }
 
 #' Get a List of Predators of a Given Prey Taxon
