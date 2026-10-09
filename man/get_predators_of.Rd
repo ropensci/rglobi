@@ -24,12 +24,12 @@ get_predators_of("Primates")
 }
 }
 \seealso{
-Other interactions: 
-\code{\link{get_interaction_matrix}()},
-\code{\link{get_interaction_types}()},
-\code{\link{get_interactions_by_taxa}()},
-\code{\link{get_interactions_by_type}()},
-\code{\link{get_interactions}()},
-\code{\link{get_prey_of}()}
+Other interactions:
+\code{\link[=get_interaction_matrix]{get_interaction_matrix()}},
+\code{\link[=get_interaction_types]{get_interaction_types()}},
+\code{\link[=get_interactions]{get_interactions()}},
+\code{\link[=get_interactions_by_taxa]{get_interactions_by_taxa()}},
+\code{\link[=get_interactions_by_type]{get_interactions_by_type()}},
+\code{\link[=get_prey_of]{get_prey_of()}}
 }
 \concept{interactions}

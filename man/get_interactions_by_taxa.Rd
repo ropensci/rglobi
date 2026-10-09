@@ -73,13 +73,13 @@ bbox = c(-67.87,12.79,-57.08,23.32))
 }
 }
 \seealso{
-Other interactions: 
-\code{\link{get_interaction_matrix}()},
-\code{\link{get_interaction_types}()},
-\code{\link{get_interactions_by_type}()},
-\code{\link{get_interactions}()},
-\code{\link{get_predators_of}()},
-\code{\link{get_prey_of}()}
+Other interactions:
+\code{\link[=get_interaction_matrix]{get_interaction_matrix()}},
+\code{\link[=get_interaction_types]{get_interaction_types()}},
+\code{\link[=get_interactions]{get_interactions()}},
+\code{\link[=get_interactions_by_type]{get_interactions_by_type()}},
+\code{\link[=get_predators_of]{get_predators_of()}},
+\code{\link[=get_prey_of]{get_prey_of()}}
 }
 \concept{interactions}
 \keyword{database}
