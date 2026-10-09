@@ -1,16 +1,16 @@
 Dear Reviewers:
 
-I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran rglobi_0.3.4.tar.gz] using Ubuntu 22.04.3 LTS-R version 4.3.1 (2023-06-16). 
+This is a resubmission of rglobi, which was archived on 2026-09-16 because the "donttest" additional check failed: the example of get_data_fields() stopped with "cannot open the connection" (https://www.stats.ox.ac.uk/pub/bdr/donttest/rglobi.out).
 
-IMPROVEMENT
- * changed package title to omit the leading "R" - from "R Interface to ..." to "Interface to ..."
- * for boolean defaults, use "= TRUE" style, instead of shorthand "= T" 
- * replaced wrapped examples from "dontrun{}" to "donttest{}" 
+I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran --run-donttest rglobi_0.3.5.tar.gz].
 
+FIXES
+ * all functions now fail gracefully, with an informative message and a NULL return value, when the GloBI web services cannot be reached or return an HTTP error (CRAN policy on Internet resources). Previously only DNS resolution was checked, so HTTP errors surfaced as R errors.
+ * get_data_fields() now uses the /interactionFields endpoint, as /interactionFields.csv started returning HTTP 404.
+ * replaced the broken vignette link https://spatialreference.org/ref/epsg/wgs-84/ (HTTP 404) with https://spatialreference.org/ref/epsg/4326/.
+ * new offline tests check that each function returns NULL with a message when the web service is unavailable.
 
-I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled. 
-
-Also, note that with the v0.3.0, and removal of Cypher query support, the root cause of the "policy violation" has been addressed.
+I've checked the mis-spelled words and confirmed that they are in fact not mis-spelled.
 
 Thank you for taking the time to review my submission.
 

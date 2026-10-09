@@ -104,3 +104,22 @@ test_that("interactions can be retrieved by type", {
   interactions <- rglobi::get_interactions_by_type(interactiontype = c('eats', 'eatenBy'), showfield = c('source_taxon_name', 'interaction_type', 'target_taxon_name'), otherkeys = list(limit=5), read_csv = read_csv_offline)
   expect_equal(length(interactions$source_taxon_name), 5)
 })
+
+read_csv_unavailable <- function(url, ...) {
+  globi_unavailable(url, "simulated outage")
+}
+
+test_that("unreachable web service gives a message, not an error", {
+  skip_on_cran()
+  expect_message(res <- read_csv_online("https://api.globalbioticinteractions.invalid/interactionTypes.csv"), "GloBI data services are not available")
+  expect_null(res)
+})
+
+test_that("functions fail gracefully when web service is unavailable", {
+  expect_message(expect_null(get_data_fields(read_csv = read_csv_unavailable)), "simulated outage")
+  expect_message(expect_null(get_interaction_types(read_csv = read_csv_unavailable)), "simulated outage")
+  expect_message(expect_null(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", read_csv = read_csv_unavailable)), "simulated outage")
+  expect_message(expect_null(get_interactions_by_taxa(sourcetaxon = "Rattus rattus", interactiontype = "eats", read_csv = read_csv_unavailable)), "simulated outage")
+  expect_message(expect_null(get_interaction_areas(read_csv = read_csv_unavailable)), "simulated outage")
+  expect_message(expect_null(get_interaction_matrix(read_csv = read_csv_unavailable)), "simulated outage")
+})
