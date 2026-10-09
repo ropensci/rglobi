@@ -22,26 +22,43 @@ get_globi_url <- function(suffix, opts = list()) {
   paste("https://", opts$host, ":", opts$port, suffix, sep = "")
 }
 
-# Check If Web API resolvable
+# Report Unavailable Web API
 #
-# @return true if api is available, false otherwise 
-has_api <- function() {
-  !is.null(curl::nslookup(globi_api_url, error = FALSE))
+# Fail gracefully, as required by the CRAN policy on internet resources:
+# emit an informative message instead of an error.
+#
+# @param url url that could not be retrieved
+# @param reason why the url could not be retrieved
+# @param hint suggestion for the user
+# @return invisible NULL
+globi_unavailable <- function(url, reason, hint = "Please try again later.") {
+  message(paste("GloBI data services are not available at [", url, "] (", reason, "). ", hint, sep = ""))
+  invisible(NULL)
 }
 
 # Read csv URL
 # @param url points to csv resource
+# @return data frame, or NULL (with a message) if the resource is not available
 read_csv_online <- function(url, ...) {
-    if (has_api()) {
-      res <- suppressWarnings(suppressMessages(as.data.frame(readr::read_csv(url))))
+  # fail fast on unreachable or stalled connections, without capping slow but healthy downloads
+  handle <- curl::new_handle(connecttimeout = 30, low_speed_limit = 1, low_speed_time = 60)
+  response <- tryCatch(
+    curl::curl_fetch_memory(url, handle = handle),
+    error = function(e) e
+  )
+  if (inherits(response, "error")) {
+    return(globi_unavailable(url, conditionMessage(response), "Are you connected to the internet? If so, please try again later."))
+  }
+  if (response$status_code >= 400) {
+    return(globi_unavailable(url, paste("HTTP status", response$status_code), "The service may be down or the endpoint may have changed; please try again later."))
+  }
 
-      # Drop rows with all NAs
-      res <- res[rowSums(is.na(res)) != ncol(res), ]
+  res <- suppressWarnings(suppressMessages(as.data.frame(readr::read_csv(response$content))))
 
-      return(res)
-    }
+  # Drop rows with all NAs
+  res <- res[rowSums(is.na(res)) != ncol(res), ]
 
-    stop(paste("GloBI data services are not available at [", globi_api_url, "]. Are you connected to the internet?", sep = ""))
+  res
 }
 
 #' Get Species Interaction from GloBI
@@ -144,7 +161,8 @@ create_bbox_param <- function(bbox) {
 #' else only distinct relationships
 #' @param opts list of named options to configure GloBI API
 #' @param read_csv function used to find csv associated to query url, defaulting to online query method
-#' @return Returns data frame of interactions
+#' @return Returns data frame of interactions, or NULL (with a message) if the
+#' GloBI web service is not available
 #' @keywords database
 #' @export
 #' @note For data sources in which type of interactions were not specified, the interaction is labeled "interacts_with"
@@ -152,8 +170,11 @@ create_bbox_param <- function(bbox) {
 #' @examples \donttest{
 #' get_interactions_by_taxa(sourcetaxon = "Rattus")
 #' get_interactions_by_taxa(sourcetaxon = "Aves", targettaxon = "Rattus")
-#' get_interactions_by_taxa(sourcetaxon = "Aves", accordingto = "globi:globalbioticinteractions/inaturalist")
-#' get_interactions_by_taxa(sourcetaxon = "Aves", accordingto = "globi:globalbioticinteractions/inaturalist", returnobservations = T)
+#' get_interactions_by_taxa(sourcetaxon = "Aves",
+#' accordingto = "globi:globalbioticinteractions/inaturalist")
+#' get_interactions_by_taxa(sourcetaxon = "Aves",
+#' accordingto = "globi:globalbioticinteractions/inaturalist",
+#' returnobservations = TRUE)
 #' get_interactions_by_taxa(sourcetaxon = "Rattus rattus",
 #' bbox = c(-67.87,12.79,-57.08,23.32))
 #' }
@@ -161,7 +182,11 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   showfield = c("source_taxon_external_id","source_taxon_name","source_taxon_path","source_specimen_life_stage","interaction_type","target_taxon_external_id","target_taxon_name","target_taxon_path","target_specimen_life_stage","latitude","longitude","study_citation","study_external_id","study_source_citation"),
   otherkeys = NULL, bbox = NULL, returnobservations = FALSE, opts = list(), read_csv = read_csv_online){
   if(length(interactiontype)>0){
-    interactiontypes <- as.vector(get_interaction_types(read_csv = read_csv)[,1])
+    supportedtypes <- get_interaction_types(read_csv = read_csv)
+    if (is.null(supportedtypes)) {
+      return(invisible(NULL))
+    }
+    interactiontypes <- as.vector(supportedtypes[,1])
     if(length(intersect(interactiontypes, interactiontype)) == 0){
       stop ("Unsupported interaction type(s)")
     } else {
@@ -176,7 +201,7 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   requesturlbase <- get_globi_url("/interaction?")
   if (!is.logical(returnobservations)) {
     warning ("Incorrect entry for 'returnobservations', using default value")
-    returnobservations <- F
+    returnobservations <- FALSE
   }
   includeobservations <- paste ("includeObservations=", ifelse(returnobservations, "t", "f"), sep = "")
   requestsequence <- (function(
@@ -202,7 +227,10 @@ get_interactions_by_taxa <- function(sourcetaxon, targettaxon = NULL, interactio
   })()
   requesturl <- paste(requesturlbase, requestsequence, create_bbox_param(bbox), includeobservations, "type=csv", sep="&")
   result <- read_csv(requesturl)
-  
+  if (is.null(result)) {
+    return(invisible(NULL))
+  }
+
   if(nrow(result) == 1024 & !"limit" %in% names(otherkeys)){
     warning("Default results limit reached. Consider increasing limit parameter and/or using pagination to retrieve all results. See rglobi vignette section on pagination for help modifying limit/skip parameters.")
   }
@@ -253,6 +281,9 @@ get_interactions_in_area <- function(bbox, ...){
 #' get_interaction_areas (bbox=c(-67.87,12.79,-57.08,23.32))
 get_interaction_areas <- function(bbox = NULL, read_csv = read_csv_online, ...){
   requesturl <- read_csv (get_globi_url("/locations?type=csv", ...))
+  if (is.null(requesturl)) {
+    return(invisible(NULL))
+  }
   names (requesturl) <- c ("Latitude", "Longitude")
   requesturl$Latitude <- as.numeric (requesturl$Latitude)
   requesturl$Longitude <- as.numeric (requesturl$Longitude)
@@ -302,7 +333,7 @@ get_interaction_types <- function(opts = list(), read_csv = read_csv_online) {
 #' get_data_fields()
 #' }
 get_data_fields <- function(opts = list(), read_csv = read_csv_online) {
-  read_csv(get_globi_url("/interactionFields.csv?type=csv", opts = opts))
+  read_csv(get_globi_url("/interactionFields?type=csv", opts = opts))
 }
 
 # Generate Diet Matrices using https://github.com/ropensci/rglobi
@@ -346,7 +377,10 @@ rel_type_interaction_type <- function(interaction.type) {
 # Retrieves diet items of given predator and classifies them by matching the prey categories against
 # both taxon hierarchy of prey and the name that was originally used to describe the prey.
 unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.names, interaction.type, opts = list(), read_csv = read_csv_online) {
-  result <- get_interactions_by_taxa(sourcetaxon = source.taxon.name, interactiontype = interaction.type, targettaxon = target.taxon.names, opts = opts, read_csv = read_csv) 
+  result <- get_interactions_by_taxa(sourcetaxon = source.taxon.name, interactiontype = interaction.type, targettaxon = target.taxon.names, opts = opts, read_csv = read_csv)
+  if (is.null(result)) {
+    return(NULL)
+  }
   ReportProgress()
   all.taxa.paths <- Reduce(function(accum, path) paste(accum, path), paste('{',result$target_taxon_path,'}', sep=''))
   has.prey.category <- lapply(target.taxon.names, function(prey.category) {
@@ -374,7 +408,16 @@ unique_target_taxa_of_source_taxon <- function(source.taxon.name, target.taxon.n
 #' get_interaction_matrix("Homo sapiens", "Mammalia", "interactsWith")
 #' }
 get_interaction_matrix <- function(source.taxon.names = list('Homo sapiens'), target.taxon.names = list('Mammalia'), interaction.type = 'eats', opts = list(), read_csv = read_csv_online) {
-  Reduce(function(accum, source.taxon.name) rbind(accum, unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts, read_csv = read_csv)), source.taxon.names, init=data.frame())
+  interaction.matrix <- data.frame()
+  for (source.taxon.name in source.taxon.names) {
+    row <- unique_target_taxa_of_source_taxon(source.taxon.name, target.taxon.names, interaction.type, opts = opts, read_csv = read_csv)
+    # do not return a partial matrix if GloBI is not available
+    if (is.null(row)) {
+      return(invisible(NULL))
+    }
+    interaction.matrix <- rbind(interaction.matrix, row)
+  }
+  interaction.matrix
 }
 
 interaction_id_for_type <- function(interaction.type) {

@@ -1,3 +1,9 @@
+# rglobi 0.3.5
+ * functions now fail gracefully when GloBI web services are unavailable or return an HTTP error: an informative message is shown and NULL is returned, instead of an error (CRAN policy on Internet resources, https://github.com/ropensci/rglobi/issues/55)
+ * get_data_fields() uses the /interactionFields endpoint, as /interactionFields.csv now returns HTTP 404 (https://github.com/ropensci/rglobi/issues/55)
+ * replaced broken vignette link https://spatialreference.org/ref/epsg/wgs-84/ with https://spatialreference.org/ref/epsg/4326/
+ * added examples for the accordingto argument of get_interactions_by_taxa() (https://github.com/ropensci/rglobi/issues/53)
+
 # rglobi 0.3.4
  * changed package title to omit the leading "R" - from "R Interface to ..." to "Interface to ..."
  * for boolean defaults, use "= TRUE" style, instead of shorthand "= T" 
