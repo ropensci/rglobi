@@ -4,6 +4,8 @@ This is a resubmission of rglobi following your feedback on our recent 0.3.5 sub
 
 > Please single quote software names in both Title and Description fields of the DESCRIPTION file such as 'rglobi'. 
 
+by putting single quotes around 'rglobi' and 'GloBI'.
+
 I built this package using [R CMD build .] and checked it with command [R CMD check --as-cran --run-donttest rglobi_0.3.6.tar.gz].
 
 FIXES

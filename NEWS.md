@@ -1,3 +1,6 @@
+# rglobi 0.3.6
+ * put single quotes around 'rglobi' and 'GloBI' in DESCRIPTION file as suggested by the reviewers
+
 # rglobi 0.3.5
  * functions now fail gracefully when GloBI web services are unavailable or return an HTTP error: an informative message is shown and NULL is returned, instead of an error (CRAN policy on Internet resources, https://github.com/ropensci/rglobi/issues/55)
  * get_data_fields() uses the /interactionFields endpoint, as /interactionFields.csv now returns HTTP 404 (https://github.com/ropensci/rglobi/issues/55)
